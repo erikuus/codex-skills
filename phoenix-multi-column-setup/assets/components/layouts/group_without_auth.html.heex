@@ -1,0 +1,14 @@
+<Layouts.app flash={@flash}>
+  <.multi_column_layout>
+    <:narrow_sidebar>
+      <Sidebar.menu current_layout={:group} />
+    </:narrow_sidebar>
+    <:mobile_menu>
+      <Group.menu id="group-mobile-menu" current_path={@current_path} />
+    </:mobile_menu>
+    <:desktop_menu hook="PreserveScroll">
+      <Group.menu id="group-desktop-menu" current_path={@current_path} />
+    </:desktop_menu>
+    {@inner_content}
+  </.multi_column_layout>
+</Layouts.app>

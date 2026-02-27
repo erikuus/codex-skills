@@ -1,0 +1,11 @@
+<.flash_group flash={@flash} />
+<.auth_menu
+  :if={
+    Map.get(assigns, :show_auth_menu, false) &&
+      !(assigns[:current_scope] && assigns[:current_scope].user)
+  }
+  id={Map.get(assigns, :auth_menu_id, "auth-menu-header")}
+  current_scope={assigns[:current_scope]}
+  class={Map.get(assigns, :auth_menu_class, "hidden lg:flex justify-end px-6 lg:px-8 py-4")}
+/>
+{render_slot(@inner_block)}

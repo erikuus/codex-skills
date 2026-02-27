@@ -1,0 +1,6 @@
+interface:
+  display_name: "Reprompt Refactor"
+  short_description: "Refactor AGENTS.md and prune learnings"
+  icon_small: "./assets/icon.svg"
+  icon_large: "./assets/icon.png"
+  default_prompt: "Use $reprompt-refactor to rewrite AGENTS.md and curate learnings.md into a compact residual memory list."
