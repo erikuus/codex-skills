@@ -330,3 +330,10 @@ Capture these as default checks for similar legacy Yii upgrades:
 - Fix: add render-time normalization that rewrites legacy base paths (for example `/kaardid`) to current `Yii::app()->baseUrl` in shared content rendering paths.
 - Implementation rule: make legacy prefixes config-driven (for example `params['legacyBasePaths']`) so future path moves do not require DB rewrites.
 - Verify: same DB content renders valid links when app is served both from `/` and from a subfolder path.
+
+7. VAU `remoteUrl` missing non-default dev port
+- Symptom: VAU login/logout callback URL resolves to `https://localhost/...` without required dev port.
+- Root cause: callback URL built from request host defaults and does not respect external reverse-proxy/dev port setup.
+- Fix: introduce a shared callback URL builder that can use configurable absolute base (for example `params['externalCallbackBaseUrl']`) and apply it consistently for VAU login and logout callback generation.
+- Implementation rule: keep default fallback to Yii `createAbsoluteUrl()` when override is empty, so production behavior stays unchanged.
+- Verify: with `externalCallbackBaseUrl='https://localhost:8443'`, generated VAU `remoteUrl` and logout callback include `:8443`; with empty override, URLs use normal environment host.
