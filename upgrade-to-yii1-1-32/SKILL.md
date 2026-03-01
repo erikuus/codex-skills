@@ -323,3 +323,10 @@ Capture these as default checks for similar legacy Yii upgrades:
 - Root cause: historical compatibility code path retained after runtime moved to PHP 8.x.
 - Fix: delete unreachable `<5.6` branches from entry scripts.
 - Verify: app boots normally on PHP 8.x and no mbstring startup warnings appear.
+
+6. Legacy hardcoded app path in DB-stored HTML (`/kaardid/...`)
+- Symptom: images/links in CMS/help content break after moving app from subfolder to web root (or vice versa).
+- Root cause: stored HTML contains environment-specific absolute paths instead of portable URLs.
+- Fix: add render-time normalization that rewrites legacy base paths (for example `/kaardid`) to current `Yii::app()->baseUrl` in shared content rendering paths.
+- Implementation rule: make legacy prefixes config-driven (for example `params['legacyBasePaths']`) so future path moves do not require DB rewrites.
+- Verify: same DB content renders valid links when app is served both from `/` and from a subfolder path.
