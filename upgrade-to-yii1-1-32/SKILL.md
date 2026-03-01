@@ -289,3 +289,37 @@ Read `references/mcrypt-php8-vau.md` when PHP 8 upgrade scope includes VAU or an
 Read `references/plugin-upgrade-path.md` when Select2/Fancybox/legacy frontend plugins are in scope.
 
 Read `references/test-loop.md` for loop execution and learnings capture format.
+
+## Field learnings (Kaardid, Yii 1.1.8 -> 1.1.32)
+
+Capture these as default checks for similar legacy Yii upgrades:
+
+1. Debug stack trace behavior changed by app error handler wiring
+- Symptom: `YII_DEBUG=true` is set, but browser shows friendly error page without stack trace.
+- Root cause: `errorHandler.errorAction` still points to `site/error`, which intercepts exceptions.
+- Fix: in debug mode set `errorAction` to `null` (for example `(defined('YII_DEBUG') && YII_DEBUG) ? null : 'site/error'`).
+- Verify: trigger a known exception and confirm native Yii debug stack trace is rendered.
+
+2. PHP 8.1+ deprecations from null passed into string functions
+- Symptom: logs contain deprecations like `mb_strlen(): Passing null ... is deprecated`.
+- Root cause: legacy helpers assume nullable values are always strings.
+- Fix: add null-safety and string-casting in shared helpers before calling `mb_*`/string functions.
+- Verify: re-run affected page/action and confirm error log no longer records that deprecation.
+
+3. Fancybox opens correctly in grid view but not list view
+- Symptom: clicking image thumbnail in `vmode=list` navigates to image URL instead of opening modal.
+- Root cause: Fancybox binding targets only one markup variant or is lost after dynamic list refresh.
+- Fix: bind Fancybox via delegated handler covering both grid and list thumbnail selectors; avoid per-node inline assumptions.
+- Verify: both `vmode=grid` and `vmode=list` open the same modal behavior after AJAX refresh.
+
+4. jQuery UI dialog close button breaks after 1.12 markup changes
+- Symptom: close button shows visible `Close` text, wrong border/background, or tiny/misaligned icon.
+- Root cause: legacy theme CSS (1.8-era) styles no longer match 1.12 button markup.
+- Fix: patch loaded jUI theme file under `css/yiithemes/*` (not global app CSS) with 1.12-compatible `.ui-dialog-titlebar-close` rules.
+- Verify: close button in all dialogs has correct icon size, no visible text label, and no unwanted button chrome.
+
+5. Remove dead PHP <5.6 bootstrap conditionals
+- Symptom: obsolete entrypoint blocks for old `mbstring.internal_encoding`/`mbstring.http_input`.
+- Root cause: historical compatibility code path retained after runtime moved to PHP 8.x.
+- Fix: delete unreachable `<5.6` branches from entry scripts.
+- Verify: app boots normally on PHP 8.x and no mbstring startup warnings appear.
