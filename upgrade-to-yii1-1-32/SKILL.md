@@ -351,3 +351,17 @@ Capture these as default checks for similar legacy Yii upgrades:
 - Fix: migrate `tbl_session.data` to `bytea`, switch session component to native `CDbHttpSession`, then remove custom shim.
 - Implementation rule: conversion SQL should preserve old rows, including `\\x...` hex-encoded payloads (`decode(...)`) and plain text payloads (`convert_to(...,'UTF8')`).
 - Verify: schema reports `bytea` in both main and test DBs, login/logout session persistence works, and no runtime references to removed custom session class remain.
+
+10. Zii translations may stop applying after framework upgrade due to key drift
+- Symptom: app-local translations in `protected/messages/<lang>/zii.php` are ignored and English strings appear in widgets.
+- Root cause: Yii 1.1.32 uses updated `Yii::t('zii', ...)` source strings (for example singular|plural forms and revised wording), so old keys no longer match.
+- Fix: re-sync local `zii.php` keys with Yii 1.1.32 source strings while keeping existing translated values.
+- Implementation rule: compare keys against framework usage (search for `Yii::t('zii', ...)`) and add missing/new keys instead of only editing values.
+- Verify: translated text appears for updated keys (for example delete confirmation, list summary, total summary) and no fallback English remains in those UI paths.
+
+11. PHP 8 breaks legacy stats aggregation when rows mix labels and numbers
+- Symptom: statistics pages (for example crosstab totals) fail with `Unsupported operand types: int + string`.
+- Root cause: legacy totalization loops sum all row fields, including first text label column (`Fond`/`Users`) that was loosely tolerated before.
+- Fix: aggregate only numeric cells (`is_numeric`) and explicitly skip non-numeric label columns; keep row and column totals typed as integers.
+- Implementation rule: when building totals for query result arrays, identify label key first and never include it in arithmetic.
+- Verify: stats page renders without TypeError and totals row/column values are present and numerically correct.
