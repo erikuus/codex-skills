@@ -327,9 +327,9 @@ Capture these as default checks for similar legacy Yii upgrades:
 6. Legacy hardcoded app path in DB-stored HTML (`/kaardid/...`)
 - Symptom: images/links in CMS/help content break after moving app from subfolder to web root (or vice versa).
 - Root cause: stored HTML contains environment-specific absolute paths instead of portable URLs.
-- Fix: add render-time normalization that rewrites legacy base paths (for example `/kaardid`) to current `Yii::app()->baseUrl` in shared content rendering paths.
-- Implementation rule: make legacy prefixes config-driven (for example `params['legacyBasePaths']`) so future path moves do not require DB rewrites.
-- Verify: same DB content renders valid links when app is served both from `/` and from a subfolder path.
+- Fix: add normalization that rewrites legacy base paths (for example `/kaardid`) to current `Yii::app()->baseUrl` in both display and edit flows.
+- Implementation rule: make legacy prefixes config-driven (for example `params['legacyBasePaths']`) and normalize HTML before it enters rich text editors (for example Help module/XHeditor form models) to avoid broken images inside editor preview.
+- Verify: same DB content renders valid links when app is served both from `/` and from a subfolder path, and editor views show images correctly before saving.
 
 7. VAU `remoteUrl` missing non-default dev port
 - Symptom: VAU login/logout callback URL resolves to `https://localhost/...` without required dev port.
