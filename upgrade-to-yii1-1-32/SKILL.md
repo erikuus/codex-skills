@@ -337,3 +337,17 @@ Capture these as default checks for similar legacy Yii upgrades:
 - Fix: introduce a shared callback URL builder that can use configurable absolute base (for example `params['externalCallbackBaseUrl']`) and apply it consistently for VAU login and logout callback generation.
 - Implementation rule: keep default fallback to Yii `createAbsoluteUrl()` when override is empty, so production behavior stays unchanged.
 - Verify: with `externalCallbackBaseUrl='https://localhost:8443'`, generated VAU `remoteUrl` and logout callback include `:8443`; with empty override, URLs use normal environment host.
+
+8. App-level subclasses of Yii core classes may be obsolete after upgrade
+- Symptom: project has classes under `application/components` that extend Yii core classes (for example providers/widgets/helpers) originally created to patch old Yii behavior.
+- Root cause: local shims were needed in old Yii versions but overlap with native Yii 1.1.32 features.
+- Fix: audit each subclass against Yii 1.1.32 core implementation and remove/replace with native core class where behavior is equivalent.
+- Implementation rule: keep only subclasses that provide app-specific behavior not available in core; migrate call sites to core class first, then delete obsolete shims.
+- Verify: no remaining runtime references to removed subclass, syntax/tests pass, and affected flow (for example paging/count/sorting) behaves identically.
+
+9. Remove custom DB session handler when PostgreSQL session schema is normalized
+- Symptom: app uses custom `XDbHttpSession` shim to handle legacy `tbl_session.data` text storage.
+- Root cause: Yii `CDbHttpSession` on pgsql writes `bytea`, but legacy schema stored `data` as `text`, causing incompatibility workarounds.
+- Fix: migrate `tbl_session.data` to `bytea`, switch session component to native `CDbHttpSession`, then remove custom shim.
+- Implementation rule: conversion SQL should preserve old rows, including `\\x...` hex-encoded payloads (`decode(...)`) and plain text payloads (`convert_to(...,'UTF8')`).
+- Verify: schema reports `bytea` in both main and test DBs, login/logout session persistence works, and no runtime references to removed custom session class remain.
