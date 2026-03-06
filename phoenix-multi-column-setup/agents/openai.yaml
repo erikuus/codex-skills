@@ -1,0 +1,6 @@
+interface:
+  display_name: "Phoenix Multi Column Setup"
+  short_description: "Bootstrap a Phoenix multi-column app with a local generator"
+  icon_small: "./assets/icon.svg"
+  icon_large: "./assets/phoenix-framework.png"
+  default_prompt: "Create a new Phoenix LiveView app with a multi-column layout and authentication."

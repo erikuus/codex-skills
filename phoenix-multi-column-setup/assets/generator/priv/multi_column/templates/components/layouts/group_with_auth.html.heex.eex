@@ -1,0 +1,27 @@
+<Layouts.app
+  flash={@flash}
+  current_scope={@current_scope}
+  show_auth_menu={true}
+  auth_menu_class="hidden lg:flex justify-end px-6 lg:px-8 py-4"
+>
+  <.multi_column_layout>
+    <:narrow_sidebar>
+      <Sidebar.menu current_layout={:<%= group_key %>} current_scope={@current_scope} />
+    </:narrow_sidebar>
+    <:mobile_menu>
+      <<%= group_module %>.menu
+        id="<%= group_key %>-mobile-menu"
+        current_path={@current_path}
+        current_scope={@current_scope}
+      />
+    </:mobile_menu>
+    <:desktop_menu hook="PreserveScroll">
+      <<%= group_module %>.menu
+        id="<%= group_key %>-desktop-menu"
+        current_path={@current_path}
+        current_scope={@current_scope}
+      />
+    </:desktop_menu>
+    {@inner_content}
+  </.multi_column_layout>
+</Layouts.app>

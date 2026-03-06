@@ -1,0 +1,27 @@
+defmodule {{web_module}}.Menus.Sidebar do
+  use Phoenix.Component
+
+  import {{web_module}}.BaseComponents
+
+  attr :current_layout, :atom
+
+  def menu(assigns) do
+    ~H"""
+    <div class="flex h-full w-full flex-col items-center">
+      <div class="w-full flex-1 overflow-y-auto">
+        <.narrow_sidebar items={get_items(@current_layout)} />
+      </div>
+    </div>
+    """
+  end
+
+  defp get_items(current_layout) do
+    get_items() |> Enum.map(&Map.put(&1, :active, current_layout == &1.layout))
+  end
+
+  defp get_items do
+    [
+<%= sidebar_items_literal %>
+    ]
+  end
+end

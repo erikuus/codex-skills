@@ -1,126 +1,188 @@
 ---
 name: phoenix-multi-column-setup
-description: Create and bootstrap Phoenix LiveView apps with multi-column layout pattern. Automatically sets up the project, removes Daisy UI, and implements the complete multi-column layout (narrow sidebar + vertical navigation + preserve-scroll hook) with current_layout/current_path assigns and InitLive routing.
+description: Create and bootstrap Phoenix LiveView apps with a multi-column layout pattern. Automatically sets up the app, installs shared layout assets, bootstraps a local `mix multi_column.generate` pipeline, and generates auth-aware or no-auth navigation shells from a DSL spec.
 ---
 
 # Phoenix Multi Column Setup
 
-## Overview
+Use this skill when the user wants to create a new Phoenix LiveView app, or retrofit an existing one, with:
 
-This skill creates production-ready Phoenix LiveView apps with a professional multi-column layout pattern. It executes a complete workflow: sets up the Phoenix project, removes Daisy UI to avoid conflicts, installs shared components, and wires the multi-column layout with narrow sidebar, vertical navigation, and preserve-scroll functionality.
+- narrow sidebar + vertical menu multi-column layout
+- `InitLive` + `PreserveScroll`
+- group-based `live_session` routing
+- auth-aware or no-auth layout mode
+- a local `mix multi_column.generate` command driven by a navigation DSL
 
-Use this skill when asked to create a multi-column LiveView app or set up a Phoenix app with multi-column layout.
+## Default behavior
 
-## Step 0: Collect Navigation Spec (custom or default)
+- Treat `mix compile` and `mix precommit` as part of the skill. Do not ask the user whether to run them.
+- Default to the human DSL spec format.
+- Always show the generator dry-run plan before writing generated files, unless the user explicitly asks to skip the preview.
+- Keep the generator honest: managed blocks plus fail-on-conflict, not best-effort router surgery.
 
-Before creating any multi-column files, ask user to choose:
+## Inputs to collect
 
-- provide a custom Navigation Spec (human-friendly DSL), or
-- use the built-in default Navigation Spec
+Before changing files, determine:
 
-If custom spec is selected, default to human-friendly DSL input (see `references/multi-column-layout.md`).
+- app name
+- whether this is a fresh app in an empty folder or an existing app
+- auth mode: `with_auth` or `without_auth`
+- navigation DSL
 
-Optional advanced mode: accept YAML when user explicitly prefers machine-readable format.
+If the user does not provide a DSL, use the default fallback spec from `references/multi-column-layout.md`.
 
-Custom spec must define:
+## Fresh app workflow
 
-- authentication intent in prompt (`with authentication` or `without authentication`)
-  - if missing, ask one clarification question before generation
-- `groups`: list of level-1 sidebar groups
-  - each group must include label/name and menu items (AI derives keys)
-- `menu_items`: list of level-2 items per group
-  - each item must include label
-  - path, aliases, and section are optional
+When the user starts from an empty folder:
 
-AI should auto-pick fitting Heroicons from labels and infer missing keys/paths/module names.
-Users can adjust icons and naming later in generated code.
+1. Follow `references/setup-phx-project.md`.
+2. Create the Phoenix app.
+3. Run `mix setup`.
+4. Run `mix assets.build`.
+5. If auth was requested and auth is not already present, run `mix phx.gen.auth Accounts User users`, then `mix ecto.migrate`.
+6. Remove DaisyUI only if it is present. Follow `references/remove-daisyui.md`.
+7. Install shared foundation assets:
+   - `assets/components/core_components.ex`
+   - `assets/components/base_components.ex`
+   - `assets/components/layouts/app.html.heex`
+   - `assets/live/init_live.ex`
+   - `assets/js/hooks/preserve-scroll.js`
+8. Install the local generator pipeline into the target app:
+   - copy `assets/generator/lib/mix/tasks/multi_column.generate.ex` to `lib/mix/tasks/multi_column.generate.ex`
+   - copy rendered `assets/generator/lib/app/multi_column/*.ex` to `lib/<app>/multi_column/*.ex`
+   - copy rendered `assets/generator/priv/multi_column/templates/**` to `priv/multi_column/templates/**`
+9. Render every copied `.ex` or `.eex` asset that contains placeholders:
+   - replace `{{app_module}}` with the target app module, for example `OpsHub`
+   - replace `{{web_module}}` with the target web module, for example `OpsHubWeb`
+10. Ensure `lib/<app>_web.ex` imports `BaseComponents`.
+11. Run the generator dry-run:
+   - `mix multi_column.generate --spec priv/navigation.dsl --auth <mode> --dry-run`
+12. Show the plan.
+13. If the task is to build the app, run:
+   - `mix multi_column.generate --spec priv/navigation.dsl --auth <mode> --apply`
+14. Run `mix compile`.
+15. Run `mix precommit`.
 
-If user omits custom spec, use the default fallback spec from `references/multi-column-layout.md`.
+## Existing app workflow
 
-Do not infer any other missing groups, routes, or page modules beyond the selected custom/default spec.
+When the target app already exists:
 
-Before writing files, show the derived plan (sessions, routes, layouts, menus, and LiveViews) and require explicit user confirmation.
+1. Inspect the app first:
+   - `router.ex`
+   - `assets/js/app.js`
+   - `lib/<app>_web.ex`
+   - auth presence (`user_auth.ex`, auth routes, `mount_current_scope`)
+2. Install the shared foundation assets only if missing or stale.
+3. Install the local generator pipeline if missing.
+4. Run generator dry-run.
+5. Review the plan and fail on conflicts instead of hand-waving them away.
+6. Apply only after the plan is acceptable.
+7. Run `mix compile`.
+8. Run `mix precommit`.
 
-## Step 1: Set up Phoenix app
+## Generator contract
 
-- Follow `references/setup-phx-project.md`.
-- Add `.vscode/settings.json` with Tailwind v4 lint/association settings to silence false warnings.
+The installed local command is:
 
-```json
-{
-  "css.lint.unknownAtRules": "ignore",
-  "scss.lint.unknownAtRules": "ignore",
-  "less.lint.unknownAtRules": "ignore",
-  "files.associations": {
-    "app.css": "tailwindcss"
-  }
+```bash
+mix multi_column.generate --spec priv/navigation.dsl --auth with_auth --dry-run
+mix multi_column.generate --spec priv/navigation.dsl --auth with_auth --apply
+```
+
+The generator is responsible for:
+
+- parsing and validating the DSL
+- deriving app and web modules from the target app
+- generating sidebar, group menus, group layouts, and placeholder LiveViews
+- patching `router.ex` with managed `live_session` blocks
+- patching `assets/js/app.js` to register `PreserveScroll` once
+- patching `lib/<app>_web.ex` to import `BaseComponents` once
+
+The generator is not responsible for:
+
+- creating the Phoenix app itself
+- adding auth from scratch
+- copying the shared foundation assets into the project for the first time
+
+Those bootstrap steps stay in the skill workflow. The generator owns the fragile cross-file generation and patching after bootstrap.
+
+## Router policy
+
+Generated routes must go inside top-level `live_session` blocks that each wrap:
+
+- `scope "/", AppWeb`
+- `pipe_through :browser`
+
+Reason:
+
+- these are browser LiveViews
+- `InitLive` needs to mount for `@current_path`
+- in `with_auth` mode, layouts need `@current_scope`
+
+For `with_auth`, mount:
+
+- `AppWeb.InitLive`
+- `{AppWeb.UserAuth, :mount_current_scope}`
+
+Do not put generated sections under `:require_authenticated_user` unless the user explicitly asks for protected-only navigation. `with_auth` means auth-aware UI and `current_scope`, not mandatory login.
+
+## DSL notes
+
+Use the human DSL from `references/multi-column-layout.md`.
+
+Supported in this launch version:
+
+- `[Group]`
+- `## SECTION`
+- `Label`
+- `Label -> /path`
+- `Label -> /path | /alias`
+- `Label { ... }`
+
+Current limitation:
+
+- expandable parents with their own route (`Label -> /path {`) are not supported in this launch version; fail clearly if encountered
+
+## Prompt shape
+
+Good prompts look like:
+
+```text
+Create a new Phoenix LiveView app named ops_hub in this empty folder with a multi-column layout and authentication.
+Use the following navigation schema:
+
+[Workspace]
+Overview -> /workspace/overview
+Activity -> /workspace/activity
+
+[Management]
+## OPERATIONS
+Resources -> /management/resources
+Settings -> /management/settings
+Guides {
+  Getting Started -> /management/guides/getting-started
+  Best Practices -> /management/guides/best-practices
 }
 ```
 
-## Step 2: Remove Daisy UI
+or:
 
-- Follow `references/remove-daisyui.md`.
-- Do not add alternative Tailwind plugins unless explicitly requested.
+```text
+Create a new Phoenix LiveView app named docs_portal in this empty folder with a multi-column layout and no authentication.
+Use the following navigation schema:
 
-## Step 3: Install shared components
+[Workspace]
+Overview -> /workspace/overview
+Updates -> /workspace/updates
 
-Copy/overwrite components (after template rendering):
-
-- Resolve template placeholders in all copied `.ex` assets: replace `{{web_module}}` with the target web module (example: `LivePlaygroundWeb`).
-- Overwrite `lib/<app>_web/components/core_components.ex` with rendered `assets/components/core_components.ex`.
-- Copy rendered `assets/components/base_components.ex` to `lib/<app>_web/components/base_components.ex` and import it in `my_app_web.ex` so it is available to LiveViews, components, and templates.
-- Overwrite `lib/<app>_web/components/layouts/app.html.heex` with `assets/components/layouts/app.html.heex` to centralize flash and optional auth-header rendering in `Layouts.app`.
-
-Example `my_app_web.ex` import:
-
-```elixir
-def html_helpers do
-  quote do
-    use Phoenix.Component
-
-    import Phoenix.HTML
-
-    import MyAppWeb.CoreComponents
-    import MyAppWeb.BaseComponents
-    import MyAppWeb.Gettext
-
-    alias Phoenix.LiveView.JS
-  end
-end
+[Guides]
+Getting Started -> /guides/getting-started
+Reference -> /guides/reference
 ```
-
-## Step 4: Implement multi-column layout
-
-Follow `references/multi-column-layout.md` as the single source of truth for this step.
-
-Execution summary:
-
-- Install fixed generic parts first (`InitLive`, `PreserveScroll`).
-- Resolve `{{web_module}}` placeholders in all copied/generated `.ex` files before writing them into the target app.
-- Define app-specific 2-level navigation from the selected Navigation Spec (custom or default).
-- Pick templates from global `auth_mode` (`with_auth` or `without_auth`), then generate sidebar/menu/layout modules with app-specific naming.
-- Mount `InitLive` in each relevant `live_session` and keep auth/current_scope mounts.
-- Use `Layouts.app` as the outer wrapper and `.multi_column_layout` for each group layout.
-- Keep `<.flash_group ...>` usage inside `app.html.heex` only.
-- Ensure every menu item route has a destination LiveView.
-- Require explicit confirmation on the derived generation plan before file writes.
-
-Do not duplicate or override detailed rules from the reference file in this step.
-
-## Step 5: Validation Gate
-
-- Run `mix precommit` at the end of the workflow.
-- Treat `mix precommit` as a hard validation gate: the skill is not complete until it passes.
-- If `mix precommit` fails, fix the issues and rerun it until it passes or report the blocking failure clearly.
 
 ## Resources
 
-### references/
-
-- `setup-phx-project.md`: setup workflow for Phoenix apps
-- `remove-daisyui.md`: Daisy UI removal steps
-- `multi-column-layout.md`: wiring details, assigns, and file list
-
-### assets/
-
-- Reusable Phoenix components, layouts, and JS hook for the multi-column layout
+- `references/setup-phx-project.md`: fresh-app bootstrap order
+- `references/remove-daisyui.md`: DaisyUI cleanup
+- `references/multi-column-layout.md`: DSL and generated file contract
+- `assets/`: shared components, layouts, JS hook, and generator payload
