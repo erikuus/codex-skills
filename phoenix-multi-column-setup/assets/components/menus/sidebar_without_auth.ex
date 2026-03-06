@@ -6,7 +6,7 @@ defmodule {{web_module}}.Menus.SidebarWithoutAuth do
     router: {{web_module}}.Router,
     statics: {{web_module}}.static_paths()
 
-  import {{web_module}}.MoreComponents
+  import {{web_module}}.BaseComponents
 
   attr(:current_layout, :atom)
 

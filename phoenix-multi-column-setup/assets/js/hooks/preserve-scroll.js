@@ -1,18 +1,24 @@
 let PreserveScroll = {
+  storageKey() {
+    const menuKey = this.el.firstElementChild?.id || this.el.id || "anonymous";
+    return `preserve-scroll:${menuKey}`;
+  },
+
   mounted() {
-    // Attempt to restore scroll position on mount
-    const savedScrollTop = localStorage.getItem("scrollPosition");
+    const savedScrollTop = localStorage.getItem(this.storageKey());
+
     if (savedScrollTop) {
       this.el.scrollTop = parseInt(savedScrollTop, 10);
     }
 
-    // Listen for scroll events to update the saved position
-    this.el.addEventListener("scroll", () => {
-      localStorage.setItem("scrollPosition", this.el.scrollTop.toString());
-    });
+    this.listener = () => {
+      localStorage.setItem(this.storageKey(), this.el.scrollTop.toString());
+    };
+
+    this.el.addEventListener("scroll", this.listener);
   },
+
   destroyed() {
-    // Clean up the event listener if the hook's element is destroyed
     this.el.removeEventListener("scroll", this.listener);
   }
 };

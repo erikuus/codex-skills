@@ -68,7 +68,7 @@ Copy/overwrite components (after template rendering):
 
 - Resolve template placeholders in all copied `.ex` assets: replace `{{web_module}}` with the target web module (example: `LivePlaygroundWeb`).
 - Overwrite `lib/<app>_web/components/core_components.ex` with rendered `assets/components/core_components.ex`.
-- Copy rendered `assets/components/more_components.ex` to `lib/<app>_web/components/more_components.ex` and import it in `my_app_web.ex` so it is available to LiveViews, components, and templates.
+- Copy rendered `assets/components/base_components.ex` to `lib/<app>_web/components/base_components.ex` and import it in `my_app_web.ex` so it is available to LiveViews, components, and templates.
 - Overwrite `lib/<app>_web/components/layouts/app.html.heex` with `assets/components/layouts/app.html.heex` to centralize flash and optional auth-header rendering in `Layouts.app`.
 
 Example `my_app_web.ex` import:
@@ -81,7 +81,7 @@ def html_helpers do
     import Phoenix.HTML
 
     import MyAppWeb.CoreComponents
-    import MyAppWeb.MoreComponents
+    import MyAppWeb.BaseComponents
     import MyAppWeb.Gettext
 
     alias Phoenix.LiveView.JS
@@ -106,6 +106,12 @@ Execution summary:
 - Require explicit confirmation on the derived generation plan before file writes.
 
 Do not duplicate or override detailed rules from the reference file in this step.
+
+## Step 5: Validation Gate
+
+- Run `mix precommit` at the end of the workflow.
+- Treat `mix precommit` as a hard validation gate: the skill is not complete until it passes.
+- If `mix precommit` fails, fix the issues and rerun it until it passes or report the blocking failure clearly.
 
 ## Resources
 

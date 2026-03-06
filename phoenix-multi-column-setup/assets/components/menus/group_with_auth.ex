@@ -6,7 +6,7 @@ defmodule {{web_module}}.Menus.GroupWithAuth do
     router: {{web_module}}.Router,
     statics: {{web_module}}.static_paths()
 
-  import {{web_module}}.MoreComponents
+  import {{web_module}}.BaseComponents
 
   attr(:id, :string, required: true)
   attr(:current_path, :string)

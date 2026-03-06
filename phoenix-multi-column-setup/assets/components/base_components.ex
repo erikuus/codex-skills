@@ -1,6 +1,6 @@
-defmodule {{web_module}}.MoreComponents do
+defmodule {{web_module}}.BaseComponents do
   @moduledoc """
-  Provides UI components in addition to core components.
+  Provides reusable base UI components that complement core components.
 
   The components in this module use Tailwind CSS, a utility-first CSS framework.
   See the [Tailwind CSS documentation](https://tailwindcss.com) to learn how to
@@ -10,7 +10,7 @@ defmodule {{web_module}}.MoreComponents do
 
   Components are organized by complexity and purpose:
   - Layout components (multi_column_layout, narrow_sidebar, vertical_navigation)
-  - Simple visual elements (badge, button_link, alert, note)
+  - Simple visual elements (badge, alert, note)
   - List and navigation components (simple_list, steps, tabs, stats)
   - State indicators (loading, avatar, auth_menu, protected_content)
   - Complex interactive components (pagination, editable, slideover, uploads)
@@ -483,43 +483,6 @@ defmodule {{web_module}}.MoreComponents do
     ]}>
       {render_slot(@inner_block)}
     </span>
-    """
-  end
-
-  @doc """
-  Renders a link that is designed to look like a button.
-
-  ## Examples
-
-      <.button_link navigate={~p"/page"}>Go</.button_link>
-      <.button_link patch={~p"/page"} kind={:secondary}>Refresh</.button_link>
-  """
-  attr :kind, :atom, default: :primary, doc: "Visual style (:primary, :secondary, :dangerous)."
-  attr :class, :string, default: nil, doc: "Additional classes for the link."
-
-  attr :rest, :global,
-    include: ~w(href navigate patch),
-    doc: "Link options (href/navigate/patch)."
-
-  slot :inner_block, required: true, doc: "Button label content."
-
-  def button_link(assigns) do
-    ~H"""
-    <.link
-      class={[
-        "inline-flex items-center justify-center rounded-lg py-2 px-5",
-        "text-sm font-semibold leading-6",
-        @kind == :primary && "bg-zinc-900 hover:bg-zinc-700 text-white active:text-white/80",
-        @kind == :secondary &&
-          "border border-zinc-200 bg-zinc-100 hover:bg-zinc-200 text-zinc-700 active:text-zinc-800",
-        @kind == :dangerous && "bg-red-600 hover:bg-red-700 text-white active:text-white/80",
-        @class
-      ]}
-      {@rest}
-      role="button"
-    >
-      {render_slot(@inner_block)}
-    </.link>
     """
   end
 
@@ -1687,9 +1650,9 @@ defmodule {{web_module}}.MoreComponents do
       </div>
 
       <div>
-        <.button_link kind={:secondary} class="w-full md:w-auto" phx-click={@cancel_event}>
+        <.button variant="secondary" class="w-full md:w-auto" phx-click={@cancel_event}>
           Cancel
-        </.button_link>
+        </.button>
       </div>
     </.form>
     """
@@ -1715,9 +1678,9 @@ defmodule {{web_module}}.MoreComponents do
       </.slideover>
 
       # To trigger the slideover, use a button with phx-click:
-      <.button_link phx-click={show_slideover("menu")}>
+      <.button phx-click={show_slideover("menu")}>
         Open Menu
-      </.button_link>
+      </.button>
   """
   attr :id, :string, required: true, doc: "DOM id for the slideover container."
   attr :show, :boolean, default: false, doc: "Whether to show the slideover on mount."
