@@ -1,0 +1,14 @@
+<Layouts.app
+  flash={@flash}
+  current_scope={assigns[:current_scope]}
+  show_auth_menu={true}
+>
+  <.multi_column_layout>
+    <:narrow_sidebar>
+      <{{web_module}}.Menus.Sidebar.menu current_layout={:home} current_scope={@current_scope} />
+    </:narrow_sidebar>
+  </.multi_column_layout>
+  <div class="ml-14 md:ml-20 mt-10 md:mt-20">
+    {@inner_content}
+  </div>
+</Layouts.app>

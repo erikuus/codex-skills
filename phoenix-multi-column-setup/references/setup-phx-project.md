@@ -25,6 +25,13 @@ Use the following steps after creating or cloning a Phoenix LiveView app.
      - `mix phx.gen.auth Accounts User users`
      - `mix ecto.migrate`
    - If auth already exists (for example `user_auth.ex`, auth routes, and `mount_current_scope` are already present), skip generation.
+   - After auth exists, copy auth LiveView style overrides from skill assets into the app:
+     - `assets/live/user_live/login.ex` -> `lib/<app>_web/live/user_live/login.ex`
+     - `assets/live/user_live/registration.ex` -> `lib/<app>_web/live/user_live/registration.ex`
+     - `assets/live/user_live/confirmation.ex` -> `lib/<app>_web/live/user_live/confirmation.ex`
+     - `assets/live/user_live/settings.ex` -> `lib/<app>_web/live/user_live/settings.ex`
+   - Render placeholders in copied auth files:
+     - `{{app_module}}`, `{{web_module}}`, and `{{otp_app}}`
    - For multi-column setup, later mount both `InitLive` and `{YourAppWeb.UserAuth, :mount_current_scope}` in relevant `live_session` blocks.
 
 5. Launch the Phoenix server in the background:

@@ -54,11 +54,12 @@ defmodule {{app_module}}.MultiColumn.Parser do
   end
 
   defp finish!(%{current_expandable: %{label: label}}) do
-    Mix.raise("navigation spec ended before expandable block #{inspect(label)} was closed")
+    raise ArgumentError,
+          "navigation spec ended before expandable block #{inspect(label)} was closed"
   end
 
   defp finish!(%{current_group: nil}) do
-    Mix.raise("navigation spec must contain at least one [Group]")
+    raise ArgumentError, "navigation spec must contain at least one [Group]"
   end
 
   defp finish!(state) do
@@ -74,7 +75,8 @@ defmodule {{app_module}}.MultiColumn.Parser do
     groups
   end
 
-  defp start_group!(%{current_expandable: _}, line_no, _trimmed) do
+  defp start_group!(%{current_expandable: current_expandable}, line_no, _trimmed)
+       when not is_nil(current_expandable) do
     raise_parse!(line_no, "cannot start a new group inside an expandable block")
   end
 
@@ -119,7 +121,8 @@ defmodule {{app_module}}.MultiColumn.Parser do
     raise_parse!(line_no, "expandable block declared before any [Group]")
   end
 
-  defp start_expandable!(%{current_expandable: _}, line_no, _trimmed) do
+  defp start_expandable!(%{current_expandable: current_expandable}, line_no, _trimmed)
+       when not is_nil(current_expandable) do
     raise_parse!(line_no, "nested expandable blocks are not supported")
   end
 
@@ -135,7 +138,10 @@ defmodule {{app_module}}.MultiColumn.Parser do
       raise_parse!(line_no, "expandable parents cannot declare a direct route in v1")
     end
 
-    %{state | current_expandable: %{label: item.label, section: state.current_section, children: []}}
+    %{
+      state
+      | current_expandable: %{label: item.label, section: state.current_section, children: []}
+    }
   end
 
   defp close_expandable!(%{current_expandable: nil}, line_no) do
@@ -180,7 +186,17 @@ defmodule {{app_module}}.MultiColumn.Parser do
     item = parse_item_line!(trimmed, line_no, child?: false)
 
     group =
-      %{state.current_group | items: state.current_group.items ++ [Map.put(item, :section, state.current_section)]}
+      %{
+        state.current_group
+        | items:
+            state.current_group.items ++
+              [
+                Map.merge(item, %{
+                  kind: :item,
+                  section: state.current_section
+                })
+              ]
+      }
 
     %{state | current_group: group}
   end
@@ -202,7 +218,9 @@ defmodule {{app_module}}.MultiColumn.Parser do
 
       [label, path_spec] ->
         label = String.trim(label)
-        paths = path_spec |> String.split("|") |> Enum.map(&String.trim/1) |> Enum.reject(&(&1 == ""))
+
+        paths =
+          path_spec |> String.split("|") |> Enum.map(&String.trim/1) |> Enum.reject(&(&1 == ""))
 
         cond do
           label == "" ->
@@ -222,6 +240,6 @@ defmodule {{app_module}}.MultiColumn.Parser do
   end
 
   defp raise_parse!(line_no, message) do
-    Mix.raise("navigation spec line #{line_no}: #{message}")
+    raise ArgumentError, "navigation spec line #{line_no}: #{message}"
   end
 end

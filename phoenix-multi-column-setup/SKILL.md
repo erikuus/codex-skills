@@ -45,15 +45,31 @@ When the user starts from an empty folder:
    - `assets/components/core_components.ex`
    - `assets/components/base_components.ex`
    - `assets/components/layouts/app.html.heex`
+   - `assets/components/layouts/home.html.heex`
+   - `assets/components/layouts/root.html.heex`
+   - `assets/controllers/page_controller.ex`
+   - `assets/controllers/page_html/home.html.heex`
+   - `assets/controllers/error_html.ex`
+   - `assets/controllers/error_html/404.html.heex`
+   - `assets/controllers/error_html/500.html.heex`
+   - `assets/test/page_controller_test.exs`
    - `assets/live/init_live.ex`
    - `assets/js/hooks/preserve-scroll.js`
+   - If auth mode is `with_auth`, also install auth LiveView style overrides:
+     - `assets/live/user_live/login.ex`
+     - `assets/live/user_live/registration.ex`
+     - `assets/live/user_live/confirmation.ex`
+     - `assets/live/user_live/settings.ex`
 8. Install the local generator pipeline into the target app:
    - copy `assets/generator/lib/mix/tasks/multi_column.generate.ex` to `lib/mix/tasks/multi_column.generate.ex`
    - copy rendered `assets/generator/lib/app/multi_column/*.ex` to `lib/<app>/multi_column/*.ex`
+   - copy `assets/generator/lib/app/multi_column/README.md` to `lib/<app>/multi_column/README.md`
+   - copy `assets/generator/priv/multi_column/README.md` to `priv/multi_column/README.md`
    - copy rendered `assets/generator/priv/multi_column/templates/**` to `priv/multi_column/templates/**`
-9. Render every copied `.ex` or `.eex` asset that contains placeholders:
+9. Render every copied `.ex`, `.exs`, `.heex`, or `.eex` asset that contains placeholders:
    - replace `{{app_module}}` with the target app module, for example `OpsHub`
    - replace `{{web_module}}` with the target web module, for example `OpsHubWeb`
+   - replace `{{otp_app}}` with the target OTP app atom name, for example `ops_hub`
 10. Ensure `lib/<app>_web.ex` imports `BaseComponents`.
 11. Run the generator dry-run:
    - `mix multi_column.generate --spec priv/navigation.dsl --auth <mode> --dry-run`
@@ -73,6 +89,7 @@ When the target app already exists:
    - `lib/<app>_web.ex`
    - auth presence (`user_auth.ex`, auth routes, `mount_current_scope`)
 2. Install the shared foundation assets only if missing or stale.
+   - If auth mode is `with_auth`, also install or refresh `assets/live/user_live/*.ex` overrides so auth pages use the shared auth layout pattern.
 3. Install the local generator pipeline if missing.
 4. Run generator dry-run.
 5. Review the plan and fail on conflicts instead of hand-waving them away.
@@ -94,6 +111,8 @@ The generator is responsible for:
 - parsing and validating the DSL
 - deriving app and web modules from the target app
 - generating sidebar, group menus, group layouts, and placeholder LiveViews
+- ensuring generated sidebar includes a `Home` item pointing to `/` (layout `:home`)
+- keeping initial generated page content intentionally minimal so placeholder pages do not invent detailed product copy or fake data
 - patching `router.ex` with managed `live_session` blocks
 - patching `assets/js/app.js` to register `PreserveScroll` once
 - patching `lib/<app>_web.ex` to import `BaseComponents` once

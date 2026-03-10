@@ -212,8 +212,7 @@ defmodule {{app_module}}.MultiColumn.Generator do
          ],
          trim: true
        )}
-      | Enum.flat_map(spec.groups, &group_file_entries(spec, &1))
-    ]
+    ] ++ Enum.flat_map(spec.groups, &group_file_entries(spec, &1))
   end
 
   defp group_file_entries(spec, group) do
@@ -250,7 +249,7 @@ defmodule {{app_module}}.MultiColumn.Generator do
          ],
          trim: true
        )}
-      | Enum.map(leaf_items([group]), fn item ->
+    ] ++ Enum.map(leaf_items([group]), fn item ->
           breadcrumb =
             (item.parent_labels ++ [item.label])
             |> Enum.join(" / ")
@@ -268,7 +267,6 @@ defmodule {{app_module}}.MultiColumn.Generator do
              trim: true
            )}
         end)
-    ]
   end
 
   defp render_router_block(spec) do
@@ -289,7 +287,7 @@ defmodule {{app_module}}.MultiColumn.Generator do
       |> Enum.join(",\n")
 
     routes =
-      group
+      group.items
       |> leaf_items()
       |> Enum.map(fn item -> "      live \"#{item.path}\", #{item.relative_module}" end)
       |> Enum.join("\n")
@@ -310,23 +308,36 @@ defmodule {{app_module}}.MultiColumn.Generator do
   end
 
   defp render_sidebar_items(groups) do
-    groups
-    |> Enum.map(fn group ->
-      first_path =
-        group
-        |> leaf_items()
-        |> List.first()
-        |> Map.fetch!(:path)
+    home_item = """
+    %{
+      icon: "hero-home",
+      label: "Home",
+      path: "/",
+      layout: :home
+    }
+    """ |> String.trim_trailing()
 
-      """
-      %{
-        icon: "#{group.icon}",
-        label: "#{group.label}",
-        path: "#{first_path}",
-        layout: :#{group.layout_name}
-      }
-      """
-    end)
+    group_items =
+      groups
+      |> Enum.map(fn group ->
+        first_path =
+          group.items
+          |> leaf_items()
+          |> List.first()
+          |> Map.fetch!(:path)
+
+        """
+        %{
+          icon: "#{group.icon}",
+          label: "#{group.label}",
+          path: "#{first_path}",
+          layout: :#{group.layout_name}
+        }
+        """
+        |> String.trim_trailing()
+      end)
+
+    ([home_item] ++ group_items)
     |> Enum.join(",\n")
     |> indent(6)
   end
@@ -335,6 +346,7 @@ defmodule {{app_module}}.MultiColumn.Generator do
     items
     |> group_entries()
     |> Enum.map(&render_entry(&1, 6))
+    |> Enum.map(&String.trim_trailing/1)
     |> Enum.join(",\n")
     |> indent(0)
   end
@@ -374,7 +386,7 @@ defmodule {{app_module}}.MultiColumn.Generator do
 #{spaces(indent_level + 4)}label: "#{label}"
 #{spaces(indent_level + 2)}},
 #{spaces(indent_level + 2)}section_items: [
-#{Enum.map_join(items, ",\n", &render_entry(&1, indent_level + 4))}
+#{Enum.map_join(items, ",\n", &(render_entry(&1, indent_level + 4) |> String.trim_trailing()))}
 #{spaces(indent_level + 2)}]
 #{spaces(indent_level)}}
 """
@@ -397,7 +409,7 @@ defmodule {{app_module}}.MultiColumn.Generator do
 #{spaces(indent_level + 4)}open: active_path?(current_path, #{child_active_paths})
 #{spaces(indent_level + 2)}},
 #{spaces(indent_level + 2)}expandable_items: [
-#{Enum.map_join(item.children, ",\n", &render_entry(&1, indent_level + 4))}
+#{Enum.map_join(item.children, ",\n", &(render_entry(&1, indent_level + 4) |> String.trim_trailing()))}
 #{spaces(indent_level + 2)}]
 #{spaces(indent_level)}}
 """

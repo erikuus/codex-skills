@@ -7,21 +7,13 @@ defmodule {{web_module}}.<%= live_module %> do
 
   def render(assigns) do
     ~H"""
-    <section id="<%= dom_id %>" class="space-y-6 py-4">
-      <div class="space-y-3 border-b border-zinc-200 pb-6">
-        <p class="text-xs font-semibold uppercase tracking-[0.24em] text-zinc-500">
-          <%= breadcrumb %>
-        </p>
-        <div class="space-y-2">
-          <h1 class="text-3xl font-semibold tracking-tight text-zinc-950">{@page_title}</h1>
-          <p class="max-w-2xl text-sm leading-6 text-zinc-600">
-            Generated placeholder page for
-            <code class="rounded bg-zinc-100 px-2 py-1 text-xs text-zinc-700" phx-no-curly-interpolation>
-              <%= route_path %>
-            </code>
-          </p>
-        </div>
-      </div>
+    <section id="<%= dom_id %>" class="py-4">
+      <.header class="mb-6">
+        {@page_title}
+        <:subtitle>
+          Placeholder page for <%= breadcrumb %>.
+        </:subtitle>
+      </.header>
     </section>
     """
   end

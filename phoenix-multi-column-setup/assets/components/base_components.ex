@@ -984,7 +984,7 @@ defmodule {{web_module}}.BaseComponents do
 
   Displays different content based on whether a user is authenticated:
   - For authenticated users: shows avatar, email, member since date, and a dropdown menu with settings/sign out
-  - For guest users: shows Log in and Sign up buttons, with optional custom content
+  - For guest users: shows Log in and Register buttons, with optional custom content
 
   This component works seamlessly with Phoenix's default authentication system. If your router
   mounts the current scope to the view (via `:mount_current_scope`), you can pass `@current_scope.user`
@@ -1080,7 +1080,7 @@ defmodule {{web_module}}.BaseComponents do
           navigate="/users/register"
           class="inline-flex items-center justify-center rounded-full py-2 px-5 text-sm font-semibold border border-zinc-200 bg-white hover:bg-zinc-100 text-zinc-700"
         >
-          Sign up
+          Register
         </.link>
       </div>
     </div>
