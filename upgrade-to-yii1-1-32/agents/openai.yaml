@@ -3,4 +3,5 @@ interface:
   short_description: "Plan and execute Yii 1.1.32 upgrade"
   icon_small: "./assets/icon.svg"
   icon_large: "./assets/icon.png"
-  default_prompt: "Upgrade to Yii1.1.32"
+  default_prompt: "Use $upgrade-to-yii1-1-32 to upgrade Yii application from 1.1.8 to 1.1.32 for PHP 8.4 compatibility. The application currently runs on PHP 5.6 with PostgreSQL 10, but the target environment has PHP 8.4 and PostgreSQL 17. Databases have been migrated and are ready. Your task is to systematically update the application code to ensure it runs without errors on Yii 1.1.32, which supports PHP 8.4. Address deprecations, type incompatibilities, and framework API changes. Be thorough, creative, and precise in identifying and resolving all compatibility issues."
+  author_name: "Erik Uus"
