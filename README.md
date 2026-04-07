@@ -8,12 +8,8 @@ This repository contains task-focused skill packs used by Codex, each with clear
 
 - `phoenix-multi-column-setup/`: Bootstrap Phoenix LiveView apps with a multi-column layout pattern.
 - `upgrade-to-yii1-1-32/`: Upgrade legacy Yii 1.1 applications to 1.1.32 with PHP 8 compatibility guidance.
-- `figma/`: Figma MCP workflow references and setup guidance.
-- `figma-implement-design/`: Implement code from Figma design context.
 - `reprompt-harvester/`: Harvest reusable reasoning principles from finished threads.
 - `reprompt-refactor/`: Refactor `AGENTS.md` from accumulated learnings.
-- `.system/skill-creator/`: Utilities and guidance for creating new skills.
-- `.system/skill-installer/`: Utilities for installing curated or GitHub-hosted skills.
 
 ## How to use
 
