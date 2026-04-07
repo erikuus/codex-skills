@@ -60,9 +60,17 @@ Always review these framework-level behavior changes while upgrading old Yii 1.1
 - `CModel::createValidators()` constructor arguments changed since 1.1.11.
 - `CDbMigration::safeUp()/safeDown()` transaction behavior changed since 1.1.13.
 - `CHtml::activeId()` naming behavior changed since 1.1.13.
+- `CHtml::radioButtonList()/checkBoxList()` started wrapping generated items in a container element by default (`container => 'span'`) in newer 1.1.x.
 - `CGridView` URL/filter handling caveat in path-format URLs since 1.1.14.
 
 If custom code depends on old behavior, adapt app code instead of patching framework files.
+
+Mandatory radio/checkbox list audit:
+- Search for legacy CSS selectors that style labels inside broad descendants, especially patterns like `.complex span label`, `.form span label`, or any selector that assumes `radioButtonList()` emits labels directly with no wrapper.
+- If layouts regress after upgrade, first inspect rendered HTML for new wrapper markup such as `<span id="Model_attr">...</span>` around `radioButtonList()` or `checkBoxList()` output.
+- Preferred fix: narrow the CSS selector so only the outer field label is targeted (for example direct-child selectors like `.complex > span > label`) instead of globally removing Yii's wrapper behavior.
+- If app helper code splits `radioButtonList()`/`checkBoxList()` output by a custom separator, explicitly pass `'container' => ''` in that helper only so exploded fragments are not polluted by wrapper tags.
+- Do not patch Yii core for this. Do not introduce a global compatibility override unless a repo-wide audit proves the wrapper breaks many unrelated call sites and CSS hardening is insufficient.
 
 ## Frontend compatibility checks
 
@@ -70,6 +78,7 @@ Always check these first:
 - jQuery deprecated/removed APIs from old code (`.live()`, `.die()`, `.andSelf()`, `$.browser`, legacy event shortcuts on dynamic elements).
 - jQuery UI widget API differences across 1.8 -> 1.12 (especially Tabs/Dialog/Datepicker/autocomplete wrappers).
 - Theme/CSS drift (old classes like `ui-tabs-selected` and custom overrides targeting removed markup).
+- Form markup drift from newer Yii helper output, especially radio/checkbox lists whose wrapper elements can activate old float/width CSS on nested labels.
 - Bundled/legacy plugins (fancybox 1.3.x, old select2 wrappers, tree widgets) for jQuery 1.12 behavior.
 
 Mandatory dialog/overlay check:
