@@ -1,84 +1,84 @@
 ---
 name: reprompt-refactor
-description: Refactor AGENTS.md from structural patterns in learnings.md, then prune learnings.md into a curated remainder memory. Use only when manually selected by the user (explicitly requested by name or explicitly asking to refactor AGENTS.md from learnings.md).
+description: Rebuild project-root SPEC.md from PLAN.md, DEVLOG.md, and current repo truth. Use when the user wants to synthesize the current implemented specification, rebuild SPEC.md, or reconcile the original plan with what the app actually became.
 ---
 
 # Reprompt Refactor
 
 ## Role
 
-Act as a reasoning-architecture refactorer.
-Evolve the global reasoning scaffold from accumulated structural learnings.
-After scaffold refactoring, clean up memory to prevent drift and bloat.
+Act as a project specification synthesizer.
+Rebuild `SPEC.md` from the original plan, the append-only development log, and current repo validation.
+Do not rewrite `PLAN.md`.
+Do not curate or prune `DEVLOG.md`.
 
 ## Input
 
 Use:
 
-- `learnings.md`
-- Current `AGENTS.md`
+- `PLAN.md`
+- `DEVLOG.md`
+- Current repo truth as needed, including code, tests, routes, schemas, configs, `README.md`, and walkthrough docs
 
 ## Output Target
 
-Rewrite `AGENTS.md` completely.
-Then rewrite `learnings.md` as a curated remainder: keep only principles not already embedded in `AGENTS.md`, deduplicated, normalized, and capped at 30 bullets.
-Preserve clarity and minimalism.
+Rewrite `SPEC.md` from scratch.
+Treat `PLAN.md` as initial intent, `DEVLOG.md` as change history, and repo truth as the final arbiter of what currently exists.
 
 ## Refactoring Rules
 
-1. Identify recurring themes in `learnings.md`.
-2. Merge overlapping principles.
-3. Remove redundancy.
-4. Keep the reasoning scaffold compact with 5-8 ordered steps maximum.
-5. Maintain logical flow.
-6. Avoid verbosity.
+1. Start from `PLAN.md` to understand the original target product and terminology.
+2. Read `DEVLOG.md` chronologically and treat later entries as superseding earlier ones when they conflict.
+3. Inspect the repo to validate what is actually implemented now.
+4. Prefer repo truth over plan or devlog when they diverge.
+5. Include only implemented current-state behavior.
+6. Exclude features that were planned but never built.
+7. Exclude features that were added and later removed.
+8. Mention explicit exclusions only when needed to prevent old plan assumptions from reappearing.
 
-## Cleanup Rules
+## SPEC Shape
 
-1. Remove any learning now explicitly covered in `AGENTS.md`.
-2. Merge duplicates into one canonical phrasing.
-3. Drop one-off and domain-specific learnings.
-4. Keep only high-signal principles worth retaining as memory.
-5. Keep some residual high-signal "raw wisdom" that does not belong in scaffold steps.
-6. Cap `learnings.md` at 30 bullets maximum.
+Ensure `SPEC.md` covers:
 
-## Constraints
+- Purpose and audience
+- Implemented user roles and access model
+- Current product flows and feature behavior
+- Key business rules and constraints
+- Current data concepts and important admin or content entities
+- Key technical invariants that materially affect behavior
 
-- Do not copy `learnings.md` verbatim.
-- Do not create bloated checklists.
-- Do not add domain-specific instructions.
-- Do not exceed necessary complexity.
+Keep the document product-facing and implementation-aware, not a code walkthrough.
 
-## Structure Template
+## Workflow
 
-Ensure `AGENTS.md` contains:
-
-1. A clear role statement.
-2. Ordered reasoning steps.
-3. An explicit verification step.
-4. A reference to `learnings.md` as supporting memory.
+1. Resolve the target project root and confirm `PLAN.md` and `DEVLOG.md` exist.
+2. Read `PLAN.md` for intended scope and vocabulary.
+3. Read `DEVLOG.md` for chronological change history and supersessions.
+4. Inspect repo truth only as needed to settle what is currently implemented.
+5. Rewrite `SPEC.md` from scratch in a clean, stable structure.
+6. Do not copy `PLAN.md` or `DEVLOG.md` verbatim.
+7. Do not rewrite `PLAN.md` or `DEVLOG.md`.
 
 ## Design Principle
 
-Prefer architectural improvements over additive rules.
-Prefer structural clarity over completeness.
-Prefer minimal durable systems over reactive patching.
+Prefer current truth over historical intention.
+Prefer stable, high-signal statements over changelog prose.
+Prefer concise completeness over exhaustive implementation detail.
 
 ## Validation Check
 
 Before finalizing, verify:
 
-- `AGENTS.md` is shorter or clearer than before.
-- `AGENTS.md` embeds recurring structural corrections.
-- `AGENTS.md` reduces reliance on reactive fixes.
-- `learnings.md` contains only residual, non-overlapping, high-signal memory.
-- `learnings.md` is deduplicated, normalized, and within the 30-bullet cap.
+- `SPEC.md` reflects current implemented behavior rather than the original plan alone.
+- Any devlog conflicts were resolved by preferring later entries, then validating against the repo when needed.
+- Unbuilt plan items are absent.
+- Removed or superseded features are absent unless mentioned as explicit non-features to avoid confusion.
+- The document can serve as a strong first-pass build spec for recreating the current app.
 
 If any check fails, refine again.
 
 ## Output
 
-Return full new `AGENTS.md`.
-Return full new `learnings.md`.
+Return the full new `SPEC.md`.
 No commentary.
 No explanation.

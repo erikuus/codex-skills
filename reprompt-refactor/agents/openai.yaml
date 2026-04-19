@@ -1,6 +1,6 @@
 interface:
   display_name: "Reprompt Refactor"
-  short_description: "Refactor AGENTS.md and prune learnings"
+  short_description: "Rebuild SPEC.md from plan, devlog, and code"
   icon_small: "./assets/icon.svg"
   icon_large: "./assets/icon.png"
-  default_prompt: "Use $reprompt-refactor to rewrite AGENTS.md and curate learnings.md into a compact residual memory list."
+  default_prompt: "Use $reprompt-refactor to rebuild the target project's SPEC.md from PLAN.md, DEVLOG.md, and the current repo state."

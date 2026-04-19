@@ -8,8 +8,8 @@ This repository contains task-focused skill packs used by Codex, each with clear
 
 - `phoenix-multi-column-setup/`: Bootstrap Phoenix LiveView apps with a multi-column layout pattern.
 - `upgrade-to-yii1-1-32/`: Upgrade legacy Yii 1.1 applications to 1.1.32 with PHP 8 compatibility guidance.
-- `reprompt-harvester/`: Harvest reusable reasoning principles from finished threads.
-- `reprompt-refactor/`: Refactor `AGENTS.md` from accumulated learnings.
+- `reprompt-harvester/`: Harvest finished live or archived threads into project-root `DEVLOG.md`.
+- `reprompt-refactor/`: Rebuild project-root `SPEC.md` from `PLAN.md`, `DEVLOG.md`, and current repo truth.
 
 ## How to use
 
