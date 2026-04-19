@@ -3,4 +3,4 @@ interface:
   short_description: "Rebuild SPEC.md from plan, devlog, and code"
   icon_small: "./assets/icon.svg"
   icon_large: "./assets/icon.png"
-  default_prompt: "Use $reprompt-refactor to rebuild the target project's SPEC.md from PLAN.md, DEVLOG.md, and the current repo state."
+  default_prompt: "Use $reprompt-refactor to rebuild the target project's SPEC.md from PLAN.md, DEVLOG.md, and the current repo state, first repairing any malformed or out-of-order devlog evidence before synthesis."
