@@ -1,3 +1,5 @@
 .DS_Store
 .system/
 playwright-interactive/
+codex-primary-runtime/slides/
+codex-primary-runtime/spreadsheets/
