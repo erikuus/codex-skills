@@ -3,4 +3,4 @@ interface:
   short_description: "Harvest finished threads into DEVLOG.md"
   icon_small: "./assets/icon.svg"
   icon_large: "./assets/icon.png"
-  default_prompt: "Use $reprompt-harvester to append this finished thread to the target project's DEVLOG.md, using the current thread unless I provide archived session .jsonl files."
+  default_prompt: "Use $reprompt-harvester to append this finished thread to the target project's DEVLOG.md, creating DEVLOG.md if missing and inferring a live-thread label when needed."

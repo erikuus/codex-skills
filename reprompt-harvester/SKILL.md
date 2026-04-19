@@ -31,14 +31,25 @@ The target project keeps these files at project root:
 1. Resolve the target project path and locate `PLAN.md`.
 2. Use thread content only. Do not inspect code, tests, or docs outside the supplied thread transcript.
 3. If the source is an archived `.jsonl`, extract the session id, timestamp, and source path from the transcript metadata when available.
-4. If the source is the live thread and no stable session id exists, require an explicit short user label for the entry.
-5. Read existing `DEVLOG.md` only to preserve append-only formatting and prevent duplicate session ids or duplicate live-thread labels.
-6. Harvest only the net durable outcome of the thread:
+4. If `DEVLOG.md` does not exist, create it at the project root and proceed without asking for confirmation.
+5. If the source is the live thread and no stable session id exists:
+   - use an explicit user-provided short label when one exists
+   - otherwise generate a deterministic fallback label from the current date and a short slug of the thread's net outcome
+   - do not stop just to ask for a label
+6. Read existing `DEVLOG.md` only to preserve append-only formatting and prevent duplicate session ids or duplicate live-thread labels.
+7. Harvest only the net durable outcome of the thread:
    - implemented additions or edits
    - explicit removals or narrowed behavior
    - accepted decisions that changed the product or documentation set
-7. Ignore abandoned ideas, intermediate experiments, speculative discussion, and requests that were not clearly carried through by the end of the thread.
-8. Append exactly one entry per harvested thread. If the thread produced no durable project change, append nothing.
+8. Ignore abandoned ideas, intermediate experiments, speculative discussion, and requests that were not clearly carried through by the end of the thread.
+9. Append exactly one entry per harvested thread. If the thread produced no durable project change, append nothing.
+
+## Defaults
+
+- Missing `DEVLOG.md` is not a blocker. Create it.
+- Missing `SPEC.md` is irrelevant for harvesting. Ignore it.
+- Missing live-thread label is not a blocker. Infer one.
+- Prefer acting on these defaults over asking the user for routine confirmation.
 
 ## DEVLOG Entry Format
 
@@ -72,6 +83,7 @@ Append entries in this shape:
 
 Omit `### Open Questions` when there was no explicit unresolved item.
 If no stable session id exists, replace `Session ID` with `Label`.
+Fallback labels should be short, kebab-case, and deterministic from the thread outcome, for example `2026-04-19-admin-ordering-pass`.
 
 ## Extraction Rules
 
@@ -90,6 +102,7 @@ Before appending an entry, verify all are true:
 - The entry reflects the final thread outcome rather than intermediate exploration.
 - The entry is not a duplicate of an existing session id or live-thread label.
 - The entry can be understood later without reopening the thread.
+- The harvester did not stop for missing routine inputs that can be inferred safely.
 
 Discard uncertain or speculative candidates.
 
