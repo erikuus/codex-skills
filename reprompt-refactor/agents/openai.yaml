@@ -1,6 +1,6 @@
 interface:
   display_name: "Reprompt Refactor"
-  short_description: "Rebuild SPEC.md from plan, devlog, and code"
+  short_description: "Rebuild stack-neutral source-of-truth SPEC.md"
   icon_small: "./assets/icon.svg"
   icon_large: "./assets/icon.png"
-  default_prompt: "Use $reprompt-refactor to rebuild the target project's SPEC.md from PLAN.md, DEVLOG.md, and the current repo state, first repairing any malformed or out-of-order devlog evidence before synthesis."
+  default_prompt: "Use $reprompt-refactor to rebuild the target project's SPEC.md from PLAN.md, DEVLOG.md, and the current repo state as a stack-neutral source-of-truth spec for reimplementation, first repairing any malformed or out-of-order devlog evidence before synthesis."
