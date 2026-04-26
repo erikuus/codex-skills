@@ -10,6 +10,7 @@ This repository contains task-focused skill packs used by Codex, each with clear
 - `upgrade-to-yii1-1-32/`: Upgrade legacy Yii 1.1 applications to 1.1.32 with PHP 8 compatibility guidance.
 - `reprompt-harvester/`: Harvest finished live or archived threads into project-root `DEVLOG.md`.
 - `reprompt-refactor/`: Rebuild project-root `SPEC.md` from `PLAN.md`, `DEVLOG.md`, and current repo truth.
+- `reprompt-design/`: Build project-root `DESIGN.md` from screenshots, visual assets, and design evidence.
 
 ## How to use
 

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Reprompt Design"
+  short_description: "Build DESIGN.md from screenshots and assets"
+  icon_small: "./assets/icon.svg"
+  icon_large: "./assets/icon.png"
+  default_prompt: "Use $reprompt-design to build the target project's DESIGN.md with essential screenshots, responsive states, visual reconstruction rules, and product-defining assets."
