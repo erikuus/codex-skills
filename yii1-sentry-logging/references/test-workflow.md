@@ -101,6 +101,13 @@ Expected result:
 - still one email after event `2`
 - two emails after event `5`
 
+Delivery lag rule:
+
+- if Sentry shows the matching alert fired but Gmail does not show the message yet, treat the state as pending
+- wait `2` minutes and rerun the same Gmail search
+- keep rechecking for up to `10` minutes total before concluding the mailbox proof failed
+- only call the verification partial or failed after those rechecks are exhausted
+
 ## Cleanup
 
 After the test:

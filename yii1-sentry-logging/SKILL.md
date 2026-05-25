@@ -86,6 +86,8 @@ For verification:
 
 - use the Sentry plugin/helper to inspect issues and counts
 - use the Gmail plugin to verify delivered emails
+- if Sentry shows the rule fired but Gmail search is still empty, treat that as pending delivery rather than failure
+- wait `2` minutes and rerun the Gmail search, repeating for up to `10` minutes total before concluding mailbox proof failed
 
 Create or update:
 
@@ -112,6 +114,12 @@ Use the browser to hit the failing path until:
 - first email is observed
 - summary event is observed
 - second email is observed
+
+Mailbox proof rule:
+
+- Gmail delivery and connector indexing can lag behind Sentry rule execution
+- do not report missing proof immediately when Sentry already recorded the rule trigger
+- wait and recheck Gmail on the `2` minute / `10` minute rule before calling the verification incomplete
 
 Use `scripts/verify_two_email_flow.py` to compute checkpoints from the app's throttle settings.
 
