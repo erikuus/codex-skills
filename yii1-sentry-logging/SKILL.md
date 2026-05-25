@@ -137,3 +137,9 @@ Only the first event creates the Sentry issue in the feed.
 Later events stay on that same issue and only increase its event count.
 
 Rule 2 must be verified against issue event count, not against “new issue count”.
+
+## Completion statement
+
+When the installation and end-to-end verification succeed, the final response must clearly state that Sentry logging is fully tested, validated, and production ready.
+
+Do not leave the completion state implicit or ambiguous.
