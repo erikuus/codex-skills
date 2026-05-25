@@ -1,60 +1,92 @@
 ---
-name: yii1.1.32-sentry-logging
-description: Install and verify Sentry logging in any Yii1.1.32 app using the tested XSentryLogRoute baseline, recommended production config, Sentry REST API rule setup, Sentry plugin verification, and Gmail-based two-email proof workflow.
+name: yii1-sentry-logging
+description: Install and verify Sentry logging in any Yii1 app using a frozen modern XSentryLogRoute baseline for PHP 7.2+ and a separate legacy PHP 5.6 branch, with Sentry REST API rule setup, Sentry plugin verification, and Gmail-based two-email proof workflow.
 ---
 
-# yii1.1.32-sentry-logging
+# Yii1 Sentry Logging
 
 Use this skill when the user wants to:
 
-- add Sentry logging to a Yii1.1.32 app
+- add Sentry logging to a Yii1 app
 - replace Yii mail-per-error alerts with Sentry
 - install `XSentryLogRoute`
-- configure Sentry issue email rules for a Yii1.1.32 app
+- configure Sentry issue email rules for a Yii1 app
 - prove end-to-end behavior by generating a temporary error and verifying two emails
 
-## Baseline
+## Runtime branch first
 
-Use these bundled assets as the default implementation:
+Before choosing an asset, detect the **target deployment PHP version**, not just the local CLI version.
+
+Use this precedence:
+
+1. `composer.json` `require.php`
+2. `composer.lock` or installed package constraints
+3. Dockerfile, CI, or deploy config
+4. local `php -v` only as a last hint
+
+If evidence conflicts, ask the user. If the target runtime is ambiguous, do not guess.
+
+Choose the branch like this:
+
+- PHP `>= 7.2`: use the **modern branch**
+- PHP `<= 5.6`: use the **legacy branch**
+- PHP `7.0` or `7.1`: stop and ask
+
+Read `references/compatibility.md` before choosing a branch.
+
+## Baseline assets
+
+### Modern branch
+
+Use these bundled assets as the default implementation for modern Yii1 deployments:
 
 - `assets/XSentryLogRoute.php`
 - `assets/production-config-snippet.php`
 - `assets/test-sentry-config-snippet.php`
 
-They are copied from the tested Aadresslehed implementation and should be adapted only where the target app requires different paths or component names.
+This modern branch was proved in Yii `1.1.32` + PHP `8.4` and should be treated as a frozen baseline. Do not redesign it casually.
 
-Before changing anything, inspect the target app and confirm:
+### Legacy branch
 
-- production web config file
-- current `log` routes
-- shared cache component name
-- extension path for a custom log route
-- whether `vendor/autoload.php` exists
-- whether `sentry/sentry` is already installed
+Use these separate assets for PHP `5.6` style deployments:
+
+- `assets/php56/XSentryLogRoute.php`
+- `assets/php56/production-config-snippet.php`
+- `assets/php56/test-sentry-config-snippet.php`
+
+The legacy branch keeps the same throttling and issue/event behavior, but uses the old official `Raven_Client` SDK line instead of the modern `\Sentry\...` API surface.
 
 ## Workflow
 
 ### 1. Inspect the app
 
-Find:
+Before changing anything, confirm:
 
-- main and production web config files
-- current error mail route, if any
-- cache component used across requests
-- where custom extension classes live
-- whether the app already uses Composer
+- production web config file
+- current `log` routes
+- shared cache component name
+- extension path for a custom log route
+- whether Composer/autoload exists
+- whether `sentry/sentry` is already installed
+- target deployment PHP version using the branch rules above
 
-If `sentry/sentry` is not installed and Composer is available, install it.
+If `sentry/sentry` is missing and Composer is available:
 
-### 2. Install the route
+- modern PHP `>= 7.2`: install the modern `sentry/sentry` line that fits the target app
+- legacy PHP `<= 5.6`: install `sentry/sentry` `1.11.0`
 
-- copy `assets/XSentryLogRoute.php` into the target app extension path
-- preserve the target app's path conventions
-- do not redesign the route unless the target app structure requires it
+If the installed Sentry package line conflicts with the runtime branch, stop and ask before changing it.
+
+### 2. Install the correct route
+
+- modern PHP `>= 7.2`: copy the modern `assets/*` route into the target extension path
+- legacy PHP `<= 5.6`: copy the `assets/php56/*` route into the target extension path
+
+Preserve the target app's path conventions. Do not mix modern and legacy code in one route file.
 
 ### 3. Wire recommended config
 
-Use `assets/production-config-snippet.php` as the template.
+Use the branch-matched production snippet as the template.
 
 Default production settings:
 
@@ -71,7 +103,7 @@ Require a shared cache component. Default assumption is `cache`.
 
 Replace direct per-error production mail routes with `XSentryLogRoute`.
 
-Use `assets/test-sentry-config-snippet.php` when the app needs a safe proving config first.
+Use the branch-matched test snippet when the app needs a safe proving config first.
 
 ### 4. Set up Sentry
 
@@ -86,19 +118,13 @@ For verification:
 
 - use the Sentry plugin/helper to inspect issues and counts
 - use the Gmail plugin to verify delivered emails
-- if Sentry shows the rule fired but Gmail search is still empty, treat that as pending delivery rather than failure
-- wait `2` minutes and rerun the Gmail search, repeating for up to `10` minutes total before concluding mailbox proof failed
 
 Create or update:
 
 - Rule 1: `Notify {email}: new prod issue`
 - Rule 2: `Notify {email}: persistent prod issue`
 
-These two retained mail rules are production rules, not test artifacts.
-
-- keep `prod` literally in both rule names
-- do not rename them to `test`, `test-sentry`, a marker value, or any other temporary label just because the workflow includes end-to-end testing
-- keep them scoped to environment `prod` unless the user explicitly asks for a separate non-production rule set
+These Sentry-side rules stay the same for both runtime branches.
 
 If Sentry rejects an environment-scoped rule because the environment does not exist yet, seed one event in that environment first, then rerun rule creation.
 
@@ -121,15 +147,9 @@ Use the browser to hit the failing path until:
 - summary event is observed
 - second email is observed
 
-Mailbox proof rule:
-
-- Gmail delivery and connector indexing can lag behind Sentry rule execution
-- do not report missing proof immediately when Sentry already recorded the rule trigger
-- wait and recheck Gmail on the `2` minute / `10` minute rule before calling the verification incomplete
-
 Use `scripts/verify_two_email_flow.py` to compute checkpoints from the app's throttle settings.
 
-For the expected scenario and the browser-driven workflow, read:
+For the expected scenario and browser-driven workflow, read:
 
 - `references/scenario.md`
 - `references/test-workflow.md`
@@ -151,9 +171,3 @@ Only the first event creates the Sentry issue in the feed.
 Later events stay on that same issue and only increase its event count.
 
 Rule 2 must be verified against issue event count, not against “new issue count”.
-
-## Completion statement
-
-When the installation and end-to-end verification succeed, the final response must clearly state that Sentry logging is fully tested, validated, and production ready.
-
-Do not leave the completion state implicit or ambiguous.

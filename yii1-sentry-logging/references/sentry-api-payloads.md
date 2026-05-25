@@ -2,6 +2,8 @@
 
 Use direct Sentry REST API mutation for rule setup. The local Sentry helper/plugin is read-only for issues/events and should be used only for verification.
 
+These Sentry-side rules are shared by both app-side runtime branches. Only the Yii route implementation changes between modern and legacy PHP runtimes.
+
 Base URL:
 
 - `https://sentry.io/api/0`
