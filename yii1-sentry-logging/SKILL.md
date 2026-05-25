@@ -1,16 +1,16 @@
 ---
-name: yii1-sentry-logging
-description: Install and verify Sentry logging in any Yii1 app using the tested XSentryLogRoute baseline, recommended production config, Sentry REST API rule setup, Sentry plugin verification, and Gmail-based two-email proof workflow.
+name: yii1.1.32-sentry-logging
+description: Install and verify Sentry logging in any Yii1.1.32 app using the tested XSentryLogRoute baseline, recommended production config, Sentry REST API rule setup, Sentry plugin verification, and Gmail-based two-email proof workflow.
 ---
 
-# Yii1 Sentry Logging
+# yii1.1.32-sentry-logging
 
 Use this skill when the user wants to:
 
-- add Sentry logging to a Yii1 app
+- add Sentry logging to a Yii1.1.32 app
 - replace Yii mail-per-error alerts with Sentry
 - install `XSentryLogRoute`
-- configure Sentry issue email rules for a Yii1 app
+- configure Sentry issue email rules for a Yii1.1.32 app
 - prove end-to-end behavior by generating a temporary error and verifying two emails
 
 ## Baseline

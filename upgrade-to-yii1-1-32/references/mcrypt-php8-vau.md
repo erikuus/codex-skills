@@ -6,7 +6,7 @@
 
 ## Known project hotspots
 
-- Yii1 VAU component:
+- Yii1.1.32 VAU component:
   - `protected/extensions/components/vauid/XVauSecurityManager.php`
 - Generic legacy crypto behavior:
   - `protected/extensions/behaviors/XCryptBehavior.php`

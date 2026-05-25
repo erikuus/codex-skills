@@ -148,7 +148,7 @@ When `mcrypt_*` hits are found, always produce a dedicated remediation plan with
 - This avoids the legacy `mcrypt` branch entirely.
 - Use the maintained reference implementation in `yii2-vauid2-extension` (`VauSecurityManager.php`) where `version > 2.0` bypasses `mcrypt`.
 - Include explicit config action in plan: set security manager version to `2.1` and validate full VAU login round-trip.
-- For this repo, inspect and replace legacy Yii1 VAU crypto points first:
+- For this repo, inspect and replace legacy Yii1.1.32 VAU crypto points first:
   - `protected/extensions/components/vauid/XVauSecurityManager.php`
   - `protected/extensions/behaviors/XCryptBehavior.php` (if still used for VAU-like payloads)
 
