@@ -1,0 +1,7 @@
+interface:
+  display_name: "Yii1 Sentry Logging"
+  short_description: "Install XSentryLogRoute and verify two-email alert flow"
+  icon_small: "./assets/sentry-glyph-black.svg"
+  icon_large: "./assets/sentry-logo-black.svg"
+  default_prompt: "Use $yii1-sentry-logging to install the tested XSentryLogRoute into this Yii1 app, replace per-error production mail alerts with Sentry, create or update the recommended Sentry project rules through the Sentry REST API, and prove the setup end-to-end by generating a temporary grouped error and verifying two emails with the Gmail plugin."
+  author_name: "Erik Uus"
