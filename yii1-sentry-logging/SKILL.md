@@ -58,6 +58,14 @@ The legacy branch keeps the same throttling and issue/event behavior, but uses t
 
 ## Workflow
 
+Rerun policy:
+
+- treat the Sentry project, environments, and alert rules as shared infrastructure
+- when they already exist, reuse them and do not create duplicates
+- use `test-sentry` only as a temporary proving environment when needed
+- after proving, the final rule names/environment for the app should remain `new prod issue` and `persistent prod issue`
+- when rerunning against the same app on another Yii/PHP branch, change the app integration as needed but keep the same Sentry project and `prod` rules unless the user explicitly asks otherwise
+
 ### 1. Inspect the app
 
 Before changing anything, confirm:
@@ -125,6 +133,12 @@ Create or update:
 - Rule 2: `Notify {email}: persistent prod issue`
 
 These Sentry-side rules stay the same for both runtime branches.
+
+On reruns:
+
+- first look for existing `prod` Rule 1 / Rule 2 and update them in place if needed
+- only create rules when they do not already exist for the target app
+- do not leave temporary `test-sentry` rules behind after verification unless the user explicitly wants them kept
 
 If Sentry rejects an environment-scoped rule because the environment does not exist yet, seed one event in that environment first, then rerun rule creation.
 
