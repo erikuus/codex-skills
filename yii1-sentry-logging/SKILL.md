@@ -91,8 +91,14 @@ For verification:
 
 Create or update:
 
-- Rule 1: new prod issue email
-- Rule 2: persistent prod issue email
+- Rule 1: `Notify {email}: new prod issue`
+- Rule 2: `Notify {email}: persistent prod issue`
+
+These two retained mail rules are production rules, not test artifacts.
+
+- keep `prod` literally in both rule names
+- do not rename them to `test`, `test-sentry`, a marker value, or any other temporary label just because the workflow includes end-to-end testing
+- keep them scoped to environment `prod` unless the user explicitly asks for a separate non-production rule set
 
 If Sentry rejects an environment-scoped rule because the environment does not exist yet, seed one event in that environment first, then rerun rule creation.
 

@@ -30,6 +30,8 @@ In practice, creating the project in the Sentry UI is usually faster than mutati
 Recommended rule name:
 
 - `Notify {email}: new {environment} issue`
+- for the retained production rule, the exact environment segment must be `prod`
+- do not substitute `test`, `test-sentry`, or a temporary marker in that retained production rule name
 
 Payload shape:
 
@@ -68,6 +70,8 @@ Notes:
 Recommended rule name:
 
 - `Notify {email}: persistent {environment} issue`
+- for the retained production rule, the exact environment segment must be `prod`
+- do not substitute `test`, `test-sentry`, or a temporary marker in that retained production rule name
 
 Payload shape:
 

@@ -164,7 +164,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--environment",
         default="prod",
-        help="Environment to scope the rules to (default: prod)",
+        help=(
+            "Environment to scope the rules to (default: prod). "
+            "For the retained production rules, keep this as prod rather than switching "
+            "to test/test-sentry just because the workflow includes testing."
+        ),
     )
     parser.add_argument(
         "--base-url",

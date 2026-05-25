@@ -65,15 +65,19 @@ Sentry creates the issue only on the first event. Later events stay on the same 
 Rule 1:
 
 - environment `prod`
+- name must include literal `prod`
 - `A new issue is created`
 - send one email immediately
 
 Rule 2:
 
 - environment `prod`
+- name must include literal `prod`
 - `The issue is seen more than 4 times in 1h`
 - send email
 - frequency `480` minutes
+
+These rules remain in place for ongoing production use. Even if the setup is being tested, do not rename them to `test`, `test-sentry`, or any other temporary label.
 
 Under nonstop bot traffic that gives:
 
