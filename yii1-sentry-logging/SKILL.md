@@ -78,6 +78,13 @@ Before changing anything, confirm:
 - whether `sentry/sentry` is already installed
 - target deployment PHP version using the branch rules above
 
+Also resolve the maintainer email used for alert rules:
+
+- if the user already provided one, use it
+- otherwise, if the repo or existing Sentry rules clearly point to one, propose that value
+- default suggestion is `erik.uus@gmail.com`
+- when using the default suggestion, ask the user to confirm it or provide another address before creating or updating rules
+
 If `sentry/sentry` is missing and Composer is available:
 
 - modern PHP `>= 7.2`: install the modern `sentry/sentry` line that fits the target app
@@ -134,6 +141,12 @@ Create or update:
 
 These Sentry-side rules stay the same for both runtime branches.
 
+Email selection rule:
+
+- do not silently hard-code `erik.uus@gmail.com`
+- treat it only as the default suggestion for this workspace
+- if the target app owner is unclear, ask the user to confirm the default or provide another email before mutating Sentry rules
+
 On reruns:
 
 - first look for existing `prod` Rule 1 / Rule 2 and update them in place if needed
@@ -173,7 +186,7 @@ For the expected scenario and browser-driven workflow, read:
 When the user does not provide project-specific values, default to:
 
 - project slug = repo or app name
-- maintainer email = ask only if not discoverable
+- maintainer email = propose `erik.uus@gmail.com` as the default for this workspace, but ask the user to confirm it or provide another value before creating/updating Sentry rules
 - environment names = `prod`, `test-sentry`, `local`
 - cache component = `cache`
 - release = `<app>-prod`

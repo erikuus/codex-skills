@@ -27,6 +27,16 @@ Common path:
 
 In practice, creating the project in the Sentry UI is usually faster than mutating it through the API. This skill automates rule creation and verification after the project already exists.
 
+## Email default
+
+For this workspace, `erik.uus@gmail.com` is the default suggested maintainer email.
+
+Use it only as a default:
+
+- if the user already gave another email, use that
+- if existing project/rule metadata clearly points to another owner, prefer that
+- otherwise ask the user to confirm `erik.uus@gmail.com` or provide another value before mutating Sentry rules
+
 ## Rule 1: new issue
 
 Recommended rule name:
@@ -39,7 +49,7 @@ Payload shape:
 
 ```json
 {
-  "name": "Notify erik.uus@gmail.com: new prod issue",
+  "name": "Notify <maintainer-email>: new prod issue",
   "actionMatch": "all",
   "filterMatch": "all",
   "frequency": 5,
@@ -53,7 +63,7 @@ Payload shape:
     {
       "id": "sentry.mail.actions.NotifyEmailAction",
       "targetType": "Member",
-      "targetIdentifier": "4578598",
+      "targetIdentifier": "<member-id>",
       "fallthroughType": "ActiveMembers"
     }
   ],
@@ -79,7 +89,7 @@ Payload shape:
 
 ```json
 {
-  "name": "Notify erik.uus@gmail.com: persistent prod issue",
+  "name": "Notify <maintainer-email>: persistent prod issue",
   "actionMatch": "all",
   "filterMatch": "all",
   "frequency": 480,
@@ -95,7 +105,7 @@ Payload shape:
     {
       "id": "sentry.mail.actions.NotifyEmailAction",
       "targetType": "Member",
-      "targetIdentifier": "4578598",
+      "targetIdentifier": "<member-id>",
       "fallthroughType": "ActiveMembers"
     }
   ],
