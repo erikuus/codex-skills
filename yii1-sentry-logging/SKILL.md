@@ -74,7 +74,7 @@ Before changing anything, confirm:
 - current `log` routes
 - shared cache component name
 - extension path for a custom log route
-- whether Composer/autoload exists
+- vendor/autoload strategy and actual Sentry SDK vendor folder
 - whether `sentry/sentry` is already installed
 - target deployment PHP version using the branch rules above
 
@@ -85,6 +85,13 @@ Also resolve the maintainer email used for alert rules:
 - default suggestion is `erik.uus@gmail.com`
 - when using the default suggestion, ask the user to confirm it or provide another address before creating or updating rules
 
+Also resolve the install paths before writing files:
+
+- default Sentry SDK vendor folder suggestion is `<application>/extensions/vendors`
+- default route file suggestion is `<application>/protected/extensions/components/log/XSentryLogRoute.php`
+- if the app uses a shared extension/vendor tree outside the application, prefer the discovered/shared path
+- if the path is not clearly discoverable, ask the user to confirm the default or provide another path before writing files
+
 If `sentry/sentry` is missing and Composer is available:
 
 - modern PHP `>= 7.2`: install the modern `sentry/sentry` line that fits the target app
@@ -92,10 +99,19 @@ If `sentry/sentry` is missing and Composer is available:
 
 If the installed Sentry package line conflicts with the runtime branch, stop and ask before changing it.
 
+Do not assume the package lives under the application root `vendor/` directory. Use the confirmed Sentry SDK vendor folder for this app.
+
 ### 2. Install the correct route
 
-- modern PHP `>= 7.2`: copy the modern `assets/*` route into the target extension path
-- legacy PHP `<= 5.6`: copy the `assets/php56/*` route into the target extension path
+- modern PHP `>= 7.2`: copy the modern `assets/*` route into the confirmed route target path
+- legacy PHP `<= 5.6`: copy the `assets/php56/*` route into the confirmed route target path
+
+Path rules:
+
+- default route target path is `<application>/protected/extensions/components/log/XSentryLogRoute.php`
+- default SDK vendor folder is `<application>/extensions/vendors`
+- if the app already uses another extension or vendor location, reuse that instead of forcing the defaults
+- if the path is shared across apps and any overwrite risk is unclear, ask before writing
 
 Preserve the target app's path conventions. Do not mix modern and legacy code in one route file.
 
@@ -187,6 +203,8 @@ When the user does not provide project-specific values, default to:
 
 - project slug = repo or app name
 - maintainer email = propose `erik.uus@gmail.com` as the default for this workspace, but ask the user to confirm it or provide another value before creating/updating Sentry rules
+- Sentry SDK vendor folder = propose `<application>/extensions/vendors` as the default, but ask the user to confirm it or provide another path before installing/updating the SDK
+- route target path = propose `<application>/protected/extensions/components/log/XSentryLogRoute.php` as the default, but ask the user to confirm it or provide another path before writing the route file
 - environment names = `prod`, `test-sentry`, `local`
 - cache component = `cache`
 - release = `<app>-prod`
