@@ -1,0 +1,4 @@
+interface:
+  display_name: "Prototype to Implementation"
+  short_description: "Turn prototypes into drift-resistant build contracts"
+  default_prompt: "Use $prototype-to-implementation to inspect the target project’s plan and prototype evidence, resolve implementation ambiguities one question at a time, and produce a decision-complete IMPLEMENT.md with aligned AGENTS.md rules."
