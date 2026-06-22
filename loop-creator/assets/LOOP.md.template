@@ -1,0 +1,117 @@
+# [Loop Name]
+
+## Objective and Claim Boundary
+
+- Objective:
+- Downstream use:
+- “Best” means:
+- This loop can claim:
+- This loop cannot claim:
+
+## Candidate Contract
+
+- Candidate type:
+- Required structure:
+- Validity constraints:
+- Identity and lineage:
+
+## Competition Epoch
+
+- Fixed input snapshot:
+- Criteria version:
+- Environment version:
+- Changes that start a new epoch:
+
+## Actors and Visibility
+
+| Actor | May read | May write | Must not access |
+|---|---|---|---|
+| Creator | | | |
+| Runner | | | |
+| Evaluator | | | |
+| Finalizer | | | |
+| Human | | | |
+
+## Generation Strategy
+
+- Creator behavior:
+- Independent/mutation mix:
+- Budget and concurrency:
+- Failure handling:
+
+## Materialization or Execution
+
+- Runner contract:
+- Cases or environments:
+- Resource and network limits:
+- Captured evidence:
+
+## Evaluation
+
+### Hard gates
+
+-
+
+### Deterministic metrics
+
+-
+
+### Judged dimensions
+
+-
+
+### Human gates
+
+-
+
+### Calibration and variance checks
+
+-
+
+## Selection and Promotion
+
+- Selection model:
+- Tie policy:
+- Promotion rule:
+- Rollback rule:
+
+## State and Audit History
+
+- Queue:
+- Incumbent or frontier:
+- Archives:
+- Version hashes:
+
+## Automation and Recovery
+
+- Manual pilot:
+- Cadence:
+- Interrupted-run recovery:
+- Stale candidate behavior:
+
+## Stopping Conditions
+
+- Hard budget:
+- Quality target:
+- Saturation rule:
+- Integrity stop:
+
+## Validation Plan
+
+- Mechanical tests:
+- Evaluator tests:
+- Optimization tests:
+
+## Assumptions, Risks, and Non-goals
+
+### Assumptions
+
+-
+
+### Unresolved risks
+
+-
+
+### Non-goals
+
+-

@@ -1,0 +1,41 @@
+schema_version: 1
+name: "replace-me"
+
+epoch:
+  input_version: "replace-me"
+  criteria_version: "replace-me"
+  environment_version: "identity"
+
+candidate:
+  type: "artifact-or-executable"
+  contract_version: "replace-me"
+
+generation:
+  strategy: "independent"
+  max_candidates: 0
+  concurrency: 1
+
+execution:
+  runner: "identity"
+  timeout_seconds: 0
+  network: "disabled"
+  case_manifest: null
+
+evaluation:
+  hard_gates: []
+  deterministic_metrics: []
+  judged_dimensions: []
+  human_gate: false
+
+selection:
+  policy: "replace-me"
+  ties: "preserve-incumbent"
+
+stopping:
+  max_candidates: 0
+  no_improvement_window: 0
+  target: null
+
+automation:
+  enabled: false
+  cadence: null
