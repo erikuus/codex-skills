@@ -1,6 +1,6 @@
 interface:
   display_name: "Loop Creator"
-  short_description: "Design rigorous candidate optimization loops"
+  short_description: "Create simple heartbeat candidate loops"
   icon_small: "./assets/icon.svg"
   icon_large: "./assets/icon.png"
-  default_prompt: "Use $loop-creator to help me design a loop for my specific objective."
+  default_prompt: "Use $loop-creator to create a simple heartbeat loop from one input.md and one criteria.md."

@@ -1,251 +1,165 @@
 ---
 name: loop-creator
-description: Design and, when requested, implement rigorous iterative loops that generate many candidates, evaluate them, and retain or promote the best result. Use when a user wants to optimize repeated attempts, create a creator/evaluator automation, evolve an artifact or prompt, search for a strong personal decision, or optimize an executable transformation such as a code-conversion skill against reference outputs. Conduct a focused one-question-at-a-time interview and produce a case-specific loop rather than forcing every problem into one scoring model.
+description: Create simple heartbeat candidate loops with exactly one input file, one criteria file, repeated candidate generation, repeated candidate evaluation, required creator/evaluator automations, and a static overview.html site. Use when the user wants a wit-loop or my-life-style loop where a creator produces candidates from input.md, an evaluator scores candidates against criteria.md, deterministic code archives results and updates the current best/shortlist, and an HTML overview shows progress. Do not use for complex executable transformation optimization or broad generic optimizer design.
 ---
 
 # Loop Creator
 
-## Role
+## Scope
 
-Act as a loop architect. Turn an imprecise desire for the “best” result into a testable, auditable, case-specific candidate loop.
-
-Do not promise a perfect or objectively best outcome when the evidence cannot support that claim. Optimize for the best result observed under the agreed evidence, constraints, evaluator, and budget. Make that boundary explicit in the design.
-
-Preserve this pipeline across all loop types:
+Create one simple heartbeat loop pattern:
 
 ```text
-snapshot -> generate -> materialize/run -> evaluate -> decide -> archive -> repeat
+input.md -> creator automation -> candidate
+candidate + criteria.md -> evaluator automation -> evaluation
+evaluation -> deterministic finalizer -> state + overview.html
+repeat
 ```
 
-For a simple artifact, `materialize/run` may be an identity step. For an executable transformation, it runs a candidate against isolated cases and captures outputs and telemetry.
+This skill is intentionally narrow. Do not design a universal optimizer, executable-transformation benchmark, hidden holdout system, relationship optimizer, or broad decision framework. If the user asks for those, state that this skill is not the right abstraction and switch to focused conversation outside this skill.
 
-## Interaction Contract
+Use `/Users/erikuus/dev/philosophy/my-life/` as the local implementation standard for structure and operational behavior, simplified to one `input.md` and one `criteria.md`.
 
-Conduct a focused conversation before implementation.
+Before implementing a loop, read [references/heartbeat-standard.md](references/heartbeat-standard.md) for the compact operational standard.
 
-- Ask exactly one material question per turn and wait for the answer.
-- Include a concrete recommended answer and explain its main consequence briefly.
-- Prefer a proposed formulation the user can correct over an open-ended request to “describe everything.”
-- Do not ask for facts available in supplied files, repositories, or prior answers. Inspect relevant evidence first.
-- Ask only questions whose answers can change the architecture, evaluation validity, risk controls, or stopping rule.
-- Challenge contradictions, unmeasurable objectives, evaluator leakage, and unsafe automation directly.
-- Maintain a compact internal decision ledger; do not repeatedly recap settled answers.
-- Stop interviewing at decision sufficiency, not exhaustive certainty.
-- Never silently invent a material criterion, hard constraint, data boundary, or authority to act.
+## Required loop properties
 
-If the user asks only for advice, finish with a loop blueprint. If the user asks to create or implement the loop, first present the decision-complete blueprint and ask one final confirmation before writing files or creating automations. Treat external messages, production changes, purchases, applications, and decisions affecting other people as separate human-gated actions.
+Every generated loop must include:
 
-## Discovery
+- exactly one human-maintained `input.md`
+- exactly one human-maintained `criteria.md`
+- multiple immutable candidate files
+- multiple immutable evaluation JSON files
+- a deterministic CLI/helper script for submission, validation, winner/shortlist update, and overview rendering
+- a creator automation prompt/workspace that can read `input.md` but not `criteria.md`, evaluations, state, or prior candidates unless the user explicitly allows mutation
+- an evaluator automation prompt/workspace that can read one pending candidate and `criteria.md` but not winner state, prior scores, or unrelated candidates
+- a static `overview.html` website showing input/criteria hashes, candidates, scores, current best or shortlist, pending count, and recent activity
+- tests for candidate validation, evaluation validation, promotion, stale input/criteria hashes, and overview rendering
 
-When a project, dataset, example loop, or reference artifact is available:
+## Standard project layout
 
-1. Resolve its location and inspect its documentation, structure, tests, candidate format, evaluation records, and automation contract.
-2. Separate current facts from the user’s proposed behavior.
-3. Identify reusable mechanics and domain-specific assumptions.
-4. Do not copy a narrow loop’s assumptions into the new design without justification.
-
-Read [references/loop-design-model.md](references/loop-design-model.md) for the complete design dimensions and validity checks. Read only the relevant case guide after initial classification:
-
-- Read [references/simple-artifact-loops.md](references/simple-artifact-loops.md) for prose, plans, prompts, images, configurations, and other directly judged artifacts.
-- Read [references/executable-transformation-loops.md](references/executable-transformation-loops.md) when a candidate is code, a skill, a prompt-program, or another executable transformer.
-
-## Interview Sequence
-
-Adapt the order to known evidence. Do not mechanically ask every question.
-
-### 1. Establish the outcome
-
-Resolve:
-
-- the candidate artifact or decision being optimized
-- who will use the winner and what happens afterward
-- the fixed input versus what each attempt may change
-- what “better” must mean in observable terms
-
-Recommended default: define one concrete candidate contract and one primary downstream outcome before discussing automation.
-
-### 2. Establish evidence and truth
-
-Resolve:
-
-- available examples, references, rubrics, tests, or user feedback
-- whether evaluation is objective, proxy-based, subjective, or mixed
-- whether reference outputs are specifications, examples, or merely one acceptable answer
-- uncertainty and disagreement that a single score would hide
-
-Recommended default: combine hard validity gates with several interpretable quality dimensions. Do not collapse to one score unless incumbent replacement genuinely requires it.
-
-### 3. Classify the loop
-
-Choose one or a hybrid:
-
-- **Direct artifact loop:** judge the generated candidate itself.
-- **Executable transformation loop:** execute the candidate over cases, then judge outputs and behavior.
-- **Decision-support loop:** rank hypotheses and information-gathering experiments; reserve the final decision for a human.
-- **Adaptive empirical loop:** use real-world feedback to update evidence or criteria between controlled competition epochs.
-
-Recommended default: use the simplest class that exposes the actual failure modes. Never represent an executable candidate as a direct text artifact merely because its source can be read.
-
-### 4. Design generation
-
-Resolve:
-
-- creator inputs and prohibited information
-- independent sampling versus mutation of prior winners
-- number and diversity of creators
-- candidate identity, lineage, metadata, and reproducibility
-- generation budget, concurrency, and failure handling
-
-Recommended default: begin with independent blind attempts, then add winner mutation only if archived evidence shows convergence is useful and does not destroy diversity.
-
-### 5. Design materialization or execution
-
-For direct artifacts, define normalization and packaging. For executable candidates, define:
-
-- clean workspace and dependency setup
-- case selection and train/validation/holdout boundaries
-- time, cost, filesystem, network, and tool limits
-- captured outputs, diffs, logs, screenshots, and failures
-- cleanup and reproducibility
-
-Recommended default: run each executable candidate from a fresh snapshot with network disabled unless network access is part of the task.
-
-### 6. Design evaluation and selection
-
-Resolve:
-
-- hard rejection gates
-- deterministic metrics
-- model-judged dimensions and calibration anchors
-- human gates
-- aggregation or Pareto policy
-- ties, evaluator failures, variance, and re-evaluation
-- incumbent promotion and rollback
-
-Recommended default: hard gates first, deterministic evidence second, blind model judgment third, and a human gate for consequential or weakly measurable outcomes.
-
-### 7. Design isolation and integrity
-
-Explicitly list what each actor may read and write. Protect:
-
-- incumbent and prior scores from blind creators and evaluators when they would bias judgment
-- hidden holdout references from executable candidates and their creators
-- evaluator prompts and private criteria when exposure enables gaming
-- immutable input, criteria, environment, and evaluator versions
-
-Recommended default: enforce important boundaries structurally with separate workspaces and helper commands. Prompt-only restrictions are cognitive controls, not security boundaries.
-
-### 8. Design operation and stopping
-
-Resolve:
-
-- manual pilot procedure
-- automation cadence and queue behavior
-- version changes and stale candidates
-- storage, audit history, and cost accounting
-- stopping conditions and saturation detection
-
-Recommended default: complete several manual end-to-end iterations and test recovery paths before scheduling automation. Stop on budget exhaustion, target attainment, sustained non-improvement, evaluator unreliability, or evidence that the proxy is being gamed.
-
-## Personal and Consequential Decisions
-
-For trips, careers, relationships, health, finances, employment, or other consequential choices:
-
-- Optimize candidate plans or hypotheses, not people.
-- Preserve mutual agency and consent.
-- Separate known preferences from predictions about future satisfaction.
-- Expose tradeoffs and uncertainty instead of manufacturing a precise winner.
-- Prefer reversible experiments and information gain before irreversible action.
-- Require the user to approve final real-world action.
-
-Use Pareto sets or ranked shortlists when preferences are genuinely multi-objective. A repeated model judgment is not real-world validation.
-
-## Blueprint Gate
-
-When the material decisions are sufficient, present a concise blueprint containing:
-
-1. Objective and claim boundary
-2. Candidate contract
-3. Input and evidence snapshots
-4. Actor visibility matrix
-5. Generation strategy
-6. Materialization or execution contract
-7. Evaluator suite and calibration
-8. Selection and promotion policy
-9. State, lineage, and versioning
-10. Automation and recovery
-11. Stopping conditions
-12. Validation plan
-13. Assumptions, unresolved risks, and explicit non-goals
-
-Use [assets/LOOP.md.template](assets/LOOP.md.template) as the durable design artifact. If implementation was requested, ask the final confirmation only after showing the blueprint. Phrase it as one concrete proposed scope, not a generic “shall I proceed?”
-
-## Implementation
-
-After confirmation, create the smallest case-specific project that enforces the blueprint. Do not build a universal runtime when a smaller implementation is clearer.
-
-Typical components are:
+Use this layout unless the target project already requires a small naming adjustment:
 
 ```text
-LOOP.md                 decision-complete contract
-loop.yaml               machine-readable configuration when useful
-input/                  immutable or versioned source evidence
-criteria/               rubrics, tests, references, and evaluator versions
-creator/                isolated generation workspace
-runner/                 execution workspace for executable candidates
-evaluator/              isolated judgment workspace
-state/                  incumbent, queue, locks, and version hashes
-candidates/             immutable candidate packages and lineage
-evaluations/            immutable evidence and decisions
-bin/                    deterministic prepare, submit, run, and finalize helpers
-tests/                  lifecycle, integrity, failure, and recovery tests
+LOOP.md
+input.md
+criteria.md
+overview.html
+bin/<loop_name>_loop.py
+creator/
+  automation.md
+  workspace/
+    input.md
+    candidate.template.md
+evaluator/
+  automation.md
+  evaluation.template.json
+  workspace/
+    candidate.md
+    criteria.md
+candidates/
+  README.md
+  pending/
+  archive/
+evaluations/
+  README.md
+state/
+  README.md
+  loop_state.json
+tests/
+  test_<loop_name>_loop.py
 ```
 
-Implementation rules:
+Do not add `runner/`, dataset splits, holdouts, Pareto-frontier machinery, dependency sandboxes, or executable candidate support.
 
-- Make deterministic code responsible for schema validation, hashes, arithmetic, queue transitions, and promotion decisions.
-- Make models responsible only for generation or judgments that cannot be deterministic.
-- Store raw evaluator evidence, not only aggregate scores.
-- Use atomic writes and locks when runs may overlap.
-- Version inputs, criteria, candidate contract, environment, and evaluators.
-- Mark incompatible in-flight candidates stale instead of comparing across epochs.
-- Preserve failed executions as evidence without allowing them to block the queue.
-- Make promotion reversible and keep the prior incumbent addressable.
-- Never create recurring automations until the manual pilot and recovery tests pass.
+## Focused conversation
 
-Use [assets/loop.yaml.template](assets/loop.yaml.template) only when a manifest improves operation. Remove unused fields rather than filling them with invented values.
+Ask only for facts needed to instantiate the heartbeat loop. If a reasonable default exists, propose it instead of blocking.
+
+Ask at most one material question per turn. Prioritize in this order:
+
+1. What is the candidate artifact? Example: “one witty sentence,” “one life scenario package,” “one product-name list.”
+2. What must the candidate file structure be?
+3. Should selection keep only a single best candidate or a small shortlist?
+4. What score scale and promotion rule should be used?
+5. What cadence should the creator and evaluator automations use?
+
+Recommended defaults:
+
+- candidate format: Markdown
+- selection: single incumbent winner for scalar criteria; top 5 shortlist when criteria are multi-dimensional
+- score scale: integer `0..100`
+- promotion: strictly higher validated score replaces incumbent; ties preserve incumbent
+- cadence: creator and evaluator both run repeatedly, but only after manual CLI tests pass
+
+## Design rules
+
+Keep creator and evaluator roles separate:
+
+| Actor | May read | May write | Must not read |
+|---|---|---|---|
+| Creator automation | `input.md`, candidate template, public candidate contract | one new candidate draft/submission | `criteria.md`, `evaluations/`, `state/`, `overview.html`, prior candidates unless mutation is explicitly enabled |
+| Evaluator automation | `criteria.md`, one pending candidate, evaluation template | one evaluation JSON | current winner, prior scores, unrelated candidates |
+| Finalizer CLI | candidate archive, evaluation JSON, state | `state/loop_state.json`, `overview.html` | no cognitive restriction; deterministic code only |
+| Human | all files | `input.md`, `criteria.md`, automation enable/disable decisions | none |
+
+Enforce important boundaries with workspace files and helper commands, not prompt wording alone. The helper script should prepare narrow creator/evaluator workspaces.
+
+## Implementation rules
+
+When asked to implement a loop:
+
+1. Inspect any provided project and existing files first.
+2. Create or update the standard layout.
+3. Write `LOOP.md` from `assets/LOOP.md.template`.
+4. Write a deterministic Python CLI using only the standard library unless the project already uses another runtime.
+5. Add creator and evaluator automation instructions as explicit Markdown files.
+6. Add tests and run them.
+7. Render or refresh `overview.html`.
+
+The CLI should normally support:
+
+```text
+prepare-creator
+submit-candidate --candidate <path>
+next-pending-candidate
+prepare-evaluator
+record-evaluation --evaluation <path>
+render-overview
+show-state
+```
+
+State must include hashes of the current `input.md` and `criteria.md`. A candidate or evaluation created under old hashes must be archived but not allowed to win.
+
+Candidate IDs should be content-addressed. Evaluation files should include candidate ID, input hash, criteria hash, raw scores, final score, verdict, rationale, and evaluator identity/version if known.
+
+## Overview website
+
+`overview.html` is a required first-class output, not an optional report. It should be static and self-contained. Include at minimum:
+
+- loop name and last rendered time
+- current input and criteria hashes
+- current winner or shortlist
+- all evaluated candidates with score, verdict, status, and links/paths
+- pending candidates
+- invalid/stale candidates
+- recent evaluation rationale excerpts
+
+Regenerate it after candidate submission, evaluation recording, promotion, and manual `render-overview`.
 
 ## Validation
 
-Validate the loop at three levels:
+Before reporting completion, run relevant tests. Minimum expected tests:
 
-### Mechanical
+- malformed candidate rejected
+- malformed evaluation rejected
+- evaluation for unknown candidate rejected
+- stale candidate/evaluation cannot replace winner
+- strictly higher score promotes
+- lower or tied score preserves incumbent
+- pending queue advances
+- `overview.html` renders and contains the winner/candidate data
 
-- schemas reject malformed candidates and evaluations
-- score calculations and selection are deterministic
-- stale versions cannot win
-- ties and evaluator failures follow the declared policy
-- interrupted runs recover without losing queued work
-- concurrent runs cannot corrupt state
+## Completion response
 
-### Evaluator
-
-- calibration anchors produce plausible ordering
-- repeated judgments reveal acceptable variance
-- known-bad mutations fail the intended gates
-- evaluator rationales correspond to captured evidence
-- no evaluator can see information prohibited by the visibility matrix
-
-### Optimization
-
-- a deliberately improved candidate can replace a weaker incumbent
-- proxy improvements correspond to real downstream improvement
-- holdout performance does not collapse
-- the loop retains diversity or explicitly accepts convergence
-- stopping rules can actually trigger
-
-If validation exposes proxy gaming, leakage, unstable ranking, or missing evidence, revise the design before increasing automation frequency.
-
-## Completion
-
-Return links to the blueprint and implementation artifacts, summarize the loop’s claim boundary, and report the validation performed. State remaining risks plainly. Do not describe the winner as objectively best unless the evidence justifies that statement.
+Return links to `LOOP.md`, the CLI, automation files, tests, and `overview.html`. State exactly what was validated. If automations are present but not scheduled/enabled, say so directly.

@@ -1,41 +1,56 @@
 schema_version: 1
 name: "replace-me"
 
-epoch:
-  input_version: "replace-me"
-  criteria_version: "replace-me"
-  environment_version: "identity"
+files:
+  input: "input.md"
+  criteria: "criteria.md"
+  overview: "overview.html"
+  state: "state/loop_state.json"
 
 candidate:
-  type: "artifact-or-executable"
-  contract_version: "replace-me"
-
-generation:
-  strategy: "independent"
-  max_candidates: 0
-  concurrency: 1
-
-execution:
-  runner: "identity"
-  timeout_seconds: 0
-  network: "disabled"
-  case_manifest: null
+  format: "markdown"
+  id: "content-hash"
+  archive_dir: "candidates/archive"
+  pending_dir: "candidates/pending"
 
 evaluation:
-  hard_gates: []
-  deterministic_metrics: []
-  judged_dimensions: []
-  human_gate: false
+  format: "json"
+  score_scale: "0..100"
+  required_fields:
+    - "candidate_id"
+    - "input_hash"
+    - "criteria_hash"
+    - "raw_scores"
+    - "final_score"
+    - "verdict"
+    - "rationale"
 
 selection:
-  policy: "replace-me"
+  mode: "single-winner"
+  promotion: "strictly-higher-final-score"
   ties: "preserve-incumbent"
 
-stopping:
-  max_candidates: 0
-  no_improvement_window: 0
-  target: null
-
-automation:
-  enabled: false
-  cadence: null
+automations:
+  creator:
+    required: true
+    workspace: "creator/workspace"
+    may_read:
+      - "creator/workspace/input.md"
+      - "creator/workspace/candidate.template.md"
+    must_not_read:
+      - "criteria.md"
+      - "evaluations"
+      - "state"
+      - "overview.html"
+  evaluator:
+    required: true
+    workspace: "evaluator/workspace"
+    may_read:
+      - "evaluator/workspace/candidate.md"
+      - "evaluator/workspace/criteria.md"
+      - "evaluator/evaluation.template.json"
+    must_not_read:
+      - "state"
+      - "evaluations"
+      - "candidates/archive"
+      - "overview.html"

@@ -1,117 +1,119 @@
 # [Loop Name]
 
-## Objective and Claim Boundary
+## Objective
 
-- Objective:
-- Downstream use:
-- “Best” means:
-- This loop can claim:
-- This loop cannot claim:
+- Input file: `input.md`
+- Criteria file: `criteria.md`
+- Candidate artifact:
+- Best means: highest validated score under the current `criteria.md`
+- Claim boundary: best observed candidate under this input, criteria, evaluator, and budget
 
 ## Candidate Contract
 
-- Candidate type:
+- Format:
 - Required structure:
-- Validity constraints:
-- Identity and lineage:
+- Forbidden content:
+- Size limits:
+- Candidate ID rule: content-addressed hash
 
-## Competition Epoch
+## Creator Automation
 
-- Fixed input snapshot:
-- Criteria version:
-- Environment version:
-- Changes that start a new epoch:
+- Reads:
+  - `creator/workspace/input.md`
+  - `creator/workspace/candidate.template.md`
+- Writes:
+  - one candidate file
+- Must not read:
+  - `criteria.md`
+  - `evaluations/`
+  - `state/`
+  - `overview.html`
+  - prior candidates unless mutation is explicitly enabled
+- Submission command:
+  - `python3 bin/[loop_name]_loop.py submit-candidate --candidate <path>`
 
-## Actors and Visibility
+## Evaluator Automation
 
-| Actor | May read | May write | Must not access |
-|---|---|---|---|
-| Creator | | | |
-| Runner | | | |
-| Evaluator | | | |
-| Finalizer | | | |
-| Human | | | |
-
-## Generation Strategy
-
-- Creator behavior:
-- Independent/mutation mix:
-- Budget and concurrency:
-- Failure handling:
-
-## Materialization or Execution
-
-- Runner contract:
-- Cases or environments:
-- Resource and network limits:
-- Captured evidence:
+- Reads:
+  - `evaluator/workspace/candidate.md`
+  - `evaluator/workspace/criteria.md`
+  - `evaluator/evaluation.template.json`
+- Writes:
+  - one evaluation JSON
+- Must not read:
+  - `state/`
+  - prior evaluations
+  - unrelated candidates
+  - `overview.html`
+- Recording command:
+  - `python3 bin/[loop_name]_loop.py record-evaluation --evaluation <path>`
 
 ## Evaluation
 
-### Hard gates
+- Hard rejection gates:
+  -
+- Score scale: `0..100`
+- Promotion rule: strictly higher validated score replaces incumbent
+- Tie rule: preserve incumbent
+- Evaluation JSON fields:
+  - `candidate_id`
+  - `input_hash`
+  - `criteria_hash`
+  - `raw_scores`
+  - `final_score`
+  - `verdict`
+  - `rationale`
 
--
+## State and Archive
 
-### Deterministic metrics
+- State file: `state/loop_state.json`
+- Candidate queue: pending list inside `state/loop_state.json`
+- Candidate archive: `candidates/archive/`
+- Evaluation archive: `evaluations/`
+- Stale rule: candidates/evaluations with old input or criteria hashes remain archived but cannot win
 
--
+## Overview Website
 
-### Judged dimensions
+- File: `overview.html`
+- Rendered after:
+  - candidate submission
+  - evaluation recording
+  - manual `render-overview`
+- Must show:
+  - current input and criteria hashes
+  - winner or shortlist
+  - pending/evaluated/invalid candidates
+  - scores and verdicts
+  - rationale excerpts
 
--
+## CLI
 
-### Human gates
+Expected commands:
 
--
+```text
+prepare-creator
+submit-candidate --candidate <path>
+next-pending-candidate
+prepare-evaluator
+record-evaluation --evaluation <path>
+render-overview
+show-state
+```
 
-### Calibration and variance checks
+## Validation
 
--
+- malformed candidate rejected
+- malformed evaluation rejected
+- unknown candidate evaluation rejected
+- stale candidate/evaluation cannot win
+- higher score promotes
+- tie/lower score preserves incumbent
+- pending queue advances
+- `overview.html` renders candidate and winner data
 
-## Selection and Promotion
+## Non-goals
 
-- Selection model:
-- Tie policy:
-- Promotion rule:
-- Rollback rule:
-
-## State and Audit History
-
-- Queue:
-- Incumbent or frontier:
-- Archives:
-- Version hashes:
-
-## Automation and Recovery
-
-- Manual pilot:
-- Cadence:
-- Interrupted-run recovery:
-- Stale candidate behavior:
-
-## Stopping Conditions
-
-- Hard budget:
-- Quality target:
-- Saturation rule:
-- Integrity stop:
-
-## Validation Plan
-
-- Mechanical tests:
-- Evaluator tests:
-- Optimization tests:
-
-## Assumptions, Risks, and Non-goals
-
-### Assumptions
-
--
-
-### Unresolved risks
-
--
-
-### Non-goals
-
--
+- executable transformation optimization
+- hidden holdout benchmarking
+- Pareto frontier machinery
+- real-world action without human judgment
