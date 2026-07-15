@@ -75,9 +75,12 @@
 ## Overview Website
 
 - File: `overview.html`
+- Template: `overview.template.html`, adapted from the loop-creator skill's `assets/overview.html.template`
+- Renderer contract: replace `__LOOP_TITLE__` with an HTML-escaped title and `__OVERVIEW_DATA_JSON__` with JSON whose `</` sequences are escaped as `<\/`
 - Rendered after:
   - candidate submission
   - evaluation recording
+  - invalidation or stale-state changes
   - manual `render-overview`
 - Must show:
   - current input and criteria hashes
@@ -85,6 +88,11 @@
   - pending/evaluated/invalid candidates
   - scores and verdicts
   - rationale excerpts
+- Must preserve:
+  - searchable and time/score-sortable candidate list
+  - selectable reading pane with candidate prose
+  - loop metadata popover, empty states, and responsive single-column layout
+  - dependency-free local-file operation
 
 ## CLI
 
@@ -109,7 +117,9 @@ show-state
 - higher score promotes
 - tie/lower score preserves incumbent
 - pending queue advances
-- `overview.html` renders candidate and winner data
+- overview tokens are safely replaced
+- `overview.html` renders candidate, winner/shortlist, hashes, status, score, verdict, rationale, pending, invalid, and stale data
+- search, sort, selection, empty-state, and responsive UI hooks remain present
 
 ## Non-goals
 

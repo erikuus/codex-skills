@@ -62,6 +62,8 @@ For multi-dimensional criteria, keep a top 5 shortlist sorted by final score, wi
 
 ## Overview
 
+Copy `assets/overview.html.template` from the skill to project-root `overview.template.html` and follow `references/overview-template-contract.md`. The finalizer renders the self-contained `overview.html`; the generated project must not read the installed skill directory at runtime.
+
 The overview should be useful without reading raw JSON. It should show:
 
 - winner/shortlist

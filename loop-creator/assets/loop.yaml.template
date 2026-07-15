@@ -5,6 +5,7 @@ files:
   input: "input.md"
   criteria: "criteria.md"
   overview: "overview.html"
+  overview_template: "overview.template.html"
   state: "state/loop_state.json"
 
 candidate:

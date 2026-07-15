@@ -22,6 +22,8 @@ Use `/Users/erikuus/dev/philosophy/my-life/` as the local implementation standar
 
 Before implementing a loop, read [references/heartbeat-standard.md](references/heartbeat-standard.md) for the compact operational standard.
 
+Before implementing or changing the overview renderer, also read [references/overview-template-contract.md](references/overview-template-contract.md) and use [assets/overview.html.template](assets/overview.html.template) as the required visual and interaction baseline.
+
 ## Required loop properties
 
 Every generated loop must include:
@@ -45,6 +47,7 @@ LOOP.md
 input.md
 criteria.md
 overview.html
+overview.template.html
 bin/<loop_name>_loop.py
 creator/
   automation.md
@@ -112,10 +115,11 @@ When asked to implement a loop:
 1. Inspect any provided project and existing files first.
 2. Create or update the standard layout.
 3. Write `LOOP.md` from `assets/LOOP.md.template`.
-4. Write a deterministic Python CLI using only the standard library unless the project already uses another runtime.
-5. Add creator and evaluator automation instructions as explicit Markdown files.
-6. Add tests and run them.
-7. Render or refresh `overview.html`.
+4. Copy and minimally adapt `assets/overview.html.template` to project-root `overview.template.html`; preserve its structure, visual system, data element, controls, and responsive behavior.
+5. Write a deterministic Python CLI using only the standard library unless the project already uses another runtime.
+6. Add creator and evaluator automation instructions as explicit Markdown files.
+7. Add tests and run them.
+8. Render or refresh `overview.html`.
 
 The CLI should normally support:
 
@@ -145,7 +149,21 @@ Candidate IDs should be content-addressed. Evaluation files should include candi
 - invalid/stale candidates
 - recent evaluation rationale excerpts
 
-Regenerate it after candidate submission, evaluation recording, promotion, and manual `render-overview`.
+Use the bundled overview template instead of inventing a new dashboard. The template establishes the `my-life`-style warm editorial presentation:
+
+- compact header with loop title and freshness/count metadata
+- searchable, sortable candidate list in a narrow left pane
+- calm reading pane for the selected candidate
+- serif candidate prose with restrained sans-serif operational metadata
+- status dots, winner/shortlist markers, score bars, rationale, warnings, and file paths
+- loop metadata popover with full input/criteria hashes and queue counts
+- responsive single-column behavior below `800px`
+
+The project CLI must render `overview.html` from project-root `overview.template.html`, replacing `__LOOP_TITLE__` and `__OVERVIEW_DATA_JSON__` exactly as specified in the overview template contract. Do not make generated projects depend on the installed skill path at runtime. Preserve the content-security-safe rules: HTML-escape the title, JSON-encode the payload, replace `</` with `<\/`, and render all payload strings through the template's `esc()` helper.
+
+Adapt nouns and optional fields to the loop, but do not remove search, time/score sorting, candidate selection, metadata visibility, empty states, or mobile layout. Keep it dependency-free and usable when opened directly as a local file. Polling for refreshed content may fail under `file:` URLs and must fail silently.
+
+Regenerate it after candidate submission, evaluation recording, promotion, invalidation/staleness changes, and manual `render-overview`.
 
 ## Validation
 
@@ -158,7 +176,9 @@ Before reporting completion, run relevant tests. Minimum expected tests:
 - strictly higher score promotes
 - lower or tied score preserves incumbent
 - pending queue advances
-- `overview.html` renders and contains the winner/candidate data
+- overview template tokens are fully replaced and the embedded JSON cannot break out of its script element
+- `overview.html` renders and contains winner/shortlist, candidate, hash, score, verdict, status, rationale, and pending/invalid/stale data
+- overview search, time/score sort, selection, empty state, and narrow-screen layout remain present
 
 ## Completion response
 

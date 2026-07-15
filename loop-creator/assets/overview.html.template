@@ -1,0 +1,671 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>__LOOP_TITLE__</title>
+  <style>
+    :root {
+      --bg: #f4f1e9;
+      --paper: #fbf9f3;
+      --ink: #26302c;
+      --muted: #877e70;
+      --faint: #b4ab9b;
+      --line: #e6ddce;
+      --line-soft: #efe8db;
+      --accent: #23615a;
+      --accent-soft: #e8f0ed;
+      --good: #2f6b3f;
+      --warn: #9a6a20;
+      --bad: #8d2d2d;
+      --stale: #6f5b8d;
+      --serif: Georgia, "Iowan Old Style", Palatino, "Times New Roman", serif;
+      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      color-scheme: light;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      display: grid;
+      margin: 0;
+      overflow: hidden;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--serif);
+      grid-template-rows: auto minmax(0, 1fr);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    button, input, summary { -webkit-tap-highlight-color: transparent; }
+    button:focus-visible, input:focus-visible, summary:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    header {
+      position: relative;
+      z-index: 4;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 24px;
+      min-height: 64px;
+      padding: 21px 32px 17px;
+      border-bottom: 1px solid var(--line);
+    }
+    header h1 {
+      min-width: 0;
+      margin: 0;
+      overflow: hidden;
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: .01em;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-family: var(--sans);
+    }
+    .head-meta {
+      color: var(--faint);
+      font-size: 11px;
+      letter-spacing: .04em;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .loop-info { position: relative; }
+    .loop-info > summary {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 5px 11px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--paper);
+      color: var(--muted);
+      cursor: pointer;
+      font: 11px var(--sans);
+      letter-spacing: .04em;
+      list-style: none;
+      white-space: nowrap;
+    }
+    .loop-info > summary::-webkit-details-marker { display: none; }
+    .loop-info > summary::before { content: "●"; margin-right: 7px; color: var(--good); font-size: 8px; }
+    .loop-info[open] > summary { border-color: var(--accent); color: var(--accent); }
+    .info-panel {
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      width: min(420px, calc(100vw - 32px));
+      max-height: min(620px, calc(100vh - 88px));
+      overflow: auto;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--paper);
+      box-shadow: 0 18px 50px rgba(38, 48, 44, .14);
+    }
+    .info-title, .section-label {
+      margin: 0 0 10px;
+      color: var(--faint);
+      font: 600 10px var(--sans);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .info-grid { display: grid; grid-template-columns: auto 1fr; gap: 7px 14px; margin-bottom: 18px; }
+    .info-key { color: var(--muted); font: 12px var(--sans); }
+    .info-value {
+      min-width: 0;
+      color: var(--ink);
+      font: 12px var(--sans);
+      overflow-wrap: anywhere;
+      text-align: right;
+    }
+    .hash { font: 10.5px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .activity { margin: 0; padding: 0; list-style: none; }
+    .activity li { padding: 9px 0; border-top: 1px solid var(--line-soft); }
+    .activity-time { color: var(--faint); font: 10px var(--sans); }
+    .activity-label { margin-top: 2px; font: 12px var(--sans); }
+    .activity-detail { margin-top: 2px; color: var(--muted); font: 11px var(--sans); }
+
+    main {
+      display: grid;
+      grid-template-columns: 310px minmax(0, 1fr);
+      min-height: 0;
+    }
+    aside {
+      display: flex;
+      min-width: 0;
+      overflow: auto;
+      border-right: 1px solid var(--line);
+      flex-direction: column;
+    }
+    .search-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      padding: 14px 18px 11px;
+      border-bottom: 1px solid var(--line-soft);
+      background: color-mix(in srgb, var(--bg) 94%, transparent);
+      backdrop-filter: blur(8px);
+    }
+    .search-row { display: flex; align-items: center; gap: 10px; }
+    .search-field { flex: 1; min-width: 0; }
+    #search {
+      width: 100%;
+      padding: 5px 2px;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--ink);
+      font: 14px var(--sans);
+    }
+    #search::placeholder { color: var(--faint); }
+    .queue-summary {
+      min-height: 17px;
+      margin-top: 6px;
+      overflow: hidden;
+      color: var(--muted);
+      font: 10.5px var(--sans);
+      letter-spacing: .02em;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .sort-control { position: relative; margin: 0; padding: 0; border: 0; }
+    .sort-control > summary {
+      display: flex;
+      width: 30px;
+      height: 30px;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--paper);
+      color: var(--muted);
+      cursor: pointer;
+      list-style: none;
+      transition: border-color .12s ease, color .12s ease, background .12s ease;
+    }
+    .sort-control > summary::-webkit-details-marker { display: none; }
+    .sort-control > summary:hover, .sort-control[open] > summary { border-color: var(--accent); color: var(--accent); }
+    .sort-control svg { width: 15px; height: 15px; stroke: currentColor; }
+    .sort-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      display: flex;
+      min-width: 128px;
+      padding: 6px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--paper);
+      box-shadow: 0 10px 30px rgba(38, 48, 44, .1);
+      flex-direction: column;
+      gap: 4px;
+    }
+    .sort-option {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 8px 10px;
+      border: 0;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--ink);
+      cursor: pointer;
+      font: 12px var(--sans);
+      text-align: left;
+    }
+    .sort-option:hover { background: var(--line-soft); }
+    .sort-option.active { background: #f1ede4; color: var(--accent); }
+    .sort-check { opacity: 0; color: var(--accent); }
+    .sort-option.active .sort-check { opacity: 1; }
+
+    .list { padding: 6px 0 24px; }
+    button.candidate {
+      display: block;
+      width: 100%;
+      padding: 13px 18px 13px 15px;
+      border: 0;
+      border-left: 3px solid transparent;
+      background: transparent;
+      color: var(--ink);
+      cursor: pointer;
+      font: inherit;
+      text-align: left;
+      transition: background .12s ease, border-color .12s ease;
+    }
+    button.candidate:hover { background: var(--line-soft); }
+    button.candidate.active { border-left-color: var(--accent); background: var(--paper); }
+    .cand-title {
+      display: -webkit-box;
+      margin-bottom: 6px;
+      overflow: hidden;
+      font-size: 15px;
+      line-height: 1.35;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+    .cand-meta {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--muted);
+      font: 10.5px var(--sans);
+      letter-spacing: .03em;
+    }
+    .status { display: inline-flex; align-items: center; gap: 6px; text-transform: uppercase; }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--faint); }
+    .status.evaluated .dot, .status.submitted .dot { background: var(--good); }
+    .status.pending .dot { background: var(--warn); }
+    .status.invalid .dot { background: var(--bad); }
+    .status.stale .dot { background: var(--stale); }
+    .selection-tag { color: var(--good); }
+    .cand-score { margin-left: auto; color: var(--accent); font-variant-numeric: tabular-nums; }
+    .list-empty, .empty { padding: 34px 20px; color: var(--muted); font: 13px var(--sans); }
+
+    section.detail { min-width: 0; overflow: auto; }
+    .reader { max-width: 720px; margin: 0 auto; padding: 46px 40px 96px; }
+    .detail h2 {
+      margin: 0 0 14px;
+      font-size: clamp(27px, 3vw, 34px);
+      font-weight: 600;
+      letter-spacing: -.015em;
+      line-height: 1.16;
+    }
+    .detail-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding-bottom: 25px;
+      margin-bottom: 30px;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font: 12px var(--sans);
+      letter-spacing: .03em;
+      flex-wrap: wrap;
+    }
+    .score-num { color: var(--accent); font-variant-numeric: tabular-nums; }
+    .candidate-id { margin-left: auto; color: var(--faint); font: 10.5px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+    .dims { margin: 0 0 34px; }
+    .dim {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 48px;
+      align-items: center;
+      gap: 10px 12px;
+      padding: 5px 0;
+      font: 13px var(--sans);
+    }
+    .dim-label { min-width: 0; overflow-wrap: anywhere; }
+    .dim-val { color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; }
+    .dim-track { grid-column: 1 / -1; height: 3px; margin-top: -3px; overflow: hidden; border-radius: 2px; background: var(--line); }
+    .dim-fill { height: 100%; border-radius: 2px; background: var(--accent); }
+
+    .callout { padding: 14px 18px; margin: 28px 0; border-left: 3px solid var(--accent); border-radius: 0 6px 6px 0; background: var(--accent-soft); }
+    .callout.warning { border-left-color: var(--bad); background: #f7ecec; }
+    .callout.stale { border-left-color: var(--stale); background: #f1edf5; }
+    .callout .section-label { margin-bottom: 7px; color: var(--accent); }
+    .callout.warning .section-label { color: var(--bad); }
+    .callout.stale .section-label { color: var(--stale); }
+    .callout p { margin: 0; font-size: 14px; }
+
+    .prose { font-size: 17px; line-height: 1.66; }
+    .prose > *:first-child { margin-top: 0; }
+    .prose h3 { margin: 40px 0 12px; color: var(--accent); font: 600 12px var(--sans); letter-spacing: .09em; text-transform: uppercase; }
+    .prose h4 { margin: 28px 0 8px; font-size: 18px; font-weight: 600; }
+    .prose p { margin: 0 0 18px; }
+    .prose ul, .prose ol { margin: 0 0 18px; padding-left: 24px; }
+    .prose li { margin: 0 0 7px; }
+    .prose blockquote { margin: 24px 0; padding-left: 18px; border-left: 2px solid var(--line); color: var(--muted); }
+    .prose strong { font-weight: 600; }
+    .prose code { padding: .1em .3em; border-radius: 3px; background: #f0ebe0; font: .82em ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+    .file-links { display: flex; gap: 16px; margin-top: 34px; color: var(--muted); font: 11px var(--sans); flex-wrap: wrap; }
+    .file-links a { color: var(--accent); text-decoration-color: color-mix(in srgb, var(--accent) 30%, transparent); text-underline-offset: 3px; }
+    .raw-detail { padding-top: 16px; margin-top: 36px; border-top: 1px solid var(--line); }
+    .raw-detail summary { color: var(--muted); cursor: pointer; font: 10.5px var(--sans); letter-spacing: .08em; list-style: none; text-transform: uppercase; }
+    .raw-detail summary::-webkit-details-marker { display: none; }
+    .raw-detail summary::before { content: "+ "; color: var(--faint); }
+    .raw-detail[open] summary::before { content: "− "; }
+    pre { margin: 14px 0 0; padding: 16px; overflow: auto; border-radius: 6px; background: #f0ebe0; color: #3a4441; font: 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; line-height: 1.55; overflow-wrap: anywhere; white-space: pre-wrap; }
+
+    @media (max-width: 800px) {
+      header { min-height: 60px; padding: 18px 20px 14px; }
+      header h1 { font-size: 19px; }
+      .head-meta { display: none; }
+      main { grid-template-columns: 1fr; min-height: 0; }
+      aside { max-height: 42vh; border-right: 0; border-bottom: 1px solid var(--line); }
+      section.detail { min-height: 0; }
+      .reader { padding: 32px 24px 72px; }
+      .candidate-id { width: 100%; margin-left: 0; }
+      .loop-info > summary { width: 30px; padding: 0; justify-content: center; font-size: 0; }
+      .loop-info > summary::before { margin: 0; }
+      .info-panel { position: fixed; top: 54px; right: 12px; left: 12px; width: auto; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>__LOOP_TITLE__</h1>
+    <div class="header-right">
+      <div class="head-meta" id="headMeta"></div>
+      <details class="loop-info" id="loopInfo">
+        <summary aria-label="Show loop status">Loop status</summary>
+        <div class="info-panel" id="infoPanel"></div>
+      </details>
+    </div>
+  </header>
+
+  <main>
+    <aside id="candidatePane">
+      <div class="search-wrap">
+        <div class="search-row">
+          <div class="search-field">
+            <input id="search" type="search" autocomplete="off" aria-label="Filter candidates" placeholder="Filter candidates">
+          </div>
+          <details class="sort-control" id="sortControl">
+            <summary aria-label="Sort candidates" title="Sort candidates">
+              <svg viewBox="0 0 16 16" fill="none" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 4h8"></path><path d="M3 8h6"></path><path d="M3 12h4"></path>
+                <path d="M12 3v10"></path><path d="m10.5 10.5 1.5 1.5 1.5-1.5"></path>
+              </svg>
+            </summary>
+            <div class="sort-menu">
+              <button type="button" class="sort-option active" data-sort="time"><span>Newest</span><span class="sort-check">✓</span></button>
+              <button type="button" class="sort-option" data-sort="score"><span>Score</span><span class="sort-check">✓</span></button>
+            </div>
+          </details>
+        </div>
+        <div class="queue-summary" id="queueSummary"></div>
+      </div>
+      <div id="candidateList" class="list"></div>
+    </aside>
+
+    <section id="detail" class="detail" aria-live="polite">
+      <div class="empty">Select a candidate.</div>
+    </section>
+  </main>
+
+  <script id="overview-data" type="application/json">__OVERVIEW_DATA_JSON__</script>
+  <script>
+    let data = JSON.parse(document.getElementById('overview-data').textContent);
+    const list = document.getElementById('candidateList');
+    const detail = document.getElementById('detail');
+    const search = document.getElementById('search');
+    const sortControl = document.getElementById('sortControl');
+    const sortOptions = Array.from(document.querySelectorAll('.sort-option'));
+    const headMeta = document.getElementById('headMeta');
+    const queueSummary = document.getElementById('queueSummary');
+    const infoPanel = document.getElementById('infoPanel');
+    const candidatePane = document.getElementById('candidatePane');
+    const loopInfo = document.getElementById('loopInfo');
+    let sortMode = 'time';
+    let selectedId = preferredCandidateId();
+
+    function esc(value) {
+      return String(value ?? '').replace(/[&<>"']/g, char => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[char]));
+    }
+
+    function noun(plural = false) {
+      const word = String(data.candidate_noun || 'candidate');
+      return plural ? `${word}${word.endsWith('s') ? '' : 's'}` : word;
+    }
+
+    function humanize(value) {
+      return String(value || '').replace(/[_-]+/g, ' ').replace(/\b\w/g, char => char.toUpperCase());
+    }
+
+    function formatTime(value) {
+      if (!value) return 'unknown';
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return String(value).replace('T', ' ').slice(0, 16);
+      return date.toLocaleString([], { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+    }
+
+    function candidates() { return Array.isArray(data.candidates) ? data.candidates : []; }
+
+    function preferredCandidateId() {
+      const all = candidates();
+      const preferred = data.winner_id || (Array.isArray(data.shortlist_ids) ? data.shortlist_ids[0] : null);
+      return all.some(candidate => candidate.candidate_id === preferred) ? preferred : (all[0]?.candidate_id || null);
+    }
+
+    function candidateScore(candidate) {
+      const raw = candidate.score ?? candidate.final_score ?? null;
+      if (raw == null || Number.isNaN(Number(raw))) return null;
+      return Number(raw);
+    }
+
+    function selectionTag(candidate) {
+      if (candidate.is_winner || candidate.candidate_id === data.winner_id) return 'winner';
+      if (candidate.in_shortlist || (data.shortlist_ids || []).includes(candidate.candidate_id)) return 'shortlist';
+      return '';
+    }
+
+    function statusEl(status) {
+      const normalized = ['pending', 'submitted', 'evaluated', 'invalid', 'stale'].includes(status) ? status : 'submitted';
+      return `<span class="status ${esc(normalized)}"><span class="dot"></span>${esc(normalized)}</span>`;
+    }
+
+    function updateChrome() {
+      const all = candidates();
+      const counts = data.counts || {};
+      headMeta.textContent = `${all.length} ${noun(all.length !== 1)} · updated ${formatTime(data.generated_at)}`;
+      const countParts = ['pending', 'evaluated', 'invalid', 'stale']
+        .filter(key => Number(counts[key] || 0) > 0)
+        .map(key => `${counts[key]} ${key}`);
+      queueSummary.textContent = countParts.length ? countParts.join(' · ') : `${all.length} archived`;
+      search.placeholder = `Filter ${noun(true)}`;
+      search.setAttribute('aria-label', `Filter ${noun(true)}`);
+
+      const winner = data.winner_id ? esc(data.winner_id) : '—';
+      const shortlist = Array.isArray(data.shortlist_ids) && data.shortlist_ids.length
+        ? data.shortlist_ids.map(esc).join(', ')
+        : '—';
+      const activities = Array.isArray(data.recent_activity) ? data.recent_activity.slice(0, 8) : [];
+      infoPanel.innerHTML = `
+        <div class="info-title">Loop state</div>
+        <div class="info-grid">
+          <span class="info-key">Selection</span><span class="info-value">${esc(humanize(data.selection_mode || 'single-winner'))}</span>
+          <span class="info-key">Winner</span><span class="info-value hash">${winner}</span>
+          <span class="info-key">Shortlist</span><span class="info-value hash">${shortlist}</span>
+          <span class="info-key">Pending</span><span class="info-value">${esc(counts.pending ?? 0)}</span>
+          <span class="info-key">Evaluated</span><span class="info-value">${esc(counts.evaluated ?? 0)}</span>
+          <span class="info-key">Invalid</span><span class="info-value">${esc(counts.invalid ?? 0)}</span>
+          <span class="info-key">Stale</span><span class="info-value">${esc(counts.stale ?? 0)}</span>
+          <span class="info-key">Input hash</span><span class="info-value hash">${esc(data.input_hash || 'unknown')}</span>
+          <span class="info-key">Criteria hash</span><span class="info-value hash">${esc(data.criteria_hash || 'unknown')}</span>
+        </div>
+        <div class="info-title">Recent activity</div>
+        ${activities.length ? `<ol class="activity">${activities.map(item => `
+          <li><div class="activity-time">${esc(formatTime(item.at))}</div><div class="activity-label">${esc(item.label || 'Activity')}</div>${item.detail ? `<div class="activity-detail">${esc(item.detail)}</div>` : ''}</li>
+        `).join('')}</ol>` : '<div class="activity-detail">No recent activity.</div>'}`;
+    }
+
+    function compareCandidates(left, right) {
+      if (sortMode === 'score') {
+        const leftScore = candidateScore(left);
+        const rightScore = candidateScore(right);
+        if (leftScore == null && rightScore != null) return 1;
+        if (leftScore != null && rightScore == null) return -1;
+        if (leftScore != null && rightScore != null && leftScore !== rightScore) return rightScore - leftScore;
+      }
+      const leftTime = left.submitted_at || '';
+      const rightTime = right.submitted_at || '';
+      if (leftTime !== rightTime) return rightTime.localeCompare(leftTime);
+      return String(right.candidate_id || '').localeCompare(String(left.candidate_id || ''));
+    }
+
+    function visibleCandidates() {
+      const query = search.value.trim().toLowerCase();
+      const filtered = query ? candidates().filter(candidate => [
+        candidate.title, candidate.candidate_id, candidate.status, candidate.verdict, candidate.rationale_excerpt
+      ].join(' ').toLowerCase().includes(query)) : [...candidates()];
+      return filtered.sort(compareCandidates);
+    }
+
+    function renderList() {
+      const visible = visibleCandidates();
+      if (!visible.length) {
+        const message = candidates().length ? `No matching ${noun(true)}.` : `No ${noun(true)} yet.`;
+        list.innerHTML = `<div class="list-empty">${esc(message)}</div>`;
+        detail.innerHTML = `<div class="empty">${esc(message)}</div>`;
+        return;
+      }
+      if (!visible.some(candidate => candidate.candidate_id === selectedId)) selectedId = visible[0].candidate_id;
+      list.innerHTML = visible.map(candidate => {
+        const score = candidateScore(candidate);
+        const tag = selectionTag(candidate);
+        return `<button type="button" class="candidate ${candidate.candidate_id === selectedId ? 'active' : ''}" data-id="${esc(candidate.candidate_id)}" aria-pressed="${candidate.candidate_id === selectedId}">
+          <div class="cand-title">${esc(candidate.title || candidate.candidate_id || 'Untitled candidate')}</div>
+          <div class="cand-meta">${statusEl(candidate.status)}${tag ? `<span class="selection-tag">${esc(tag)}</span>` : ''}<span class="cand-score">${score == null ? '' : esc(score)}</span></div>
+        </button>`;
+      }).join('');
+      renderDetail();
+    }
+
+    function renderDimensions(scores) {
+      const entries = Object.entries(scores || {});
+      if (!entries.length) return '';
+      const values = entries.map(([, value]) => Number(value)).filter(Number.isFinite);
+      const inferredMax = values.length && Math.max(...values) <= 10 ? 10 : Number(data.score_max || 100);
+      return `<div class="dims"><div class="section-label">Dimension scores</div>${entries.map(([label, value]) => {
+        const numeric = Number(value);
+        const percent = Number.isFinite(numeric) ? Math.max(0, Math.min(100, numeric / inferredMax * 100)) : 0;
+        return `<div class="dim"><span class="dim-label">${esc(humanize(label))}</span><span class="dim-val">${esc(value)}</span><div class="dim-track"><div class="dim-fill" style="width:${percent}%"></div></div></div>`;
+      }).join('')}</div>`;
+    }
+
+    function renderMarkdown(markdown) {
+      const lines = String(markdown || '').split('\n');
+      const output = [];
+      let paragraph = [];
+      let listItems = [];
+      let ordered = false;
+      const inline = text => esc(text)
+        .replace(/`([^`]+)`/g, '<code>$1</code>')
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+      const flushParagraph = () => { if (paragraph.length) { output.push(`<p>${inline(paragraph.join(' '))}</p>`); paragraph = []; } };
+      const flushList = () => { if (listItems.length) { const tag = ordered ? 'ol' : 'ul'; output.push(`<${tag}>${listItems.map(item => `<li>${inline(item)}</li>`).join('')}</${tag}>`); listItems = []; } };
+      for (const raw of lines) {
+        const line = raw.trim();
+        if (!line) { flushParagraph(); flushList(); continue; }
+        const orderedMatch = line.match(/^\d+\.\s+(.+)/);
+        if (line.startsWith('- ')) { flushParagraph(); if (listItems.length && ordered) flushList(); ordered = false; listItems.push(line.slice(2)); continue; }
+        if (orderedMatch) { flushParagraph(); if (listItems.length && !ordered) flushList(); ordered = true; listItems.push(orderedMatch[1]); continue; }
+        flushList();
+        if (line.startsWith('### ')) { flushParagraph(); output.push(`<h4>${inline(line.slice(4))}</h4>`); }
+        else if (line.startsWith('## ')) { flushParagraph(); output.push(`<h3>${inline(line.slice(3))}</h3>`); }
+        else if (line.startsWith('# ')) { flushParagraph(); }
+        else if (line.startsWith('> ')) { flushParagraph(); output.push(`<blockquote>${inline(line.slice(2))}</blockquote>`); }
+        else { paragraph.push(line); }
+      }
+      flushParagraph(); flushList();
+      return output.join('\n');
+    }
+
+    function pathHref(path) {
+      if (!path) return '';
+      if (/^file:/i.test(path)) return encodeURI(path);
+      if (/^[a-z][a-z0-9+.-]*:/i.test(path)) return '';
+      if (path.startsWith('/')) return `file://${encodeURI(path)}`;
+      return encodeURI(path);
+    }
+
+    function renderDetail() {
+      const candidate = candidates().find(item => item.candidate_id === selectedId);
+      if (!candidate) { detail.innerHTML = `<div class="empty">Select a ${esc(noun())}.</div>`; return; }
+      const score = candidateScore(candidate);
+      const scoreMax = Number(data.score_max || 100);
+      const tag = selectionTag(candidate);
+      const warningText = candidate.stale_reason || candidate.invalid_reason || candidate.invalidation;
+      const warningClass = candidate.status === 'stale' ? 'stale' : 'warning';
+      const warningLabel = candidate.status === 'stale' ? 'Stale candidate' : 'Invalid candidate';
+      const warning = warningText ? `<div class="callout ${warningClass}"><div class="section-label">${warningLabel}</div><p>${esc(typeof warningText === 'string' ? warningText : JSON.stringify(warningText))}</p></div>` : '';
+      const rationale = candidate.rationale_excerpt ? `<div class="callout"><div class="section-label">Evaluation rationale</div><p>${esc(candidate.rationale_excerpt)}</p></div>` : '';
+      const candidateHref = pathHref(candidate.candidate_path);
+      const evaluationHref = pathHref(candidate.evaluation_path);
+      const links = [
+        candidateHref ? `<a href="${esc(candidateHref)}">Candidate file</a>` : '',
+        evaluationHref ? `<a href="${esc(evaluationHref)}">Evaluation file</a>` : ''
+      ].filter(Boolean).join('');
+      const evaluation = candidate.evaluation ? `<details class="raw-detail"><summary>Raw evaluation</summary><pre>${esc(JSON.stringify(candidate.evaluation, null, 2))}</pre></details>` : '';
+      detail.innerHTML = `<article class="reader">
+        <h2>${esc(candidate.title || candidate.candidate_id || 'Untitled candidate')}</h2>
+        <div class="detail-meta">${statusEl(candidate.status)}${tag ? `<span class="selection-tag">${esc(tag)}</span>` : ''}<span>${score == null ? 'awaiting evaluation' : `<span class="score-num">${esc(score)}</span> / ${esc(scoreMax)}`}</span>${candidate.verdict ? `<span>${esc(candidate.verdict)}</span>` : ''}<span class="candidate-id">${esc(candidate.candidate_id)}</span></div>
+        ${renderDimensions(candidate.dimension_scores)}${warning}${rationale}
+        <div class="prose">${renderMarkdown(candidate.content || '')}</div>
+        ${links ? `<div class="file-links">${links}</div>` : ''}${evaluation}
+      </article>`;
+    }
+
+    function syncSortUI() {
+      sortOptions.forEach(option => option.classList.toggle('active', option.dataset.sort === sortMode));
+    }
+
+    list.addEventListener('click', event => {
+      const button = event.target.closest('button[data-id]');
+      if (!button) return;
+      selectedId = button.dataset.id;
+      renderList();
+      if (window.matchMedia('(max-width: 800px)').matches) detail.scrollTop = 0;
+    });
+    search.addEventListener('input', renderList);
+    sortOptions.forEach(option => option.addEventListener('click', () => {
+      sortMode = option.dataset.sort || 'time';
+      syncSortUI();
+      sortControl.removeAttribute('open');
+      renderList();
+    }));
+    document.addEventListener('click', event => {
+      if (loopInfo.open && !loopInfo.contains(event.target)) loopInfo.removeAttribute('open');
+      if (sortControl.open && !sortControl.contains(event.target)) sortControl.removeAttribute('open');
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') { loopInfo.removeAttribute('open'); sortControl.removeAttribute('open'); search.blur(); }
+    });
+
+    updateChrome();
+    syncSortUI();
+    renderList();
+
+    let currentRaw = document.getElementById('overview-data').textContent;
+    async function refresh() {
+      try {
+        const response = await fetch(location.href, { cache: 'no-store' });
+        if (!response.ok) return;
+        const documentCopy = new DOMParser().parseFromString(await response.text(), 'text/html');
+        const raw = documentCopy.getElementById('overview-data')?.textContent;
+        if (!raw || raw === currentRaw) return;
+        const next = JSON.parse(raw);
+        currentRaw = raw;
+        const listTop = candidatePane.scrollTop;
+        const detailTop = detail.scrollTop;
+        data = next;
+        if (!candidates().some(candidate => candidate.candidate_id === selectedId)) selectedId = preferredCandidateId();
+        updateChrome();
+        renderList();
+        candidatePane.scrollTop = listTop;
+        detail.scrollTop = detailTop;
+      } catch (_) { /* Local-file and transient refresh failures are intentionally ignored. */ }
+    }
+    setInterval(refresh, 30000);
+  </script>
+</body>
+</html>
