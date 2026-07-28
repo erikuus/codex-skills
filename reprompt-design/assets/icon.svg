@@ -1,17 +1,19 @@
-<svg
-  xmlns="http://www.w3.org/2000/svg"
-  width="24"
-  height="24"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="currentColor"
-  stroke-width="2"
-  stroke-linecap="round"
-  stroke-linejoin="round"
->
-  <rect x="3" y="4" width="18" height="12" rx="2" />
-  <path d="M3 8h18" />
-  <circle cx="8" cy="19" r="1" fill="currentColor" stroke="none" />
-  <circle cx="12" cy="19" r="1" fill="currentColor" stroke="none" />
-  <circle cx="16" cy="19" r="1" fill="currentColor" stroke="none" />
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" fill="none">
+  <!-- Keep all artwork inside a 96px corner-safe zone for Codex's rounded host tile. -->
+  <g transform="translate(76 76) scale(1.73)">
+    <text
+      x="37"
+      y="133"
+      fill="#2F7CF6"
+      font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+      font-size="105"
+      font-weight="700"
+      letter-spacing="-9"
+    >Re</text>
+    <g transform="rotate(42 158 146)">
+      <rect x="154" y="108" width="8" height="37" rx="4" fill="#F5A623" />
+      <rect x="149" y="141" width="18" height="12" rx="3" fill="#AAB2BD" />
+      <path d="M149 151H167V161C167 169 161 176 158 180C155 176 149 169 149 161V151Z" fill="#F05D5E" />
+    </g>
+  </g>
 </svg>
