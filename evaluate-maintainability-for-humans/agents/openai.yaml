@@ -1,0 +1,6 @@
+interface:
+  display_name: "Evaluate Maintainability for Humans"
+  short_description: "Probe real code changes for human complexity"
+  icon_small: "./assets/maintainability-scale-small.png"
+  icon_large: "./assets/maintainability-scale.png"
+  default_prompt: "Use $evaluate-maintainability-for-humans to test how easily a developer can make a realistic change in this repository."
