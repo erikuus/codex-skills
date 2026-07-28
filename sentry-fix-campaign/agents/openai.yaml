@@ -1,0 +1,7 @@
+interface:
+  display_name: "Sentry Fix Campaign"
+  short_description: "Remediate related Sentry errors on one branch"
+  icon_small: "./assets/icon-small.svg"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#584674"
+  default_prompt: "Use $sentry-fix-campaign to triage and fix this project's unresolved Sentry issues on one backward-compatible PR branch."
