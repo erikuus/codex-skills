@@ -1,0 +1,4 @@
+interface:
+  display_name: "Refactor LiveView for Humans"
+  short_description: "Simplify Phoenix LiveView code for maintainers"
+  default_prompt: "Use $refactor-liveview-for-humans to simplify this Phoenix LiveView code while preserving behavior and verifying the result."
