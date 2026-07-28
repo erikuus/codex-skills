@@ -1,21 +1,11 @@
-<svg
-  xmlns="http://www.w3.org/2000/svg"
-  width="24"
-  height="24"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="currentColor"
-  stroke-width="2"
-  stroke-linecap="round"
-  stroke-linejoin="round"
->
-  <circle cx="3" cy="5" r="1" fill="currentColor" stroke="none" />
-  <circle cx="3" cy="12" r="1" fill="currentColor" stroke="none" />
-  <circle cx="3" cy="19" r="1" fill="currentColor" stroke="none" />
-  <path d="M5 5c2.5 0 2 4 4 4" />
-  <path d="M5 12h4" />
-  <path d="M5 19c2.5 0 2-4 4-4" />
-  <rect x="9" y="4" width="8" height="16" rx="2.5" />
-  <path d="M17 12h4" />
-  <circle cx="21" cy="12" r="1" fill="currentColor" stroke="none" />
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" fill="none">
+  <path
+    d="M176 130L100 206L176 282M336 130L412 206L336 282"
+    stroke="#F59E0B"
+    stroke-width="36"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <circle cx="256" cy="220" r="38" fill="#28A8E9" />
+  <path d="M192 410C199 337 221 305 256 305C291 305 313 337 320 410H192Z" fill="#28A8E9" />
 </svg>
