@@ -1,0 +1,6 @@
+interface:
+  display_name: "Review to PR"
+  short_description: "Review, repair, and open a verified draft PR"
+  default_prompt: "Use $review-to-pr to review the current branch, fix verified findings, run tests, and open a draft PR without merging."
+policy:
+  allow_implicit_invocation: false
