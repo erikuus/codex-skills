@@ -1,6 +1,6 @@
 ---
 name: finish-vau-github-issue
-description: Finish a VAU development or bug-fix thread by finding the originating issue in erikuus/Issues, using authenticated vautest to verify behavior and capture safe screenshots, normalizing its VAU project status, and posting a clear Estonian user-facing explanation to the issue. Use as the final step after implementing a VAU change requested through GitHub Issues, or when the user asks to report, document, demonstrate, or explain completed VAU work to the requester.
+description: Finish a VAU development or bug-fix thread by finding the originating issue in erikuus/Issues, using authenticated vautest to verify behavior and capture screenshots, normalizing its VAU project status, and posting a concise, complete Estonian user-facing explanation to the issue. Use as the final step after implementing a VAU change requested through GitHub Issues, or when the user asks to report, document, demonstrate, or explain completed VAU work to the requester.
 ---
 
 # Finish a VAU GitHub issue
@@ -60,15 +60,14 @@ Use the `https://www.ra.ee/vautest/index.php/et` base for verification and scree
 
 Verify the actual user-visible behavior before writing. If the feature is missing or broken in `vautest`, stop and report that it could not be verified there. Do not infer from this that it is missing from production, and do not post a completion explanation.
 
-## Capture safe visual evidence
+## Capture visual evidence
 
 Capture one to three screenshots that demonstrate the main workflow. Prefer an overview and the most useful detail state. Use a short video only when motion or a multi-step interaction cannot be explained with screenshots.
 
 - Use existing test data. Do not create, edit, or submit VAU data merely to stage a screenshot unless the user explicitly authorizes it.
-- Prefer clearly synthetic records.
-- Crop screenshots to the relevant interface.
-- Avoid exposing real names, email addresses, birth dates, addresses, phone numbers, request text, or other personal data.
-- Verify that every screenshot matches the explanation and does not show unrelated sensitive content.
+- Crop screenshots to the interface area relevant to the issue.
+- Preserve personal information visible in that relevant area. Do not blur, cover, anonymize, replace, or crop out names, email addresses, birth dates, addresses, phone numbers, request text, or other personal information unless the user's prompt explicitly instructs you to hide or redact it.
+- Verify that every screenshot matches the explanation and does not include unrelated interface content.
 
 Upload the visuals to the GitHub comment and give each one a short Estonian caption and descriptive alt text.
 
@@ -76,11 +75,13 @@ Upload the visuals to the GitHub comment and give each one a short Estonian capt
 
 Always write the comment in simple, correct Estonian for a VAU administrator or other UI user. Use short sentences and concrete instructions. Avoid implementation details such as SQL, migrations, indexes, model methods, code structure, commits, or test internals.
 
-Always begin with these sentences, substituting the Codex user's name only when the thread establishes a different owner:
+Always begin with exactly one introduction sentence in this form:
 
-> Ma ei ole inimene, vaid AI-agent. Kasutan selleks Codexi kasutaja arvutit tema palvel. Codexi kasutaja on Erik Uus.
+> Ma olen AI-agent, kes kasutab arvutit, mille omanik on Erik Uus.
 
-Then explain only verified user-facing behavior:
+Treat **Erik Uus** as a variable. Replace it with the full name of the user currently signed in to Codex. Use the name available from the current Codex session or thread context. If the name cannot be established reliably, ask the user before drafting the comment; do not guess. Do not add the previous multi-sentence disclosure or another generic introduction.
+
+Then explain only verified user-facing behavior that is relevant to this issue. Include every applicable detail needed to understand and use the feature, but omit inapplicable items:
 
 1. what changed and where it appears;
 2. what each marker, message, count, field, or state means;
@@ -94,7 +95,7 @@ Describe the change without claiming that it was implemented, released, or deplo
 
 When describing matching or counting rules, explicitly explain overlaps and why an older or baseline record may have no marker when that is relevant. Never claim fuzzy matching, automatic duplicate rejection, or another behavior that was not verified.
 
-Prefer headings and short lists. Keep the explanation thorough enough to answer likely user questions, but remove developer-facing history.
+Assume readers skim. Lead with the outcome, use short headings and compact lists, and remove repetition. Stay strictly within the issue's scope: omit generic product information, general advice, unaffected behavior, speculative edge cases, and developer-facing history. Completeness means covering every relevant detail of this feature, not expanding into surrounding topics.
 
 ## Review and publish
 
