@@ -1,6 +1,6 @@
 ---
 name: finish-vau-github-issue
-description: Finish a VAU development or bug-fix thread by finding the originating issue in erikuus/Issues, verifying the completed behavior in the authenticated VAU test environment, capturing safe screenshots, and posting a clear Estonian user-facing explanation to the issue. Use as the final step after implementing a VAU change requested through GitHub Issues, or when the user asks to report, document, demonstrate, or explain completed VAU work to the requester.
+description: Finish a VAU development or bug-fix thread by finding the originating issue in erikuus/Issues, using authenticated vautest to verify behavior and capture safe screenshots, normalizing its VAU project status, and posting a clear Estonian user-facing explanation to the issue. Use as the final step after implementing a VAU change requested through GitHub Issues, or when the user asks to report, document, demonstrate, or explain completed VAU work to the requester.
 ---
 
 # Finish a VAU GitHub issue
@@ -27,7 +27,7 @@ Treat the current thread and repository as the source of truth. Before browsing:
 - distinguish implemented behavior from ideas that were discussed but rejected;
 - identify the user-visible routes that were changed or tested.
 
-Do not infer behavior only from the issue description. Confirm it against the final code and the test environment.
+Do not infer behavior only from the issue description. Confirm it against the final code and the behavior visible in `vautest`. Treat `vautest` as the verification and screenshot surface, not as evidence of which environment the change was deployed to.
 
 ## Find the originating issue
 
@@ -36,9 +36,18 @@ Do not infer behavior only from the issue description. Confirm it against the fi
 3. Open the strongest candidate and compare its title and full description with the implemented change.
 4. Continue only when one issue clearly matches. If several issues remain plausible, show their numbers and titles and ask the user to choose. Never comment on a merely similar issue.
 
-Do not change the issue state, labels, assignees, milestone, or relationships unless the user explicitly requests it.
+Do not change the issue state, labels, assignees, milestone, or relationships except for the required VAU project membership and project status below, unless the user explicitly requests another change.
 
-## Identify and verify the test routes
+## Normalize the VAU project status
+
+1. Inspect the issue's project membership.
+2. If the issue is not in the **VAU** project, add it to that project.
+3. Inspect its **Status** field in the VAU project. If the value is anything other than **Ülevaatamisel**, change it to **Ülevaatamisel**.
+4. Verify both the VAU project membership and the **Ülevaatamisel** status after the update.
+
+Do not close or reopen the issue as part of this normalization.
+
+## Identify and verify routes in vautest
 
 Derive test routes from evidence already produced during development, in this order:
 
@@ -47,9 +56,9 @@ Derive test routes from evidence already produced during development, in this or
 3. controller/view routes visible in the final diff or repository;
 4. stable links visible in the active VAU test session.
 
-Use the `https://www.ra.ee/vautest/index.php/et` base. Do not guess route variants.
+Use the `https://www.ra.ee/vautest/index.php/et` base for verification and screenshots, including when the completed change has already been uploaded to production. Do not guess route variants.
 
-Verify the actual user-visible behavior before writing. If the feature is missing, broken, or not yet deployed in `vautest`, stop and report that fact. Do not post a completion explanation.
+Verify the actual user-visible behavior before writing. If the feature is missing or broken in `vautest`, stop and report that it could not be verified there. Do not infer from this that it is missing from production, and do not post a completion explanation.
 
 ## Capture safe visual evidence
 
@@ -80,6 +89,8 @@ Then explain only verified user-facing behavior:
 5. important ordering, overlap, or edge-case behavior discovered during development;
 6. what the feature does not decide or automate;
 7. screenshots with short captions.
+
+Describe the change without claiming that it was implemented, released, or deployed in a test environment. The use of `vautest` for verification and screenshots must not determine the deployment wording. If the thread reliably establishes a production deployment and that fact is useful to the requester, describe it accurately; otherwise keep the explanation environment-neutral. Do not label screenshot captions as evidence of a test-environment implementation.
 
 When describing matching or counting rules, explicitly explain overlaps and why an older or baseline record may have no marker when that is relevant. Never claim fuzzy matching, automatic duplicate rejection, or another behavior that was not verified.
 
