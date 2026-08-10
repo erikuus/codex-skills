@@ -1,0 +1,13 @@
+interface:
+  display_name: "Analyze GitHub Feature"
+  short_description: "Clarify GitHub feature requests before coding"
+  default_prompt: "Use $analyze-github-feature with a GitHub issue URL and documentation path to establish an evidence-backed consensus before implementation."
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "github"
+      description: "GitHub MCP server for issue reading, comments, and issue updates"
+      transport: "streamable_http"
+      url: "https://api.githubcopilot.com/mcp/"
+policy:
+  allow_implicit_invocation: false
