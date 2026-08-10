@@ -7,9 +7,10 @@ Use this reference to calibrate investigation depth, select the next question, a
 1. [Core stance](#core-stance)
 2. [Evidence and proportional depth](#evidence-and-proportional-depth)
 3. [Choosing the next question](#choosing-the-next-question)
-4. [Requirements maturity](#requirements-maturity)
-5. [Estonian public-writing style](#estonian-public-writing-style)
-6. [Examples](#examples)
+4. [Ambiguity-first question ladder](#ambiguity-first-question-ladder)
+5. [Requirements maturity](#requirements-maturity)
+6. [Estonian public-writing style](#estonian-public-writing-style)
+7. [Examples](#examples)
 
 ## Core stance
 
@@ -106,6 +107,58 @@ Useful question themes include:
 - Which roles may see or change the information?
 - What is the smallest change that would solve the validated need?
 - What happens if no change is made?
+
+## Ambiguity-first question ladder
+
+Use this ladder when the request does not identify a unique workflow. Do not jump from an ambiguous noun directly to feature design.
+
+### 1. Confirm the probable context
+
+Infer the most plausible actor and workflow from the issue, supplied documentation, and code. Present it as an inference, not a fact, and ask for confirmation.
+
+Good form:
+
+> Saan soovist praegu aru nii, et … See tundub kõige tõenäolisem, sest … Kas peame silmas just seda olukorda?
+
+If two interpretations are similarly plausible, present both briefly. Do not list every theoretical procedure.
+
+### 2. Identify the starting surface and source object
+
+After the context is confirmed, establish where the user expects to begin and what they expect to act on. A request may say “old application” while the selectable objects are actually orders, archival items, attachments, or another child record.
+
+Useful form:
+
+> Kust peaks kasutaja seda tegevust alustama ja mida ta seal valib?
+
+Prefer named current screens or objects discovered from evidence over abstract wording.
+
+### 3. State the current representation
+
+Tell participants what the current screen actually provides before proposing controls. A PDF, email, summary row, or generated attachment cannot host row selection without a new interactive representation.
+
+Useful form:
+
+> Praegu saab kasutaja vana taotluse avada PDF-ina. Seal ei ole valitavat materjalide loendit.
+
+This is not a reason to reject the need. It identifies the real design boundary.
+
+### 4. Establish relevant lifecycle rules
+
+Ask only about states that change feasibility or expected behavior: active versus expired access, approved versus denied items, duplicates, ownership, permissions, or whether previously valid items remain eligible.
+
+Do not enumerate every lifecycle state when only one distinction affects the request.
+
+### 5. Offer the smallest feasible choices
+
+Give two or three user-facing options after the scope, starting point, and current representation are known. Put the smallest sufficient option first.
+
+For reuse from an old non-interactive record, options might be:
+
+1. Start from the old record and reuse every still-eligible item without individual selection.
+2. Add an interactive item view where the user can select individual items before continuing.
+3. Keep the current flow and improve guidance when the need is too rare to justify either change.
+
+Recommend based on the confirmed outcome. Do not recommend the simplest option when it fails an essential need such as selecting only some items.
 
 ## Requirements maturity
 
@@ -256,3 +309,36 @@ After explicit agreement, post the no-build summary, close the issue, pause the 
 > Kas soov on seda käitumist muuta või oli küsimus praeguse töökorralduse täpsustamiseks?
 
 This keeps the conversation focused on product intent rather than making participants rediscover system behavior.
+
+### 6. Vague request to create a new application from an old one
+
+**Request:** “Create a new application based on a selection from an old application.”
+
+**Documentation evidence:** Several application procedures exist. The most plausible interpretation is a client reusing records from an earlier restricted-digital-material application. The client's consolidated history opens old applications as PDFs and has no interactive historical item list.
+
+**First GitHub comment — confirm context only:**
+
+> Saan soovist praegu aru nii, et klient tahab varasema virtuaalse juurdepääsutaotluse materjalide põhjal teha uue taotluse. See tundub kõige tõenäolisem, sest selles töövoos valib klient taotlusse konkreetsed materjalid.
+>
+> Kas peame silmas just seda olukorda?
+
+Do not ask about checkboxes, copying rules, or expired permissions in the same comment.
+
+**After context is confirmed — establish the starting point:**
+
+> Kust peaks klient uut tegevust alustama?
+>
+> Praegu näeb klient varasemat taotlust oma konto all ja saab selle avada PDF-ina. PDF-is ei ole valitavat materjalide loendit.
+>
+> Kas tegevus peaks algama varasema taotluse rea juurest või mõnest olemasolevast materjalide vaatest?
+
+**After the starting point is confirmed — offer feasible options:**
+
+> Näen praegu kahte võimalikku lahendust.
+>
+> 1. Varasema taotluse juurest saab alustada uut taotlust kõigi uuesti sobivate materjalidega. See on lihtsam lahendus.
+> 2. Varasema taotluse jaoks luuakse materjalide vaade, kus klient märgib vajalikud read. See võimaldab valida ainult osa materjale, kuid lisab uue vaate ja sammu.
+>
+> Soovitan esimest varianti, kui tavaliselt vajatakse kõiki varasemaid materjale. Kui osaline valik on oluline, on vaja teist varianti.
+
+Only then clarify eligibility rules such as expired access, prior denial, duplicates, and items that are no longer available. Each answer should narrow the next question.
