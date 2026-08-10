@@ -1,21 +1,27 @@
 ---
 name: finish-vau-github-issue
-description: Finish a VAU development or bug-fix thread by finding the originating issue in erikuus/Issues, using authenticated vautest to verify behavior and capture screenshots, normalizing its VAU project status, and posting a concise, complete Estonian user-facing explanation to the issue. Use as the final step after implementing a VAU change requested through GitHub Issues, or when the user asks to report, document, demonstrate, or explain completed VAU work to the requester.
+description: Finish a VAU development or bug-fix thread by finding the originating issue in erikuus/Issues through the connected GitHub app, using authenticated vautest to verify behavior and capture screenshots, normalizing its VAU project status with gh, and posting a concise, complete Estonian user-facing explanation. Use as the final step after implementing a VAU change requested through GitHub Issues, or when the user asks to report, document, demonstrate, or explain completed VAU work to the requester.
 ---
 
 # Finish a VAU GitHub issue
 
-Use the user's existing Chrome sessions to turn the completed work in the current thread into a verified, user-facing GitHub issue comment.
+Use a connector-first hybrid workflow to turn the completed work in the current thread into a verified, user-facing GitHub issue comment:
 
-## Use the required browser sessions
+- use the connected GitHub app for issue search, reading, and structured verification;
+- use `gh api graphql` only for GitHub Projects v2 membership and status fields;
+- use the user's authenticated Chrome session for `vautest`, screenshots, native GitHub image upload, and rendered-preview checks.
 
-1. Read and follow the Chrome plugin's `control-chrome` skill before browser work. Follow its confirmation and tab-finalization rules.
-2. List open Chrome tabs. Claim existing authenticated tabs matching:
-   - `https://github.com/erikuus/Issues/issues` or an issue below that path;
-   - `https://www.ra.ee/vautest/index.php/et` or an application page below that path.
-3. Confirm that GitHub permits issue commenting and VAU shows an authenticated administrator interface.
-4. If either active session is absent or unauthenticated, pause. Ask the user to open or sign in to both sites and tell you when they are ready. Do not open a replacement login session or switch to another browser.
-5. If several matching VAU tabs are open and there is no uniquely relevant one, ask which visible tab to use.
+Do not use the GitHub web UI for semantic issue work when the GitHub app or `gh` covers the operation.
+
+## Prepare the required tools and sessions
+
+1. Read and follow the GitHub plugin's `github` skill before GitHub work.
+2. Confirm that the connected GitHub app can access `erikuus/Issues`. If it is unavailable or unauthenticated, pause and ask the user to connect GitHub. Do not replace it with GitHub web-page search.
+3. Before browser work, read and follow the Chrome plugin's `control-chrome` skill. Follow its confirmation and tab-finalization rules.
+4. Use an authenticated Chrome tab matching `https://www.ra.ee/vautest/index.php/et` or an application page below that path. Confirm that VAU shows an authenticated administrator interface.
+5. If the VAU session is absent or unauthenticated, ask the user to open or sign in to `vautest` and tell you when it is ready. If several matching VAU tabs are open and there is no uniquely relevant one, ask which visible tab to use.
+
+Do not require or inspect a GitHub browser tab at the start. Use GitHub in the browser only later if native screenshot attachment or rendered-preview work requires it.
 
 ## Reconstruct the change from the development thread
 
@@ -31,21 +37,28 @@ Do not infer behavior only from the issue description. Confirm it against the fi
 
 ## Find the originating issue
 
-1. Start from the active `erikuus/Issues` tab.
-2. Search open and closed issues using distinctive terms from the problem, feature, module, or Estonian ticket text found in the thread.
-3. Open the strongest candidate and compare its title and full description with the implemented change.
+1. Search open and closed issues in `erikuus/Issues` through the connected GitHub app, using distinctive terms from the problem, feature, module, or Estonian ticket text found in the thread.
+2. Fetch the strongest candidate through the GitHub app and compare its title, full description, and relevant comments with the implemented change.
+3. Record its issue number and direct URL for later browser attachment work.
 4. Continue only when one issue clearly matches. If several issues remain plausible, show their numbers and titles and ask the user to choose. Never comment on a merely similar issue.
+
+Do not search for or inspect candidate issues through the GitHub web UI unless the user explicitly asks for UI inspection.
 
 Do not change the issue state, labels, assignees, milestone, or relationships except for the required VAU project membership and project status below, unless the user explicitly requests another change.
 
 ## Normalize the VAU project status
 
-1. Inspect the issue's project membership.
-2. If the issue is not in the **VAU** project, add it to that project.
-3. Inspect its **Status** field in the VAU project. If the value is anything other than **Ülevaatamisel**, change it to **Ülevaatamisel**.
-4. Verify both the VAU project membership and the **Ülevaatamisel** status after the update.
+Use authenticated `gh api graphql` for this section because the GitHub app does not expose GitHub Projects v2 fields.
+
+1. Confirm `gh` authentication and access to the repository owner's projects.
+2. Query the project, field, option, issue, and existing project-item IDs. Resolve them from GitHub; do not hardcode IDs from an earlier run.
+3. If the issue is not in the **VAU** project, add it to that project.
+4. Inspect its **Status** field in the VAU project. If the value is anything other than **Ülevaatamisel**, change it to **Ülevaatamisel**.
+5. Query the project item again and verify both the VAU project membership and the **Ülevaatamisel** status.
 
 Do not close or reopen the issue as part of this normalization.
+
+If `gh` is unavailable, unauthenticated, lacks the required project scope, or cannot resolve the project unambiguously, stop and report the exact blocker. Do not silently fall back to editing project fields through the GitHub web UI.
 
 ## Identify and verify routes in vautest
 
@@ -69,7 +82,7 @@ Capture one to three screenshots that demonstrate the main workflow. Prefer an o
 - Preserve personal information visible in that relevant area. Do not blur, cover, anonymize, replace, or crop out names, email addresses, birth dates, addresses, phone numbers, request text, or other personal information unless the user's prompt explicitly instructs you to hide or redact it.
 - Verify that every screenshot matches the explanation and does not include unrelated interface content.
 
-Upload the visuals to the GitHub comment and give each one a short Estonian caption and descriptive alt text.
+Keep the screenshot files locally until the full comment is ready. Give each one a short Estonian caption and descriptive alt text. Upload them later through GitHub's native comment UI; do not commit screenshot files to a repository merely to obtain image URLs.
 
 ## Write the issue comment in clear Estonian
 
@@ -99,11 +112,15 @@ Assume readers skim. Lead with the outcome, use short headings and compact lists
 
 ## Review and publish
 
-1. Prepare the full comment and upload the visuals without submitting it.
-2. Check GitHub's rendered preview. Confirm the opening disclosure, Estonian wording, list formatting, image placement, and alt text.
-3. Ask for action-time confirmation immediately before clicking **Comment**, because the post is representational communication from the user's GitHub account.
-4. After confirmation, submit only with **Comment**. Do not use **Close with comment** unless closing was explicitly requested.
-5. Verify the new comment in the issue activity, including the author, text, and every image.
-6. Leave the published issue open as a deliverable and report its direct comment URL.
+1. Prepare the complete Markdown comment outside the GitHub web UI.
+2. Only after the issue is identified and the comment is ready, use or navigate an authenticated Chrome tab directly to the recorded issue URL. Do not browse the issue list or repeat issue discovery in the UI.
+3. Place the prepared comment in the comment editor and upload the screenshots as native GitHub attachments without submitting it.
+4. Check GitHub's rendered preview. Confirm the opening disclosure, Estonian wording, list formatting, image placement, captions, and alt text.
+5. Ask for action-time confirmation immediately before clicking **Comment**, because the post is representational communication from the user's GitHub account.
+6. After confirmation, submit only with **Comment**. Do not use **Close with comment** unless closing was explicitly requested.
+7. Verify the published comment's author and text through the GitHub app, and verify every rendered image in the browser.
+8. Leave the published issue open as a deliverable and report its direct comment URL.
+
+If the user explicitly requests no screenshots, skip the GitHub browser steps and, after action-time confirmation, publish the prepared Markdown through the GitHub app. Verify the resulting comment through the app.
 
 If upload or submission fails, keep the draft intact, state exactly what remains, and ask only for the specific user action needed to continue.
