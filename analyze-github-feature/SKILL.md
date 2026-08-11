@@ -1,13 +1,13 @@
 ---
 name: analyze-github-feature
-description: Analyze a proposed feature before implementation by combining one GitHub issue, one supplied Markdown documentation file, and the current project's code; conduct an evidence-led Estonian clarification conversation in the issue, maintain an hourly same-task monitor, establish explicit participant consensus, and hand a technical plan back to the invoking Codex task without implementing it. Use only when the user explicitly invokes `$analyze-github-feature` with a GitHub issue URL and documentation path. Never invoke implicitly for ordinary feature requests.
+description: Analyze a proposed feature before implementation by combining one GitHub issue, one supplied Markdown documentation file, and the current project's code; conduct an evidence-led Estonian clarification conversation in the issue, maintain a weekday working-hours same-task monitor, establish explicit participant consensus, and hand a technical plan back to the invoking Codex task without implementing it. Use only when the user explicitly invokes `$analyze-github-feature` with a GitHub issue URL and documentation path. Never invoke implicitly for ordinary feature requests.
 ---
 
 # Analyze a GitHub feature
 
 Establish whether a requested feature solves a real problem and what, if anything, should be built. Treat the issue as evidence of a need or desire, not as an implementation specification.
 
-Explicit invocation authorizes the scoped GitHub comments, Project status changes, agreed no-build closure, and hourly heartbeat described below. It never authorizes implementation or edits to the project checkout.
+Explicit invocation authorizes the scoped GitHub comments, Project status changes, agreed no-build closure, and working-hours heartbeat described below. It never authorizes implementation or edits to the project checkout.
 
 ## Require the invocation contract
 
@@ -122,20 +122,21 @@ After the first analyst comment is successfully visible on the issue, attempt to
 
 Do not add the issue to a Project. Do not replace the status with a similarly named label. Do not alter labels, assignees, milestone, title, body, state, or other fields as part of clarification.
 
-## Establish one hourly continuation heartbeat
+## Establish one working-hours continuation heartbeat
 
-After the first substantive GitHub comment, ensure one hourly heartbeat is attached to the current Codex task.
+After the first substantive GitHub comment, ensure one heartbeat is attached to the current Codex task.
 
 - Use the Codex scheduled-task/automation capability, not a shell cron job or a manually written automation file.
 - Name it deterministically: `Analyze <owner>/<repo>#<number>`.
 - Inspect existing automations and reuse or update an exact matching heartbeat instead of creating a duplicate.
 - Keep it attached to the current task so it retains the issue analysis and project context.
-- Use an hourly cadence and the user's current timezone.
+- Check at each full hour from 08:00 through 18:00, Monday through Friday, in the `Europe/Tallinn` timezone.
+- Do not schedule overnight or weekend runs. Activity received outside the window waits for the next scheduled check.
 - Do not override the user's configured model or reasoning effort.
 
 Use a durable prompt equivalent to:
 
-> Use `$analyze-github-feature` to continue analysis of `<issue-url>` using documentation at `<documentation-path>`. This is an hourly continuation, not a new analysis. Read new GitHub activity, respond in concise plain Estonian only when a relevant human message requires a useful question, option, clarification, or consensus step, and never duplicate an earlier comment. Do not implement or edit project files. Pause this heartbeat after an agreed implementation handoff, an agreed no-build closure, issue cancellation or closure, a user stop request, or a persistent access blocker.
+> Use `$analyze-github-feature` to continue analysis of `<issue-url>` using documentation at `<documentation-path>`. This is a scheduled weekday working-hours continuation, not a new analysis. Read new GitHub activity, respond in concise plain Estonian only when a relevant human message requires a useful question, option, clarification, or consensus step, and never duplicate an earlier comment. Do not implement or edit project files. Pause this heartbeat after an agreed implementation handoff, an agreed no-build closure, issue cancellation or closure, a user stop request, or a persistent access blocker.
 
 Preserve the actual resolved issue URL and documentation path in the prompt. If the automation capability is unavailable, continue the initial analysis, report the missing monitor as a blocker in the Codex task, and do not invent a scheduling workaround.
 
