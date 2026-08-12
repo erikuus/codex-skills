@@ -9,8 +9,9 @@ Use this reference to calibrate investigation depth, select the next question, a
 3. [Choosing the next question](#choosing-the-next-question)
 4. [Ambiguity-first question ladder](#ambiguity-first-question-ladder)
 5. [Requirements maturity](#requirements-maturity)
-6. [Estonian public-writing style](#estonian-public-writing-style)
-7. [Examples](#examples)
+6. [Prototype validation](#prototype-validation)
+7. [Estonian public-writing style](#estonian-public-writing-style)
+8. [Examples](#examples)
 
 ## Core stance
 
@@ -30,8 +31,10 @@ Use this sequence:
 4. Define the desired observable outcome.
 5. Analyze scope and consequences.
 6. Formulate requirements and options.
-7. Ask explicitly for agreement.
-8. Hand off either an implementation plan or a no-build decision.
+7. Ask explicitly for direction agreement.
+8. Validate materially uncertain user-visible behavior with one prototype when useful.
+9. Ask explicitly for final agreement.
+10. Hand off either an implementation plan or a no-build decision.
 
 Do not seek certainty about irrelevant details. The goal is enough confidence to make a responsible decision.
 
@@ -214,7 +217,7 @@ The analysis is mature enough for a consensus request when evidence supports:
 - observable acceptance criteria;
 - no material unresolved disagreement.
 
-Ask for agreement only when a response can responsibly close analysis. A useful Estonian form is:
+Ask for direction agreement only when the problem and proposed direction are mature. A useful Estonian form is:
 
 > Minu arusaam on järgmine: …
 >
@@ -227,6 +230,31 @@ For a no-build recommendation:
 > Palun kinnitage, kas nõustute selle järeldusega. Pärast kinnitust võtan otsuse kokku ja sulgen teema.
 
 Do not interpret silence as agreement.
+
+## Prototype validation
+
+Use a prototype to answer a product question, not to prove technical feasibility or begin implementation. It adds value when experienced users can identify a wrong interaction, missing state, confusing starting point, or unsuitable workflow more reliably by trying it than by reading a description.
+
+Before prototyping, require agreement on the problem, actor, starting context, desired outcome, main scope, and recommended direction. Keep genuinely unresolved visible behavior discoverable in the prototype. Do not use polish to conceal uncertainty or invent a full product around a narrow decision.
+
+A good prototype demonstrates:
+
+- the agreed starting point;
+- the smallest meaningful sequence of user actions;
+- the information and choices needed at each step;
+- the resulting visible state; and
+- any high-impact branch participants must judge.
+
+It may deliberately omit technical processing, integrations, persistence, exhaustive validation, and rare failure states when those omissions are disclosed. Synthetic data should feel realistic enough for expert users to evaluate the workflow without resembling real customer records.
+
+After participants try it, separate feedback into:
+
+- **misunderstanding:** return to clarification before changing the prototype;
+- **material workflow correction:** revise the same prototype;
+- **cosmetic preference:** record it without blocking agreement unless it affects comprehension or accessibility;
+- **new scope:** explain the expansion and do not absorb it silently.
+
+Final prototype acceptance must name the demonstrated workflow as the agreed implementation target. Do not treat “looks good” as acceptance when material questions remain in the same comment or discussion.
 
 ## Estonian public-writing style
 
@@ -384,3 +412,21 @@ After eligibility is clear, a genuine open decision could be the initial selecti
 > Soovitan esimest varianti, sest see toetab nii kõigi kui ka ainult osa varasemate säilikute uuesti taotlemist väiksema tööga.
 
 Only then clarify eligibility rules such as expired access, prior denial, duplicates, and items that are no longer available. Each answer should narrow the next question.
+
+### 7. Direction is clear but the interaction needs validation
+
+**Agreed direction:** From a previous application, the client opens its eligible materials, selects all or some of them, and starts a new application.
+
+**Remaining uncertainty:** Participants agree on the need and starting point but have not experienced the proposed selection and continuation flow.
+
+**Prototype behavior:** Create one private Sites prototype showing the previous-application row, eligible-material selection, selected count, and continuation into a new draft. Use synthetic records. Omit real submission, permissions processing, and integrations, and say so in the prototype and issue comment.
+
+**Possible GitHub comment:**
+
+> Tegin kokkulepitud töövoost lihtsa näidise: `<prototype-url>`
+>
+> Näidis näitab, kuidas klient avab varasema taotluse säilikud, valib neist kõik või osa ja jätkab uue taotlusega. See ei saada päris taotlust ega kontrolli kõiki piiranguid.
+>
+> Palun proovige valik läbi. Kas selline töövoog võib olla arenduse kokkulepitud alus?
+
+If feedback changes the selection behavior, revise the same prototype and URL. Produce the technical plan only after an explicit affirmative response and no unresolved material objection.

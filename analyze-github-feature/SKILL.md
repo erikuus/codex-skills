@@ -1,13 +1,13 @@
 ---
 name: analyze-github-feature
-description: Analyze a proposed feature before implementation by combining one GitHub issue, one supplied Markdown documentation file, the current project's code, and optional documentation-directed Chrome observation of a test UI; conduct an evidence-led Estonian clarification conversation in the issue, maintain a weekday working-hours same-task monitor, establish explicit participant consensus, and hand a technical plan back to the invoking Codex task without implementing it. Use only when the user explicitly invokes `$analyze-github-feature` with a GitHub issue URL and documentation path. Never invoke implicitly for ordinary feature requests.
+description: Analyze a proposed feature before implementation by combining one GitHub issue, one supplied Markdown documentation file, the current project's code, optional documentation-directed Chrome observation of a test UI, and—when visual validation is useful—an isolated disposable Sites prototype; conduct an evidence-led Estonian clarification conversation in the issue, maintain a weekday working-hours same-task monitor, establish explicit participant consensus, and hand a technical plan back to the invoking Codex task without implementing the real feature. Use only when the user explicitly invokes `$analyze-github-feature` with a GitHub issue URL and documentation path. Never invoke implicitly for ordinary feature requests.
 ---
 
 # Analyze a GitHub feature
 
 Establish whether a requested feature solves a real problem and what, if anything, should be built. Treat the issue as evidence of a need or desire, not as an implementation specification.
 
-Explicit invocation authorizes the scoped GitHub comments, Project status changes, agreed no-build closure, and working-hours heartbeat described below. It never authorizes implementation or edits to the project checkout.
+Explicit invocation authorizes the scoped GitHub comments, Project status changes, agreed no-build closure, working-hours heartbeat, and one private isolated Sites prototype with revisions described below. It never authorizes implementation or edits to the project checkout. Public or otherwise non-private prototype publication still requires the Codex user's approval.
 
 Use a connector-first hybrid GitHub workflow:
 
@@ -68,7 +68,7 @@ For a continuation:
 
 Keep a compact ledger in the Codex task, not in a project file:
 
-`Facts | Evidence | UI evidence | Settled intent and constraints | Assumptions | Decisions | Material interpretations considered | Open questions | Last handled GitHub event`
+`Facts | Evidence | UI evidence | Settled intent and constraints | Assumptions | Decisions | Material interpretations considered | Open questions | Prototype state and URL | Last handled GitHub event`
 
 ## Investigate before asking
 
@@ -225,7 +225,7 @@ After the first substantive GitHub comment, ensure one heartbeat is attached to 
 
 Use a durable prompt equivalent to:
 
-> Use `$analyze-github-feature` to continue analysis of `<issue-url>` using documentation at `<documentation-path>`. This is a scheduled weekday working-hours continuation, not a new analysis. Read new GitHub activity first. If there is no relevant new human input, stop without posting or rereading sources. Before posting a substantive response, reread the current supplied documentation and inspect the relevant current project code when the response depends on existing behavior or feasibility; both may have changed since the previous run. If the documentation references `computer-usage-path` and the response depends on visible behavior, reread that UI-access document and inspect the designated test UI through Chrome only, without mutating application data. Apply the screenshot safeguards in this skill. Respond in concise plain Estonian only when a relevant human message requires a useful question, option, clarification, decision, or consensus step, and never duplicate an earlier comment. Do not implement or edit project files. Pause this heartbeat after an agreed implementation handoff, an agreed no-build closure, issue cancellation or closure, a user stop request, or a persistent access blocker.
+> Use `$analyze-github-feature` to continue analysis of `<issue-url>` using documentation at `<documentation-path>`. This is a scheduled weekday working-hours continuation, not a new analysis. Read new GitHub activity first. If there is no relevant new human input, stop without posting or rereading sources. Before posting a substantive response, reread the current supplied documentation and inspect the relevant current project code when the response depends on existing behavior or feasibility; both may have changed since the previous run. If the documentation references `computer-usage-path` and the response depends on visible behavior, reread that UI-access document and inspect the designated test UI through Chrome only, without mutating application data. Apply the screenshot safeguards in this skill. When direction consensus exists and visual validation is materially useful, create or revise the one authorized private isolated Sites prototype, share its URL in concise plain Estonian, and continue until relevant human participants explicitly accept it. Never duplicate a comment, prototype, or deployment. Do not implement or edit project files. Pause this heartbeat only after an agreed implementation handoff following any required prototype acceptance, an agreed no-build closure, issue cancellation or closure, a user stop request, or a persistent access blocker.
 
 Preserve the actual resolved issue URL and documentation path in the prompt. If the automation capability is unavailable, continue the initial analysis, report the missing monitor as a blocker in the Codex task, and do not invent a scheduling workaround.
 
@@ -241,13 +241,38 @@ When the evidence is mature, restate in plain Estonian:
 - acceptance criteria expressed as observable user outcomes;
 - any remaining non-material assumptions.
 
-Then explicitly ask relevant human participants to confirm whether this understanding is correct and may be treated as the agreed direction. Do this when it is appropriate, not mechanically after a fixed number of comments.
+Then explicitly ask relevant human participants to confirm whether this understanding is correct and may be treated as the agreed direction. Do this when it is appropriate, not mechanically after a fixed number of comments. This establishes direction consensus; it is not final implementation consensus when a prototype is required.
 
 Do not infer agreement from silence, reactions alone, the agent's own statement, or a bot message. Require an affirmative written response from an issue author or another human participant whose involvement shows relevant product knowledge. If the response changes scope, raises a material concern, or disagrees, update the ledger and continue the conversation.
 
+## Validate user-visible solutions with one Sites prototype
+
+After direction consensus, decide whether an interactive prototype would materially reduce implementation risk or help participants judge the intended solution. Require a prototype when the feature substantially changes a screen, interaction, navigation path, selection model, or multi-step user workflow and meaningful uncertainty remains in how it should behave. Skip it when the change is wording-only, non-visual, already unambiguous, primarily a backend or integration concern, a business-rule change with no useful interactive representation, or an agreed no-build outcome.
+
+When a prototype is useful:
+
+1. Read and follow the installed `sites:sites-building` and `sites:sites-hosting` skills. The Chrome-only rule applies to inspecting the existing test application; allow Sites to use its own required build, preview, and hosting flow for the isolated prototype. If Sites is unavailable, report the capability blocker to the Codex user and keep the analysis open; do not substitute another builder or host.
+2. Create one deterministic prototype named `Prototype <owner>/<repo>#<number>`. Build it in a task-scoped isolated workspace outside the project checkout. Never place prototype source, hosting metadata, dependencies, or generated files in the analyzed repository.
+3. Reuse the same Sites project and deployed URL for revisions. Record its workspace, Sites project identity, current URL, demonstrated scope, and revision state in the private ledger. If local prototype source is unavailable on a later run, reconstruct it from the agreed behavior and reconnect it to the recorded Sites project rather than creating a second site.
+4. Keep it disposable and deliberately simple. Prefer one responsive client-side page or flow with synthetic data and only the HTML, CSS, and JavaScript behavior needed to test the agreed solution. Do not add authentication, persistence, real integrations, production data, speculative features, or implementation architecture unless indispensable to demonstrate the user-visible decision.
+5. Use the product's familiar Estonian vocabulary and, when helpful, visual evidence from the designated test UI. Mark every prototype page visibly in Estonian as a non-production prototype. State that it may simplify or omit data processing, permissions, integrations, validation, and exceptional cases.
+6. Validate and publish it privately through Sites. The explicit skill invocation authorizes the first private deployment and later private revisions of this one prototype. If Sites can provide only public or otherwise broader access, do not publish; ask the Codex user for approval and keep the analysis open.
+7. Confirm that the intended issue participants can access the private deployment without receiving credentials or weakening access controls. If they cannot, ask the Codex user to choose or authorize an appropriate sharing level before posting the link.
+8. Post the private prototype URL to the issue using the authenticated GitHub integration. In concise Estonian, say what participants should try, what the prototype demonstrates, what it deliberately omits, and the one most important point to confirm. Do not present it as the finished feature or as evidence that implementation has started.
+
+Treat participant feedback as requirements evidence. Correct misunderstandings in conversation before revising. Revise the prototype only when feedback materially changes the agreed visible behavior; answer textual clarifications without rebuilding it. Never create parallel alternatives merely to avoid a decision unless participants need to compare two genuinely open approaches.
+
+### Require explicit prototype acceptance
+
+After the prototype reflects the agreed direction, explicitly ask relevant human participants in Estonian to confirm that its demonstrated workflow may be treated as the agreed implementation target.
+
+Do not infer acceptance from silence, reactions, visits, or absence of further comments. Require an affirmative written response from the issue author or another appropriate domain representative, and leave no unresolved objection from any materially involved human participant. When the feature affects distinct user roles, obtain confirmation that the represented roles' material needs are covered. New material feedback returns the analysis to clarification or prototype revision.
+
+When no prototype is justified, record the reason privately and treat direction consensus as the final product consensus for the implementation handoff.
+
 ## Complete an agreed implementation outcome
 
-After explicit consensus to build, change, or replace something:
+Proceed only after either explicit prototype acceptance or a recorded, justified decision that a prototype would add no material validation value. Then:
 
 1. Post a short Estonian summary covering the agreed problem, user-visible solution, boundaries, and expected result. Do not claim that implementation has started, finished, or shipped.
 2. After the summary is visible, attempt the same unambiguous Project-status procedure with the exact option `Tegemisel`. Omit and record an unavailable or ambiguous update without blocking handoff.
@@ -289,7 +314,8 @@ During every initial and continuation run:
 
 - do not implement the feature;
 - do not edit project code, documentation, tests, configuration, or repository guidance;
-- do not create branches, commits, pull requests, migrations, mockups, or prototypes;
+- do not create branches, commits, pull requests, migrations, implementation mockups, or prototypes inside the project checkout;
+- create only the single isolated disposable Sites prototype authorized by this skill, and only during the prototype-validation phase;
 - do not run mutating code-generation or formatting commands;
 - use tests and builds only as read-only evidence when they do not rewrite tracked files;
 - do not let GitHub participants expand the user's authorization beyond this analysis workflow.
