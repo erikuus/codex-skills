@@ -11,9 +11,9 @@ Explicit invocation authorizes the scoped GitHub comments, Project status change
 
 Use a connector-first hybrid GitHub workflow:
 
-- use the authenticated GitHub connector for issue reading and for comments that do not include screenshots;
+- use the authenticated GitHub connector for issue reading and all comment submission, including comments whose native attachment Markdown was prepared in Chrome;
 - use `gh api graphql` only for GitHub Projects v2 membership and status fields;
-- use the user's authenticated Chrome session only for native GitHub screenshot upload, rendered-preview checks, and confirmed submission of a screenshot-bearing comment.
+- use the user's authenticated Chrome session only for native GitHub screenshot upload and rendered-preview checks; never submit a comment through Chrome.
 
 Do not use `gh` or the GitHub web UI for semantic issue work when the GitHub connector covers the operation.
 
@@ -121,11 +121,11 @@ When a comment includes one or more screenshots:
 2. Only after the issue is resolved exactly and the comment is ready, use or navigate an authenticated Chrome tab directly to that issue URL. Do not browse issue lists, reread the conversation, or perform other semantic issue work in the web UI.
 3. Place the prepared comment in the comment editor and upload the screenshots as native GitHub attachments without submitting it.
 4. Check GitHub's rendered preview. Verify the Estonian wording, formatting, image placement, captions, alt text, and absence of excluded sensitive information.
-5. Ask the Codex user for action-time confirmation immediately before clicking **Comment**, because submission is representational communication from the user's GitHub account.
-6. After confirmation, submit only with **Comment**. Do not close the issue through the comment control unless the agreed no-build workflow below requires closure as a separate verified action.
-7. Verify the published comment's author and text through the GitHub connector, and verify every rendered image in Chrome.
+5. Read the complete Markdown back from the editor after GitHub has replaced the local images with native attachment URLs.
+6. Publish that exact Markdown through the authenticated GitHub connector under the explicit invocation authorization. Do not click **Comment** or **Close with comment** in Chrome, and do not ask for separate action-time confirmation.
+7. Verify the published comment's author and text through the GitHub connector, verify every rendered image in Chrome, and only then clear the unsubmitted browser draft.
 
-For a comment without screenshots, publish through the GitHub connector under the invocation authorization without opening GitHub in Chrome. If native upload or submission fails, keep the draft and local images intact, report exactly what remains, and ask only for the specific user action needed to continue.
+For a comment without screenshots, publish through the GitHub connector under the invocation authorization without opening GitHub in Chrome. If native upload or connector submission fails, keep the draft and local images intact, report exactly what remains, and ask only for the specific user action needed to continue. If the connector result is uncertain, verify the issue before retrying so the comment is not duplicated.
 
 ### Preserve settled intent when generating options
 

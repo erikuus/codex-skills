@@ -9,9 +9,12 @@ Use a connector-first hybrid workflow to turn the completed work in the current 
 
 - use the connected GitHub app for issue search, reading, and structured verification;
 - use `gh api graphql` only for GitHub Projects v2 membership and status fields;
-- use the user's authenticated Chrome session for `vautest`, screenshots, native GitHub image upload, and rendered-preview checks.
+- use the user's authenticated Chrome session for `vautest`, screenshots, native GitHub image upload, and rendered-preview checks, but never for comment submission;
+- use the connected GitHub app to submit the final comment, including native attachment Markdown prepared in Chrome.
 
 Do not use the GitHub web UI for semantic issue work when the GitHub app or `gh` covers the operation.
+
+Invocation of this skill to finish the matching issue authorizes its scoped final comment and the required VAU Project normalization. Do not request separate action-time confirmation for that comment.
 
 ## Prepare the required tools and sessions
 
@@ -112,11 +115,11 @@ Assume readers skim. Lead with the outcome, use short headings and compact lists
 2. Only after the issue is identified and the comment is ready, use or navigate an authenticated Chrome tab directly to the recorded issue URL. Do not browse the issue list or repeat issue discovery in the UI.
 3. Place the prepared comment in the comment editor and upload the screenshots as native GitHub attachments without submitting it.
 4. Check GitHub's rendered preview. Confirm that the comment begins directly with the outcome and that the Estonian wording, list formatting, image placement, captions, and alt text are correct.
-5. Ask for action-time confirmation immediately before clicking **Comment**, because the post is representational communication from the user's GitHub account.
-6. After confirmation, submit only with **Comment**. Do not use **Close with comment** unless closing was explicitly requested.
-7. Verify the published comment's author and text through the GitHub app, and verify every rendered image in the browser.
+5. Read the complete Markdown back from the editor after GitHub has replaced the local images with native attachment URLs.
+6. Publish that exact Markdown through the connected GitHub app without separate action-time confirmation. Do not click **Comment** or **Close with comment** in Chrome.
+7. Verify the published comment's author and text through the GitHub app, verify every rendered image in Chrome, and only then clear the unsubmitted browser draft.
 8. Leave the published issue open as a deliverable and report its direct comment URL.
 
-If the user explicitly requests no screenshots, skip the GitHub browser steps and, after action-time confirmation, publish the prepared Markdown through the GitHub app. Verify the resulting comment through the app.
+If the user explicitly requests no screenshots, skip the GitHub browser steps and publish the prepared Markdown through the GitHub app without separate action-time confirmation. Verify the resulting comment through the app.
 
-If upload or submission fails, keep the draft intact, state exactly what remains, and ask only for the specific user action needed to continue.
+If native upload or connector submission fails, keep the draft intact, state exactly what remains, and ask only for the specific user action needed to continue. If the connector result is uncertain, verify the issue before retrying so the comment is not duplicated.
