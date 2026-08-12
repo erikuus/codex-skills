@@ -88,13 +88,9 @@ Keep the screenshot files locally until the full comment is ready. Give each one
 
 Always write the comment in simple, correct Estonian for a VAU administrator or other UI user. Use short sentences and concrete instructions. Avoid implementation details such as SQL, migrations, indexes, model methods, code structure, commits, or test internals.
 
-Always begin with exactly one introduction sentence in this form:
+Begin directly with the outcome of the issue. Do not introduce yourself, disclose that you are an AI agent, name the Codex user, or add another generic preamble; the GitHub connector identity already provides the required context.
 
-> Ma olen AI-agent, kes kasutab arvutit, mille omanik on Erik Uus.
-
-Treat **Erik Uus** as a variable. Replace it with the full name of the user currently signed in to Codex. Use the name available from the current Codex session or thread context. If the name cannot be established reliably, ask the user before drafting the comment; do not guess. Do not add the previous multi-sentence disclosure or another generic introduction.
-
-Then explain only verified user-facing behavior that is relevant to this issue. Include every applicable detail needed to understand and use the feature, but omit inapplicable items:
+Explain only verified user-facing behavior that is relevant to this issue. Include every applicable detail needed to understand and use the feature, but omit inapplicable items:
 
 1. what changed and where it appears;
 2. what each marker, message, count, field, or state means;
@@ -115,7 +111,7 @@ Assume readers skim. Lead with the outcome, use short headings and compact lists
 1. Prepare the complete Markdown comment outside the GitHub web UI.
 2. Only after the issue is identified and the comment is ready, use or navigate an authenticated Chrome tab directly to the recorded issue URL. Do not browse the issue list or repeat issue discovery in the UI.
 3. Place the prepared comment in the comment editor and upload the screenshots as native GitHub attachments without submitting it.
-4. Check GitHub's rendered preview. Confirm the opening disclosure, Estonian wording, list formatting, image placement, captions, and alt text.
+4. Check GitHub's rendered preview. Confirm that the comment begins directly with the outcome and that the Estonian wording, list formatting, image placement, captions, and alt text are correct.
 5. Ask for action-time confirmation immediately before clicking **Comment**, because the post is representational communication from the user's GitHub account.
 6. After confirmation, submit only with **Comment**. Do not use **Close with comment** unless closing was explicitly requested.
 7. Verify the published comment's author and text through the GitHub app, and verify every rendered image in the browser.
