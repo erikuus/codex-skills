@@ -114,6 +114,27 @@ If any answer is no, omit the option. Do not pad a list to reach two or three ch
 
 If evidence justifies challenging settled intent, state the conflict separately: explain what cannot safely or reasonably work and ask whether participants want to reconsider the constraint. Do not disguise that challenge as an ordinary option.
 
+### Make conclusions auditable, not exhaustive
+
+Keep the full comparison of material interpretations in the private Codex ledger. For each reasonably plausible interpretation, record the decisive supporting or rejecting evidence. Do not store or publish an exhaustive stream of intermediate reasoning.
+
+In GitHub, normally show only:
+
+1. the selected interpretation or conclusion;
+2. the decisive evidence in product language;
+3. a material assumption or uncertainty, if one remains; and
+4. the correction or confirmation being requested.
+
+Mention a dismissed interpretation only when a reasonable participant could still choose it from the known facts and choosing it would materially change the actor, workflow, scope, or outcome. Give the rejection reason in one short sentence.
+
+Use confidence to control detail:
+
+- **One interpretation clearly dominates:** state it, give the decisive reason, and ask for confirmation. Omit clearly incompatible alternatives.
+- **Two or more interpretations remain materially plausible:** present them briefly and ask which one applies.
+- **An assumption cannot yet be tested:** label it and ask the smallest question that would resolve it.
+
+This pattern protects against hidden assumptions without making issue comments read like internal analysis notes.
+
 Useful question themes include:
 
 - Who encounters this situation, and how often?

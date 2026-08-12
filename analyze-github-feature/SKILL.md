@@ -50,7 +50,7 @@ For a continuation:
 
 Keep a compact ledger in the Codex task, not in a project file:
 
-`Facts | Evidence | Settled intent and constraints | Assumptions | Decisions | Open questions | Last handled GitHub event`
+`Facts | Evidence | Settled intent and constraints | Assumptions | Decisions | Material interpretations considered | Open questions | Last handled GitHub event`
 
 ## Investigate before asking
 
@@ -96,6 +96,21 @@ Remove an option that contradicts settled intent even when the UI or code could 
 
 Reopen settled intent only when concrete evidence shows that it is infeasible, unsafe, disproportionately costly, or conflicts with the underlying need. Explain that conflict explicitly and ask whether the constraint may be reconsidered. Do not present the conflicting path as an ordinary peer option.
 
+### Expose decision-relevant rationale
+
+Make public conclusions auditable without publishing exhaustive step-by-step reasoning.
+
+When a GitHub comment relies on an inference, include:
+
+1. the selected interpretation or conclusion;
+2. the decisive user-visible evidence supporting it;
+3. any material uncertainty or assumption; and
+4. a request for correction or confirmation when the inference affects scope.
+
+Mention a dismissed interpretation publicly only when it remains reasonably plausible from the available evidence and would materially change the actor, workflow, scope, or outcome. State it briefly and explain the decisive reason it was not selected. Do not enumerate alternatives that clearly conflict with the request or add no useful correction opportunity.
+
+If confidence is low and several interpretations remain materially plausible, present those interpretations for confirmation. If one interpretation clearly dominates, state only that interpretation with a short reason and ask for confirmation. Keep the fuller comparison of material interpretations and rejection reasons in the private Codex ledger.
+
 ### Resolve ambiguous scope before solution details
 
 When a request uses broad domain nouns such as “application,” “order,” “record,” “old request,” “copy,” or “select” that could refer to several actors, procedures, objects, or screens, do not begin with implementation questions.
@@ -122,6 +137,7 @@ Use these rules:
 - explain technical constraints only through visible effects on users and their work;
 - avoid code, architecture, database, API, migration, and test terminology;
 - offer only compatible alternatives, and a recommendation, when a real tradeoff remains open;
+- expose the conclusion, decisive evidence, and material uncertainty without narrating exhaustive reasoning;
 - say what the available evidence already established before asking for missing knowledge;
 - distinguish a proposed solution from the underlying need;
 - never publish the internal ledger or technical plan in the issue;
