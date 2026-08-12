@@ -83,19 +83,36 @@ Do not frame a no-build conclusion as a failure. It prevents unnecessary cost wh
 Maintain these private categories:
 
 - **Fact:** directly supported by a named artifact or participant statement.
+- **Settled intent or constraint:** scope, outcome, starting context, or boundary stated unambiguously or explicitly confirmed by a relevant participant.
 - **Assumption:** plausible but not yet verified.
 - **Decision:** an option explicitly chosen by relevant participants.
 - **Open question:** missing information that could change the decision or scope.
 
 Before asking, test the candidate question:
 
-1. Can code, tests, documentation, issue history, or repository history answer it? Inspect those first.
-2. Could the answer change whether to build, what to build, or a material boundary? If not, defer it.
-3. Is it the highest-value remaining uncertainty? Ask that one first.
-4. Would concrete options make the choice easier? Offer two or three real alternatives and recommend one.
-5. Can the question be written without technical vocabulary? Translate it to visible user behavior.
+1. Has the issue or a relevant participant already stated or confirmed the answer? If so, record it as settled instead of asking again.
+2. Can code, tests, documentation, issue history, or repository history answer it? Inspect those first.
+3. Could the answer change whether to build, what to build, or a material boundary? If not, defer it.
+4. Is it the highest-value remaining uncertainty? Ask that one first.
+5. Would concrete options make the choice easier? Offer only alternatives that satisfy every settled constraint.
+6. Can the question be written without technical vocabulary? Translate it to visible user behavior.
 
 Avoid mechanical questionnaires. Each answer should determine the next move.
+
+### Preserve settled intent when generating options
+
+Do not confuse the existence of another technically possible workflow with an open product decision. Generate options only for the unresolved dimension currently under discussion.
+
+Filter every candidate option before showing it:
+
+- Does it preserve the stated need and outcome?
+- Does it preserve explicit scope, starting context, source object, and prior decisions?
+- Is it a genuine alternative on the open question rather than a different request?
+- Would choosing it advance the current analysis?
+
+If any answer is no, omit the option. Do not pad a list to reach two or three choices. A single compatible proposal is acceptable.
+
+If evidence justifies challenging settled intent, state the conflict separately: explain what cannot safely or reasonably work and ask whether participants want to reconsider the constraint. Do not disguise that challenge as an ordinary option.
 
 Useful question themes include:
 
@@ -124,13 +141,13 @@ If two interpretations are similarly plausible, present both briefly. Do not lis
 
 ### 2. Identify the starting surface and source object
 
-After the context is confirmed, establish where the user expects to begin and what they expect to act on. A request may say “old application” while the selectable objects are actually orders, archival items, attachments, or another child record.
+After the context is confirmed, establish where the user expects to begin and what they expect to act on only when the request has not already fixed those points. A request may say “old application” while the selectable objects are actually orders, archival items, attachments, or another child record.
 
-Useful form:
+Useful form when the starting point is genuinely open:
 
 > Kust peaks kasutaja seda tegevust alustama ja mida ta seal valib?
 
-Prefer named current screens or objects discovered from evidence over abstract wording.
+Prefer named current screens or objects discovered from evidence over abstract wording. If the title, body, or a confirmation already says the action starts from an old application, preserve that constraint; do not offer an unrelated item view as a peer starting point.
 
 ### 3. State the current representation
 
@@ -150,7 +167,7 @@ Do not enumerate every lifecycle state when only one distinction affects the req
 
 ### 5. Offer the smallest feasible choices
 
-Give two or three user-facing options after the scope, starting point, and current representation are known. Put the smallest sufficient option first.
+Give user-facing options only when at least two materially different choices remain compatible after the scope, starting point, and current representation are known. Put the smallest sufficient option first.
 
 For reuse from an old non-interactive record, options might be:
 
@@ -324,21 +341,25 @@ This keeps the conversation focused on product intent rather than making partici
 
 Do not ask about checkboxes, copying rules, or expired permissions in the same comment.
 
-**After context is confirmed — establish the starting point:**
+**After context is confirmed — preserve the settled starting point:**
 
-> Kust peaks klient uut tegevust alustama?
->
-> Praegu näeb klient varasemat taotlust oma konto all ja saab selle avada PDF-ina. PDF-is ei ole valitavat materjalide loendit.
->
-> Kas tegevus peaks algama varasema taotluse rea juurest või mõnest olemasolevast materjalide vaatest?
+The request already says that the new action is based on the previous application. Record that as settled. Do not ask whether the client should instead start from an unrelated material view.
 
-**After the starting point is confirmed — offer feasible options:**
+State the current design boundary and move to the next open decision:
 
-> Näen praegu kahte võimalikku lahendust.
+> Uus tegevus algab seega varasema taotluse juurest. Praegu saab klient selle oma konto all avada ainult PDF-ina. PDF-is ei ole valitavat materjalide loendit.
 >
-> 1. Varasema taotluse juurest saab alustada uut taotlust kõigi uuesti sobivate materjalidega. See on lihtsam lahendus.
-> 2. Varasema taotluse jaoks luuakse materjalide vaade, kus klient märgib vajalikud read. See võimaldab valida ainult osa materjale, kuid lisab uue vaate ja sammu.
+> Valiku tegemiseks on vaja varasema taotluse rea juurest avanevat säilikute vaadet. Järgmine küsimus on, millised varasema taotluse säilikud on uue taotluse jaoks sobivad.
+
+**Offer alternatives only within the settled constraint:**
+
+After eligibility is clear, a genuine open decision could be the initial selection state:
+
+> Sobivate säilikute valimiseks on kaks varianti.
 >
-> Soovitan esimest varianti, kui tavaliselt vajatakse kõiki varasemaid materjale. Kui osaline valik on oluline, on vaja teist varianti.
+> 1. Kõik sobivad säilikud on alguses märgitud. Klient eemaldab need, mida ta ei soovi uude taotlusse lisada.
+> 2. Ükski säilik ei ole alguses märgitud. Klient valib vajalikud säilikud ise.
+>
+> Soovitan esimest varianti, sest see toetab nii kõigi kui ka ainult osa varasemate säilikute uuesti taotlemist väiksema tööga.
 
 Only then clarify eligibility rules such as expired access, prior denial, duplicates, and items that are no longer available. Each answer should narrow the next question.

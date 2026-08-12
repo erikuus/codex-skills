@@ -50,7 +50,7 @@ For a continuation:
 
 Keep a compact ledger in the Codex task, not in a project file:
 
-`Facts | Evidence | Assumptions | Decisions | Open questions | Last handled GitHub event`
+`Facts | Evidence | Settled intent and constraints | Assumptions | Decisions | Open questions | Last handled GitHub event`
 
 ## Investigate before asking
 
@@ -75,6 +75,27 @@ Before asking how to implement anything, determine:
 
 Permit insufficient evidence as a valid finding. Do not convert stakeholder confidence into proof.
 
+### Preserve settled intent when generating options
+
+Before asking a question or offering alternatives, distinguish:
+
+- the underlying need;
+- explicit or confirmed intent, scope, and constraints;
+- a proposed solution that remains a hypothesis;
+- genuinely open decisions.
+
+Treat an unambiguous statement in the issue or an explicit participant confirmation as settled unless later evidence contradicts it. Do not turn settled intent back into a question merely because other workflows are technically possible.
+
+Generate alternatives only along a genuinely open decision. Before presenting an option, verify that it:
+
+1. satisfies the established need, scope, constraints, and prior decisions;
+2. is materially different from the other valid options on the open dimension; and
+3. is feasible enough to merit participant attention.
+
+Remove an option that contradicts settled intent even when the UI or code could support it. Technical possibility alone does not make an option relevant. Never invent an extra alternative merely to create a multiple-choice question; one compatible proposal followed by the next unresolved question is better than a false choice.
+
+Reopen settled intent only when concrete evidence shows that it is infeasible, unsafe, disproportionately costly, or conflicts with the underlying need. Explain that conflict explicitly and ask whether the constraint may be reconsidered. Do not present the conflicting path as an ordinary peer option.
+
 ### Resolve ambiguous scope before solution details
 
 When a request uses broad domain nouns such as “application,” “order,” “record,” “old request,” “copy,” or “select” that could refer to several actors, procedures, objects, or screens, do not begin with implementation questions.
@@ -82,10 +103,10 @@ When a request uses broad domain nouns such as “application,” “order,” �
 Use this order, skipping steps already established by evidence:
 
 1. **Probable context:** Compare the wording with documented workflows and code. State the most plausible actor and procedure as an inference, give the short reason, and ask the participant to confirm or correct it.
-2. **Starting point and object:** Establish where the action should begin and what concrete objects are acted on. Distinguish rows or records that look similar but have different behavior.
+2. **Starting point and object:** When not already explicit, establish where the action should begin and what concrete objects are acted on. Distinguish rows or records that look similar but have different behavior. If the request already fixes the starting context or source object, record it as settled and move to the next unresolved question.
 3. **Current representation:** Explain what the user can open and act on today. If the current surface is only a PDF, message, summary, or other non-interactive representation, say so before discussing selection controls.
 4. **Lifecycle and eligibility:** Establish only the states and policy conditions that affect copying, reuse, routing, or availability.
-5. **Solution choices:** Offer a small number of feasible user-facing options. Put the smallest sufficient option first and recommend it. Explain when a more flexible option requires a new interactive surface or broader workflow change.
+5. **Solution choices:** Offer alternatives only when two or more materially different choices remain compatible with settled intent. Put the smallest sufficient option first and recommend it. If only one compatible approach remains, state it as a proposal and move to the next unresolved question.
 
 Ask only the first unresolved question in this sequence. Do not combine scope confirmation, entry-point choice, lifecycle rules, and solution selection into one large comment.
 
@@ -100,7 +121,7 @@ Use these rules:
 - discuss one question or one closely related group at a time;
 - explain technical constraints only through visible effects on users and their work;
 - avoid code, architecture, database, API, migration, and test terminology;
-- offer two or three concrete options and a recommendation when a real tradeoff exists;
+- offer only compatible alternatives, and a recommendation, when a real tradeoff remains open;
 - say what the available evidence already established before asking for missing knowledge;
 - distinguish a proposed solution from the underlying need;
 - never publish the internal ledger or technical plan in the issue;
