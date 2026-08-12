@@ -45,7 +45,12 @@ For a continuation:
 - fetch the complete current issue and all comments, following pagination;
 - identify new or edited human contributions since the last handled GitHub event;
 - ignore the agent's own comments, bot-only activity, and already answered messages;
-- do not post anything when there is no relevant new evidence or useful next question;
+- when there is no relevant new human evidence, stop without rereading the documentation or code and do not post anything;
+- treat the supplied documentation and project checkout as mutable sources, not as facts frozen at the initial run;
+- before any substantive reply, reread the current documentation's usage or workflow guidance and the sections relevant to the new message;
+- inspect the current relevant code again whenever the reply depends on existing behavior, feasibility, constraints, or scope;
+- update stale facts and assumptions from those fresh sources while preserving explicit participant decisions unless new evidence creates a real conflict;
+- post only when the fresh evidence supports a useful question, option, clarification, decision, or consensus step;
 - do not recreate the analysis from scratch or create a second heartbeat.
 
 Keep a compact ledger in the Codex task, not in a project file:
@@ -173,7 +178,7 @@ After the first substantive GitHub comment, ensure one heartbeat is attached to 
 
 Use a durable prompt equivalent to:
 
-> Use `$analyze-github-feature` to continue analysis of `<issue-url>` using documentation at `<documentation-path>`. This is a scheduled weekday working-hours continuation, not a new analysis. Read new GitHub activity, respond in concise plain Estonian only when a relevant human message requires a useful question, option, clarification, or consensus step, and never duplicate an earlier comment. Do not implement or edit project files. Pause this heartbeat after an agreed implementation handoff, an agreed no-build closure, issue cancellation or closure, a user stop request, or a persistent access blocker.
+> Use `$analyze-github-feature` to continue analysis of `<issue-url>` using documentation at `<documentation-path>`. This is a scheduled weekday working-hours continuation, not a new analysis. Read new GitHub activity first. If there is no relevant new human input, stop without posting or rereading sources. Before posting a substantive response, reread the current supplied documentation and inspect the relevant current project code when the response depends on existing behavior or feasibility; both may have changed since the previous run. Respond in concise plain Estonian only when a relevant human message requires a useful question, option, clarification, decision, or consensus step, and never duplicate an earlier comment. Do not implement or edit project files. Pause this heartbeat after an agreed implementation handoff, an agreed no-build closure, issue cancellation or closure, a user stop request, or a persistent access blocker.
 
 Preserve the actual resolved issue URL and documentation path in the prompt. If the automation capability is unavailable, continue the initial analysis, report the missing monitor as a blocker in the Codex task, and do not invent a scheduling workaround.
 
