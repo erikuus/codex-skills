@@ -41,8 +41,8 @@ Do not seek certainty about irrelevant details. The goal is enough confidence to
 
 Use available evidence in roughly this order while accounting for context:
 
-1. Current executable behavior and focused tests show what the system does.
-2. Direct observations, repeated support cases, logs, or measured workflow costs show that a problem occurs.
+1. Current executable behavior, focused tests, and scoped observation of the designated test UI show what the system does.
+2. Direct user observations, repeated support cases, logs, or measured workflow costs show that a problem occurs.
 3. Several experienced users independently describing the same situation show reach and consistency.
 4. Current maintained documentation shows intended rules and terminology.
 5. One participant's recollection or preference is a useful lead but weak evidence by itself.
@@ -91,7 +91,7 @@ Maintain these private categories:
 Before asking, test the candidate question:
 
 1. Has the issue or a relevant participant already stated or confirmed the answer? If so, record it as settled instead of asking again.
-2. Can code, tests, documentation, issue history, or repository history answer it? Inspect those first.
+2. Can code, tests, documentation, the designated test UI, issue history, or repository history answer it? Inspect those first.
 3. Could the answer change whether to build, what to build, or a material boundary? If not, defer it.
 4. Is it the highest-value remaining uncertainty? Ask that one first.
 5. Would concrete options make the choice easier? Offer only alternatives that satisfy every settled constraint.
