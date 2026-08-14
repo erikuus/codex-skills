@@ -1,0 +1,13 @@
+interface:
+  display_name: "Finalize GitHub Issue"
+  short_description: "Verify and document completed GitHub issue work"
+  default_prompt: "Use $finalize-github-issue with an exact GitHub issue URL and application URL to verify and document the completed change."
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "github"
+      description: "GitHub MCP server for issue reading, comments, and issue updates"
+      transport: "streamable_http"
+      url: "https://api.githubcopilot.com/mcp/"
+policy:
+  allow_implicit_invocation: false
