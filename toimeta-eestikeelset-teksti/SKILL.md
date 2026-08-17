@@ -20,6 +20,8 @@ Muuda tekst kasutusvalmiks, säilitades selle mõtte, faktid ja autori äratunta
 
 Loe enne sisulist keele- või tõlketoimetamist [eesti toimetamise põhimõtteid](references/eesti-toimetamise-pohimotted.md). Üksiku kirjavea parandamisel pole viitefaili vaja.
 
+Kui toimetamine puudutab tarbeteksti põhisõnumit, ülesehitust, vastutuse jaotust, juhiseid või protsessi kirjeldust, loe ka [infokujunduse põhimõtteid](references/infokujunduse-pohimotted.md). Ära laadi seda viidet üksiku keelevea parandamiseks.
+
 ## Kaitse sisu
 
 - Säilita nimed, faktid, arvud, kuupäevad, tsitaadid, viited, lingid ja olulised rõhuasetused, kui kasutaja pole palunud neid muuta.
