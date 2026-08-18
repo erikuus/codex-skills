@@ -1,6 +1,6 @@
 ---
 name: vau
-description: Manage authenticated Rahvusarhiivi virtuaalne uurimissaal (VAU) content through the user's existing Chrome session, including editing Estonian or English articles, translating the latest Estonian news into English, and managing feedback. Use whenever the user's prompt contains the standalone keyword "VAU" in any letter case, including requests to inspect, correct, translate, create, forward, answer, archive, or administer VAU content.
+description: Manage authenticated Rahvusarhiivi virtuaalne uurimissaal (VAU) content through the user's existing Chrome session, including editing Estonian or English articles, translating the latest Estonian news into English, and managing feedback. Invoke this skill explicitly with `$vau` when those workflows are needed.
 ---
 
 # VAU Administration

@@ -4,3 +4,6 @@ interface:
   icon_small: "./assets/icon.svg"
   icon_large: "./assets/icon.png"
   default_prompt: "Use $vau to manage VAU content through the authenticated Chrome tab."
+
+policy:
+  allow_implicit_invocation: false
