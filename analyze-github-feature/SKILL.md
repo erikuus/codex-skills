@@ -241,9 +241,18 @@ When the evidence is mature, restate in plain Estonian:
 - acceptance criteria expressed as observable user outcomes;
 - any remaining non-material assumptions.
 
-Then explicitly ask relevant human participants to confirm whether this understanding is correct and may be treated as the agreed direction. Do this when it is appropriate, not mechanically after a fixed number of comments. This establishes direction consensus; it is not final implementation consensus when a prototype is required.
+Then explicitly ask relevant human participants whether this understanding may be treated as the agreed direction. Do this when it is appropriate, not mechanically after a fixed number of comments. This establishes direction consensus; it is not final implementation consensus when a prototype is required.
 
-Do not infer agreement from silence, reactions alone, the agent's own statement, or a bot message. Require an affirmative written response from an issue author or another human participant whose involvement shows relevant product knowledge. If the response changes scope, raises a material concern, or disagrees, update the ledger and continue the conversation.
+Choose the confirmation form according to what participants are judging:
+
+- When the agent has steered toward a recommendation by combining observations and arguments, use a short double approach. First make the proposed decision clear with a direct positive question. Then invite objections with a simple question that can naturally be answered `ei`. For example: `Kas sa nõustud punktidega 1–4? Kas on midagi, mis ei lase sul sellega nõustuda?`
+- When participants are judging something concrete they have directly seen, selected, or tried, normally ask one straightforward positive question. This applies especially to a prototype, exact wording, or an explicit choice between options.
+
+Use ordinary spoken Estonian. Prefer two short questions over one long sentence. Avoid cumbersome negative constructions, official language such as `palun kinnitage`, and abstract phrases such as `ei võimalda seda suunda kokkuleppeks pidada`. Adapt `sa` or `te` to the conversation rather than forcing either form.
+
+Never require a particular confirmation word. Accept an unambiguous `jah`, `sobib`, `nõus`, `ei ole midagi`, or equivalent response when its meaning establishes agreement. A bare `ei` counts only when the immediately preceding objection question makes its meaning clear. Do not infer agreement from silence, reactions alone, the agent's own statement, or a bot message.
+
+Require an explicit written response from an issue author or another human participant whose involvement shows relevant product knowledge. If a participant is not ready to agree, do not automatically repeat or paraphrase the same arguments. Ask which point is wrong, unclear, or missing evidence, then address that point. If the response changes scope, raises a material concern, or disagrees, update the ledger and continue the conversation.
 
 ## Validate user-visible solutions with one Sites prototype
 
@@ -264,9 +273,9 @@ Treat participant feedback as requirements evidence. Correct misunderstandings i
 
 ### Require explicit prototype acceptance
 
-After the prototype reflects the agreed direction, explicitly ask relevant human participants in Estonian to confirm that its demonstrated workflow may be treated as the agreed implementation target.
+After the prototype reflects the agreed direction, ask a straightforward positive question in Estonian because participants can judge a concrete workflow they have tried. For example: `Kas prototüübis näidatud töövoog sobib arenduse aluseks?`
 
-Do not infer acceptance from silence, reactions, visits, or absence of further comments. Require an affirmative written response from the issue author or another appropriate domain representative, and leave no unresolved objection from any materially involved human participant. When the feature affects distinct user roles, obtain confirmation that the represented roles' material needs are covered. New material feedback returns the analysis to clarification or prototype revision.
+Do not infer acceptance from silence, reactions, visits, or absence of further comments. Require an explicit written response whose meaning accepts the prototype from the issue author or another appropriate domain representative, and leave no unresolved objection from any materially involved human participant. Accept clear agreement regardless of whether participants answer with `jah`, another positive expression, or an unambiguous response to a follow-up objection question. When the feature affects distinct user roles, obtain confirmation that the represented roles' material needs are covered. New material feedback returns the analysis to clarification or prototype revision.
 
 When no prototype is justified, record the reason privately and treat direction consensus as the final product consensus for the implementation handoff.
 

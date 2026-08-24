@@ -217,19 +217,25 @@ The analysis is mature enough for a consensus request when evidence supports:
 - observable acceptance criteria;
 - no material unresolved disagreement.
 
-Ask for direction agreement only when the problem and proposed direction are mature. A useful Estonian form is:
+Ask for direction agreement only when the problem and proposed direction are mature. When the recommendation comes mainly from the agent's synthesis, first make the proposed decision explicit and then ask simply what prevents agreement:
 
 > Minu arusaam on järgmine: …
 >
-> Palun kinnitage, kas see kirjeldus ja pakutud suund on õiged. Kui jah, käsitlen seda meie kokkuleppena.
+> Kas sa nõustud punktidega 1–4? Kas on midagi, mis ei lase sul sellega nõustuda?
+
+This is a double approach, not a demand for a negative answer. Accept a clear positive answer immediately. The second question gives a hesitant participant an easy way to say `ei` when nothing is blocking agreement or to name the exact problem when something is.
 
 For a no-build recommendation:
 
 > Praeguse info põhjal ei ole uut arendust vaja, sest …
 >
-> Palun kinnitage, kas nõustute selle järeldusega. Pärast kinnitust võtan otsuse kokku ja sulgen teema.
+> Kas sa nõustud, et uut arendust ei ole vaja? Kas on midagi, mis ei lase teemat nii lõpetada?
 
-Do not interpret silence as agreement.
+When participants are judging a concrete result, ask directly. For example, after they try a prototype:
+
+> Kas prototüübis näidatud töövoog sobib arenduse aluseks?
+
+Never demand `jah` or `ei`. Interpret the response by meaning. Do not interpret silence as agreement. If somebody is unsure, ask which point is wrong, unclear, or missing evidence. Do not merely restate the same case in different words.
 
 ## Prototype validation
 
@@ -254,7 +260,7 @@ After participants try it, separate feedback into:
 - **cosmetic preference:** record it without blocking agreement unless it affects comprehension or accessibility;
 - **new scope:** explain the expansion and do not absorb it silently.
 
-Final prototype acceptance must name the demonstrated workflow as the agreed implementation target. Do not treat “looks good” as acceptance when material questions remain in the same comment or discussion.
+Final prototype acceptance must identify the demonstrated workflow as the agreed implementation target. Use a straightforward positive confirmation question because participants have a concrete result to judge. Do not treat “looks good” as acceptance when material questions remain in the same comment or discussion.
 
 ## Estonian public-writing style
 
@@ -263,6 +269,7 @@ Participants know the application well. Respect that knowledge without assuming 
 Prefer:
 
 - short sentences;
+- simple everyday Estonian and natural spoken phrasing;
 - familiar screen, action, role, and state names;
 - concrete examples from the current workflow;
 - one decision at a time;
@@ -274,6 +281,7 @@ Avoid:
 - code symbols and file paths;
 - database, API, schema, migration, architecture, framework, or test terminology;
 - long introductions and repeated summaries;
+- long negative constructions and official confirmation language;
 - generic praise or filler;
 - unexplained technical constraints;
 - twenty-question checklists;
@@ -356,7 +364,7 @@ Continue with notification and role questions only after this rule is decided.
 >
 > Soovitan uut paneeli mitte lisada. Vajaduse lahendab olemasoleva hoiatuse selgem kirjeldus kasutusjuhendis.
 >
-> Palun kinnitage, kas nõustute selle järeldusega. Pärast kinnitust võtan otsuse kokku ja sulgen teema.
+> Kas sa nõustud, et uut paneeli ei ole vaja? Kas on midagi, mis ei lase teemat nii lõpetada?
 
 After explicit agreement, post the no-build summary, close the issue, pause the monitor, and return a decision handoff. Do not produce an implementation plan.
 
@@ -427,6 +435,6 @@ Only then clarify eligibility rules such as expired access, prior denial, duplic
 >
 > Näidis näitab, kuidas klient avab varasema taotluse säilikud, valib neist kõik või osa ja jätkab uue taotlusega. See ei saada päris taotlust ega kontrolli kõiki piiranguid.
 >
-> Palun proovige valik läbi. Kas selline töövoog võib olla arenduse kokkulepitud alus?
+> Proovi valik läbi. Kas selline töövoog sobib arenduse aluseks?
 
 If feedback changes the selection behavior, revise the same prototype and URL. Produce the technical plan only after an explicit affirmative response and no unresolved material objection.
