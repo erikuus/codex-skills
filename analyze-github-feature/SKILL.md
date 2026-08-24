@@ -7,7 +7,7 @@ description: Analyze a proposed feature before implementation by combining one G
 
 Establish whether a requested feature solves a real problem and what, if anything, should be built. Treat the issue as evidence of a need or desire, not as an implementation specification.
 
-Explicit invocation authorizes the scoped GitHub comments, Project status changes, agreed no-build closure, working-hours heartbeat, and one private isolated Sites prototype with revisions described below. It never authorizes implementation or edits to the project checkout. Public or otherwise non-private prototype publication still requires the Codex user's approval.
+Explicit invocation authorizes the scoped GitHub comments, one inactivity reminder per waiting episode, Project status changes, agreed no-build closure, working-hours heartbeat, and one private isolated Sites prototype with revisions described below. It never authorizes implementation or edits to the project checkout. Public or otherwise non-private prototype publication still requires the Codex user's approval.
 
 Use a connector-first hybrid GitHub workflow:
 
@@ -57,7 +57,7 @@ For a continuation:
 - fetch the complete current issue and all comments, following pagination;
 - identify new or edited human contributions since the last handled GitHub event;
 - ignore the agent's own comments, bot-only activity, and already answered messages;
-- when there is no relevant new human evidence, stop without rereading the documentation or code and do not post anything;
+- when there is no relevant new human evidence, evaluate only the inactivity-reminder policy below, then stop without rereading the documentation or code;
 - treat the supplied documentation, referenced UI-access document, project checkout, and test UI as mutable sources, not as facts frozen at the initial run;
 - before any substantive reply, reread the current documentation's usage or workflow guidance and the sections relevant to the new message;
 - inspect the current relevant code again whenever the reply depends on existing behavior, feasibility, constraints, or scope;
@@ -68,7 +68,7 @@ For a continuation:
 
 Keep a compact ledger in the Codex task, not in a project file:
 
-`Facts | Evidence | UI evidence | Settled intent and constraints | Assumptions | Decisions | Material interpretations considered | Open questions | Prototype state and URL | Last handled GitHub event`
+`Facts | Evidence | UI evidence | Settled intent and constraints | Assumptions | Decisions | Material interpretations considered | Open questions | Prototype state and URL | Last handled GitHub event | Waiting since | Reminder state`
 
 ## Investigate before asking
 
@@ -199,6 +199,21 @@ Scale questioning to uncertainty, risk, reversibility, affected roles, and cost.
 
 On the initial run, post the smallest useful next comment: a high-value question, a short set of options, or an agreement restatement when the evidence is already mature. On continuation runs, respond only when new human input makes a response useful.
 
+### Remind once after a working week of silence
+
+When the analysis is blocked only because an appropriate human participant has not answered a clear question or confirmation request, allow one concise reminder after five business days of silence. Count Monday through Friday in `Europe/Tallinn`; do not model public holidays. Start the clock when the analyst's latest comment requesting human input becomes visible. Reset it when any relevant human response materially advances or changes the conversation and a later analyst comment requests new human input.
+
+Post a reminder only when all of these remain true:
+
+- the issue is open and the analysis still needs that specific human response;
+- no relevant human contribution has appeared after the request;
+- no reminder has been posted during the current waiting episode; and
+- the request has not become obsolete because of closure, cancellation, a user stop request, or another terminal condition.
+
+Write the reminder in Estonian. Briefly identify the decision or information still needed and why it blocks the next step; do not post a generic `ping`, restate the full analysis, tag additional people without established relevance, imply agreement from silence, or add urgency that the issue evidence does not support. A reminder does not require rereading documentation, code, or the test UI. Verify the published comment and record its event and timestamp in the ledger so later heartbeat runs cannot duplicate it.
+
+After the single reminder, remain silent until relevant human input or a terminal condition appears. Do not post recurring reminders. Continued silence is not consensus and does not authorize closure, handoff, or implementation.
+
 ## Update the clarification status without guessing
 
 After the first analyst comment is successfully visible on the issue, attempt to set an existing GitHub Project single-select field named `Status` to the exact option `Täpsustamisel`.
@@ -225,7 +240,7 @@ After the first substantive GitHub comment, ensure one heartbeat is attached to 
 
 Use a durable prompt equivalent to:
 
-> Use `$analyze-github-feature` to continue analysis of `<issue-url>` using documentation at `<documentation-path>`. This is a scheduled weekday working-hours continuation, not a new analysis. Read new GitHub activity first. If there is no relevant new human input, stop without posting or rereading sources. Before posting a substantive response, reread the current supplied documentation and inspect the relevant current project code when the response depends on existing behavior or feasibility; both may have changed since the previous run. If the documentation references `computer-usage-path` and the response depends on visible behavior, reread that UI-access document and inspect the designated test UI through Chrome only, without mutating application data. Apply the screenshot safeguards in this skill. When direction consensus exists and visual validation is materially useful, create or revise the one authorized private isolated Sites prototype, share its URL in concise plain Estonian, and continue until relevant human participants explicitly accept it. Never duplicate a comment, prototype, or deployment. Do not implement or edit project files. Pause this heartbeat only after an agreed implementation handoff following any required prototype acceptance, an agreed no-build closure, issue cancellation or closure, a user stop request, or a persistent access blocker.
+> Use `$analyze-github-feature` to continue analysis of `<issue-url>` using documentation at `<documentation-path>`. This is a scheduled weekday working-hours continuation, not a new analysis. Read new GitHub activity first. If there is no relevant new human input, apply the skill's one-reminder-after-five-business-days policy, then stop without rereading sources. Before posting a substantive response, reread the current supplied documentation and inspect the relevant current project code when the response depends on existing behavior or feasibility; both may have changed since the previous run. If the documentation references `computer-usage-path` and the response depends on visible behavior, reread that UI-access document and inspect the designated test UI through Chrome only, without mutating application data. Apply the screenshot safeguards in this skill. When direction consensus exists and visual validation is materially useful, create or revise the one authorized private isolated Sites prototype, share its URL in concise plain Estonian, and continue until relevant human participants explicitly accept it. Never duplicate a comment, reminder, prototype, or deployment. Do not implement or edit project files. Pause this heartbeat only after an agreed implementation handoff following any required prototype acceptance, an agreed no-build closure, issue cancellation or closure, a user stop request, or a persistent access blocker.
 
 Preserve the actual resolved issue URL and documentation path in the prompt. If the automation capability is unavailable, continue the initial analysis, report the missing monitor as a blocker in the Codex task, and do not invent a scheduling workaround.
 
