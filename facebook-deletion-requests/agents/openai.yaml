@@ -1,0 +1,6 @@
+interface:
+  display_name: "Facebook deletion requests"
+  short_description: "Turn Facebook deletion CSVs into VAU cases"
+  default_prompt: "Use $facebook-deletion-requests to process the attached Facebook deletion CSV files and create investigation issues in OWNER/REPO."
+policy:
+  allow_implicit_invocation: false
