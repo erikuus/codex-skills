@@ -20,6 +20,8 @@ Apply guidance in this order:
 3. Established conventions in the repository.
 4. The human-maintainability defaults in this skill.
 
+Resolve optional verification capabilities from the skills and callable tools available in the current turn. Treat tool names, skill availability, and filesystem paths mentioned in earlier turns as stale evidence. Expand only the current skill-root aliases supplied by the environment; never construct, record, or reuse an absolute path under `.codex/plugins/cache`, because bundled plugin versions and locations change. If a historical path no longer exists, re-check the current capability inventory before claiming that the browser or another capability is unavailable. Use a currently available browser-control tool according to its own instructions even when no separate browser skill is listed. If no suitable current capability exists, report that verification boundary without installing tools, changing configuration, or weakening the required proof unless the user authorizes it.
+
 Determine whether the user wants diagnosis, recommendations, implementation, or review. Do not edit for a diagnosis-only request. Do not rewrite unrelated code solely to impose style.
 
 For implementation, read [references/human-friendly-liveview.md](references/human-friendly-liveview.md) before reorganizing `.ex` or `.heex` files.
