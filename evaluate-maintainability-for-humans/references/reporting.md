@@ -14,6 +14,8 @@ Use this format after the developer debrief and result inspection. Keep evidence
 
 - Requested change:
 - Evaluation mode:
+- Evaluated baseline:
+- Isolation: dedicated disposable worktree | read-only/retrospective, no probe edits
 - Developer context: repository, language/framework, and domain familiarity
 - Safety or scope constraints:
 
@@ -83,6 +85,8 @@ Choose one:
 - Address a verification gap before structural work.
 - Resolve a tooling, requirements, or knowledge confounder first.
 
+End a completed live-probe report by stating that the evaluation worktree is no longer needed and may be deleted. Do not delete, merge, cherry-pick, or push it unless the user separately asks.
+
 ## Before/after comparison
 
 Report both probes and explain why they are comparable. Compare observations rather than only ratings:
@@ -104,6 +108,8 @@ Classify the result as:
 - **No demonstrated improvement:** evidence is unchanged, incomparable, or too weak.
 
 Do not claim success because files, functions, lines, or layers decreased unless the developer's task became easier as a result.
+
+The after probe must run in a fresh disposable worktree created from the refactored baseline. Report both baseline refs and do not compare probe worktrees that contain carried-forward experimental edits.
 
 ## Example finding
 

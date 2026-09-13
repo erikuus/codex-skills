@@ -5,6 +5,7 @@ Use this reference to construct a fair task that reveals repository complexity w
 ## Contents
 
 - [Calibrate the participant](#calibrate-the-participant)
+- [Isolate live probes](#isolate-live-probes)
 - [Default probe profile](#default-probe-profile)
 - [Useful probe families](#useful-probe-families)
 - [Reject unfair probes](#reject-unfair-probes)
@@ -26,8 +27,22 @@ Record only context needed to interpret the result:
 - language and framework familiarity: unfamiliar, working, or strong;
 - domain familiarity: unfamiliar, partial, or strong;
 - evaluation mode: live change, read-only walkthrough, retrospective, or repeat evaluation.
+- evaluated baseline: committed branch, tag, or ref;
+- isolation: dedicated disposable worktree for live or repeat probes.
 
 Do not turn this into a personnel assessment. The purpose is to identify friction in the code for this developer context.
+
+## Isolate live probes
+
+Before constructing a live or repeat probe, verify that the developer and evaluator are operating in a dedicated disposable Git worktree created from the committed baseline under evaluation.
+
+- Do not run a live probe in the user's normal checkout, even when it is currently clean.
+- Do not merge, cherry-pick, push, or otherwise promote the probe changes. They exist only as evaluation evidence.
+- Do not stash, copy, or commit unrelated source-checkout changes to manufacture a baseline. Ask the user to select a committed baseline or switch to read-only or retrospective mode.
+- Keep the worktree until the report is complete so the evaluator can inspect the diff and verification evidence. The user may then delete the entire worktree.
+- Use a new worktree from the refactored baseline for an after-refactor probe; never reuse the before-probe worktree.
+
+If the current task is not attached to the required worktree, pause before presenting the probe and ask the user to start or fork the evaluation into one.
 
 ## Default probe profile
 
@@ -38,7 +53,7 @@ Prefer a routine change that:
 - has a plausible authoritative owner;
 - may cross boundaries only where responsibilities genuinely differ;
 - has observable acceptance criteria and focused verification;
-- is safe, reversible, and isolated from unrelated work;
+- is safe, reversible, and isolated inside the disposable evaluation worktree;
 - resembles work the repository is likely to receive again.
 
 The exact duration is contextual. Do not use a stopwatch as the primary measure.
@@ -97,6 +112,8 @@ Prepare this privately before presenting the task:
 
 ```text
 Product concept:
+Evaluated baseline:
+Evaluation worktree confirmed:
 Expected owner:
 Expected change locations and why each is legitimate:
 Potential duplicated or leaked representations:
@@ -123,6 +140,8 @@ Acceptance criteria:
 - <Behavior that must remain unchanged>
 
 Keep the change focused and avoid unrelated cleanup. Work in your normal way. You do not need to narrate continuously, but please notice where you looked first, where you backtracked, what surprised you, and how you decided the change was complete.
+
+This is an evaluation-only experiment. Keep every edit and test artifact inside this disposable worktree; do not merge or push the result. The worktree will remain available for the debrief and result inspection, then it may be deleted.
 
 Reply when you are done, blocked, or want a hint. I will not reveal the expected location unless you request help.
 ```
@@ -212,3 +231,5 @@ After refactoring, choose a different task with similar:
 - risk level.
 
 Do not compare a cross-cutting rule change before refactoring with a local text edit afterward. Document why the probes are structurally comparable and note any familiarity advantage.
+
+Run the repeat probe in a fresh disposable worktree created from the refactored baseline. Do not carry probe edits forward from the before worktree.

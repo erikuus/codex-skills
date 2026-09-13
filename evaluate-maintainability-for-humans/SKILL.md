@@ -1,6 +1,6 @@
 ---
 name: evaluate-maintainability-for-humans
-description: Evaluate how maintainable a real repository is for a human by selecting a bounded maintenance probe, withholding location hints, interviewing the developer about navigation and cognitive load, inspecting the resulting change and verification, and producing an evidence-backed complexity diagnosis and refactor handoff. Use when Codex must measure change friction before or after a refactor, diagnose unclear ownership, duplication, coupling, obscurity, change amplification, cognitive load, or unknown-unknown risk, or compare whether one design is easier for developers to modify. Supports any language or framework and live-change, read-only walkthrough, retrospective, and before/after evaluation modes.
+description: Evaluate how maintainable a real repository is for a human by running live maintenance probes in isolated disposable worktrees, withholding location hints, interviewing the developer about navigation and cognitive load, inspecting the resulting change and verification, and producing an evidence-backed complexity diagnosis and refactor handoff. Use when Codex must measure change friction before or after a refactor, diagnose unclear ownership, duplication, coupling, obscurity, change amplification, cognitive load, or unknown-unknown risk, or compare whether one design is easier for developers to modify. Supports any language or framework and live-change, read-only walkthrough, retrospective, and before/after evaluation modes.
 ---
 
 # Evaluate Maintainability for Humans
@@ -20,13 +20,26 @@ Do not substitute static taste, code metrics, or agent confidence for a develope
 - Keep the evaluator independent. Do not refactor unless the user separately asks for implementation.
 - Preserve existing work. Inspect repository instructions and worktree state before proposing a live change, and avoid probes that overlap unrelated edits.
 
+## Isolate live probes
+
+Run every live-change or repeat probe in a dedicated disposable Git worktree so the evaluated application and the user's normal checkout remain unchanged.
+
+- Before presenting a live probe, confirm that the current task is attached to a new evaluation worktree created from the committed baseline being evaluated. Treat a branch name or ref as the baseline; record it for the report.
+- If the current task is operating in the user's normal checkout, do not ask the developer to edit there. Ask them to start or fork the evaluation in a new worktree and pause. Do not switch branches, stash changes, or construct the worktree inside their normal checkout on their behalf.
+- If the intended baseline includes uncommitted changes that cannot be represented safely in a new worktree, ask the user to choose a committed baseline or use a read-only walkthrough or retrospective instead. Never copy, stash, or commit those changes implicitly.
+- Keep all probe edits, test artifacts, and experimental cleanup inside the evaluation worktree. Do not merge, cherry-pick, push, or present the probe as product work.
+- Keep the worktree available until the debrief, diff inspection, verification inspection, and report are complete. Then state that the evaluation is complete and the disposable worktree may be deleted. Delete it only when the user explicitly asks.
+- For an after-refactor probe, create a fresh disposable worktree from the refactored baseline. Do not reuse the before-probe worktree.
+
+If the repository is not Git-backed or an isolated worktree cannot be used, do not run a live-change probe. Use a read-only walkthrough or retrospective and label the limitation.
+
 Always read [references/complexity-diagnostics.md](references/complexity-diagnostics.md) before selecting questions or diagnosing results. Read [references/probe-design.md](references/probe-design.md) before constructing a live, read-only, or repeat probe. Read [references/reporting.md](references/reporting.md) before producing the final evaluation or a refactor handoff.
 
 ## Choose the evaluation mode
 
 Use the least artificial mode that fits the user's circumstances:
 
-1. **Live-change probe, preferred:** ask the developer to implement one small, reversible change in their normal environment.
+1. **Live-change probe, preferred:** ask the developer to implement one small, reversible change in a dedicated disposable worktree while using their normal tools and workflow.
 2. **Read-only walkthrough:** ask the developer to identify the owner, describe the edits, and explain verification without changing files.
 3. **Retrospective:** evaluate a change the developer has just completed using their recollection, the diff, searches, and verification evidence.
 4. **Before/after comparison:** run one probe before refactoring and a different but structurally comparable probe afterward.
@@ -55,7 +68,7 @@ Choose a routine, product-realistic change that is normally completable in about
 The probe must be:
 
 - precise enough to have observable acceptance criteria;
-- bounded, reversible, and safe in the current worktree;
+- bounded, reversible, and safe in the disposable evaluation worktree;
 - representative of ordinary maintenance in this repository;
 - dependent on understanding the code, not trivia or obscure framework knowledge;
 - capable of revealing at least one of discoverability, change amplification, cognitive load, dependency, obscurity, or unknown-unknown risk;
@@ -71,6 +84,8 @@ Give the developer only:
 2. Concrete acceptance criteria.
 3. Explicit safety and scope constraints.
 4. A request to report completion, inability to proceed, or a need for a hint.
+
+Also state that the work is an evaluation-only experiment: all edits must remain in the disposable worktree and must not be merged or pushed.
 
 Ask the developer to notice their first destination, backtracking, surprising discoveries, information held in memory, and confidence, but do not require continuous narration or impose a timer. Do not front-load the debrief questions.
 
@@ -125,11 +140,12 @@ Distinguish direct evidence, developer report, evaluator inference, and unresolv
 Produce the compact report defined in [references/reporting.md](references/reporting.md). Include:
 
 1. Probe and developer context.
-2. Observed path and verification.
-3. Overall difficulty plus dimension ratings.
-4. Evidence-backed complexity findings.
-5. Confounders and uncertainty.
-6. A refactor handoff describing the experienced friction, concrete dependency, desired cognitive outcome, behavior to preserve, and how to retest.
+2. Evaluated baseline and worktree isolation.
+3. Observed path and verification.
+4. Overall difficulty plus dimension ratings.
+5. Evidence-backed complexity findings.
+6. Confounders and uncertainty.
+7. A refactor handoff describing the experienced friction, concrete dependency, desired cognitive outcome, behavior to preserve, and how to retest.
 
 Do not prescribe a new abstraction unless the evidence makes its responsibility clear. The evaluator should define what must become easier; the refactoring workflow should compare possible designs.
 
