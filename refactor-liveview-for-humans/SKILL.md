@@ -24,6 +24,8 @@ Resolve optional verification capabilities from the skills and callable tools av
 
 Determine whether the user wants diagnosis, recommendations, implementation, or review. Do not edit for a diagnosis-only request. Do not rewrite unrelated code solely to impose style.
 
+Match the breadth of the conclusion to the breadth of the evidence. One concrete maintenance trace can justify a focused refactor, but it cannot establish that an entire application or every LiveView has been refactored for maintainability. For an application-wide request, either trace multiple representative tasks across the major surfaces or explicitly label which surfaces were evaluated, changed, and not evaluated. Never report a bounded refactor as application-wide.
+
 For implementation, read [references/human-friendly-liveview.md](references/human-friendly-liveview.md) before reorganizing `.ex` or `.heex` files.
 
 ## Trace behavior before proposing
@@ -48,6 +50,17 @@ Record:
 - artifacts that appear unused or that the proposed design would supersede.
 
 State root causes as concrete dependencies. Prefer “`handle_event/3` must know the storage field names because the context returns raw persistence data” over “the LiveView is coupled.”
+
+### Trace policy-derived presentation
+
+When a LiveView configures a user-visible policy—such as upload file types, entry count, size limit, validation boundary, retry interval, or pagination limit—and the interface describes that policy, treat the runtime configuration, server-side enforcement, helper text, error messages, tests, and current documentation as representations of the same decision.
+
+- Search for both machine and human representations, such as `12_000_000` and `12 MB`.
+- Simulate changing the policy. If multiple implementation locations must be edited together, choose one authoritative policy owner and derive secondary representations where practical.
+- Prefer rendering upload guidance from the actual upload configuration, for example `@uploads.profile_image.accept`, `@uploads.profile_image.max_entries`, and `@uploads.profile_image.max_file_size`, with small formatting functions for readable file types, units, and singular/plural grammar.
+- Identify the real ingress and trust boundary before duplicating validation. If LiveView is the only code that accepts the upload and a context receives only a consumed, already-validated temporary file and persists its path, keep the size/type policy in the LiveView and derive its guidance and errors from `@uploads`; do not repeat the policy in the context for hypothetical callers. Make that trusted-input precondition clear in the operation's name or contract.
+- If an application operation is genuinely called through another ingress with untrusted bytes, keep validation at that application boundary and derive the LiveView configuration from the same authoritative policy. Do not make a context reach into socket upload configuration.
+- Test the exact boundary at every real ingress. Do not add context-level policy tests for an internal trusted path merely to preserve duplicated validation. A green preservation suite does not demonstrate single ownership when the tests repeat the old policy value.
 
 ## Keep one owner for each concern
 
