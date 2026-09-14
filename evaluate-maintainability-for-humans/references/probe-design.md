@@ -42,7 +42,7 @@ Before constructing a live or repeat probe, verify that the developer and evalua
 - Keep the worktree until the report is complete so the evaluator can inspect the diff and verification evidence. The user may then delete the entire worktree.
 - Use a new worktree from the refactored baseline for an after-refactor probe; never reuse the before-probe worktree.
 
-If the current task is not attached to the required worktree, pause before presenting the probe and ask the user to start or fork the evaluation into one.
+If the current task is not attached to the required worktree, follow the new-task procedure in SKILL.md before presenting the probe. Default to a fresh Codex task with **Worktree** selected so unrelated conversation history is not copied into the evaluation. Use **Hand off → Worktree** only when the task is already dedicated to the evaluation and the user explicitly prefers continuity. Continue only after verifying isolation and the committed baseline.
 
 ## Default probe profile
 
