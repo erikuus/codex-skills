@@ -16,7 +16,7 @@ Use this format after the developer debrief and result inspection. Keep evidence
 - Evaluation mode:
 - Evaluated baseline:
 - Isolation: dedicated disposable worktree | read-only/retrospective, no probe edits
-- Developer context: repository, language/framework, and domain familiarity
+- Developer context: new to the repository by design; note only volunteered or materially blocking stack/domain unfamiliarity
 - Safety or scope constraints:
 
 ### Observed experience
@@ -27,8 +27,8 @@ Use this format after the developer debrief and result inspection. Keep evidence
 - Surprises or late discoveries:
 - Hints requested:
 - Changed locations:
-- Verification used:
-- Developer confidence:
+- Affected-surface reasoning:
+- Affected-path confidence:
 
 Mark each item as developer-reported, directly observed, or evaluator-reconstructed when the distinction matters.
 
@@ -39,7 +39,7 @@ Mark each item as developer-reported, directly observed, or evaluator-reconstruc
 - Locality: 1–5 or not observed
 - Change surface: 1–5 or not observed
 - Mental load: 1–5 or not observed
-- Verification confidence: 1–5 or not observed
+- Affected-path confidence: 1–5 or not observed
 
 For each rating above 2, give one sentence of evidence. Do not calculate a combined score.
 
@@ -59,7 +59,7 @@ Prefer two strong findings over a long inventory of static red flags.
 
 ### Confounders and uncertainty
 
-State language, framework, domain, tooling, environment, prior-familiarity, task-selection, and incomplete-observation effects. State what cannot be concluded.
+State material language, framework, domain, tooling, environment, unexpected prior exposure, task-selection, and incomplete-observation effects. State what cannot be concluded. Do not ask a general familiarity survey merely to populate this section.
 
 ### Refactor handoff
 
@@ -82,7 +82,7 @@ Choose one:
 - No refactor justified by this probe.
 - Gather another probe before deciding.
 - Refactor the evidenced boundary.
-- Address a verification gap before structural work.
+- Address an affected-path discoverability gap before structural work.
 - Resolve a tooling, requirements, or knowledge confounder first.
 
 End a completed live-probe report by stating that the evaluation worktree is no longer needed and may be deleted. Do not delete, merge, cherry-pick, or push it unless the user separately asks.
@@ -98,7 +98,7 @@ Remembered facts: before -> after
 Coordinated edit locations: before -> after
 Late discoveries or missed paths: before -> after
 Hints: before -> after
-Verification confidence: before -> after
+Affected-path confidence: before -> after
 ```
 
 Classify the result as:
@@ -114,21 +114,21 @@ The after probe must run in a fresh disposable worktree created from the refacto
 ## Example finding
 
 ```text
-Observation: The developer opened four plausible modules and changed one before a focused test revealed the authoritative rule elsewhere.
+Observation: The developer opened four plausible modules and changed one before a late caller trace revealed the authoritative rule elsewhere.
 Experienced symptom: Obscurity and unknown-unknown risk.
 Concrete cause: The same policy is represented in both request handling and the domain operation, with neither location identifying the other as authoritative.
 Maintenance risk: A future edit can update one path while leaving the other behavior unchanged.
-Evidence strength: Direct, supported by the diff, test failure, and developer report.
+Evidence strength: Direct, supported by the diff, caller trace, and developer report.
 ```
 
 Example handoff:
 
 ```text
-Experienced friction: The developer could not identify one owner for the policy and needed a failing test to find the second representation.
+Experienced friction: The developer could not identify one owner for the policy and needed a late caller trace to find the second representation.
 Concrete dependency or obscurity: Request handling knows and repeats a domain rule.
 Desired cognitive outcome: A developer changing the policy should find one authoritative owner and should not need request-layer implementation knowledge.
 Behavior and contracts to preserve: Existing accepted inputs, rejection messages, authorization, and public API behavior.
-Evidence the refactor must improve: One policy owner, no synchronized policy edit in request handling, and a focused test that establishes completeness.
+Evidence the refactor must improve: One policy owner, no synchronized policy edit in request handling, and a code-local path that makes all affected callers discoverable.
 Constraints and non-goals: Do not redesign unrelated request flow or introduce speculative extension points.
 Comparable follow-up probe: Change a different policy enforced through the same boundary and observe whether the first destination is correct.
 ```

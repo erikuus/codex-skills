@@ -21,16 +21,13 @@ Use this reference to construct a fair task that reveals repository complexity w
 
 ## Calibrate the participant
 
-Record only context needed to interpret the result:
+The participant is new to the repository by design. Do not ask them to classify repository, language, framework, or domain familiarity before the probe. Record only context needed to run and interpret the evaluation:
 
-- repository familiarity: new, occasional, or regular maintainer;
-- language and framework familiarity: unfamiliar, working, or strong;
-- domain familiarity: unfamiliar, partial, or strong;
 - evaluation mode: live change, read-only walkthrough, retrospective, or repeat evaluation.
 - evaluated baseline: committed branch, tag, or ref;
 - isolation: dedicated disposable worktree for live or repeat probes.
 
-Do not turn this into a personnel assessment. The purpose is to identify friction in the code for this developer context.
+Record language, framework, tooling, or domain unfamiliarity only when the developer volunteers it or it materially blocks the work. Do not turn this into a personnel assessment; the purpose is to identify friction in AI-generated code for a repository-new developer.
 
 ## Isolate live probes
 
@@ -39,7 +36,7 @@ Before constructing a live or repeat probe, verify that the developer and evalua
 - Do not run a live probe in the user's normal checkout, even when it is currently clean.
 - Do not merge, cherry-pick, push, or otherwise promote the probe changes. They exist only as evaluation evidence.
 - Do not stash, copy, or commit unrelated source-checkout changes to manufacture a baseline. Ask the user to select a committed baseline or switch to read-only or retrospective mode.
-- Keep the worktree until the report is complete so the evaluator can inspect the diff and verification evidence. The user may then delete the entire worktree.
+- Keep the worktree until the report is complete so the evaluator can inspect the diff and affected code paths. The user may then delete the entire worktree.
 - Use a new worktree from the refactored baseline for an after-refactor probe; never reuse the before-probe worktree.
 
 If the current task is not attached to the required worktree, follow the new-task procedure in SKILL.md before presenting the probe. Default to a fresh Codex task with **Worktree** selected so unrelated conversation history is not copied into the evaluation. Use **Hand off → Worktree** only when the task is already dedicated to the evaluation and the user explicitly prefers continuity. Continue only after verifying isolation and the committed baseline.
@@ -52,7 +49,7 @@ Prefer a routine change that:
 - changes one product concept;
 - has a plausible authoritative owner;
 - may cross boundaries only where responsibilities genuinely differ;
-- has observable acceptance criteria and focused verification;
+- has observable acceptance criteria and a credible code-based change-surface rationale;
 - is safe, reversible, and isolated inside the disposable evaluation worktree;
 - resembles work the repository is likely to receive again.
 
@@ -66,7 +63,7 @@ Adapt these to the repository rather than copying them mechanically.
 
 Examples: adjust a validation boundary, permission condition, status transition, retry rule, or display rule.
 
-Reveals: ownership, duplicated knowledge, caller leakage, verification boundaries.
+Reveals: ownership, duplicated knowledge, caller leakage, affected-path boundaries.
 
 ### Add one existing kind of thing
 
@@ -86,9 +83,9 @@ Examples: adjust when an action is available, where navigation goes, or how a st
 
 Reveals: state ownership, lifecycle distribution, event or callback fragmentation.
 
-### Explain and verify one failure
+### Trace one behavior or failure
 
-Examples: identify why a realistic input is rejected or why a request takes a fallback path, then name the smallest safe fix and test.
+Examples: identify why a realistic input is rejected or why a request takes a fallback path, then name the smallest safe change and the code paths it affects.
 
 Reveals: error complexity, hidden dependencies, debugging affordances.
 
@@ -104,7 +101,7 @@ Reject a candidate when:
 - it requires destructive data changes, credentials, production access, or risky migrations;
 - it overlaps unrelated uncommitted work;
 - its primary purpose is to expose a hotspot already chosen by the evaluator;
-- no credible completion oracle exists.
+- no credible code-based way exists to judge whether the affected paths were found.
 
 ## Hidden change-model template
 
@@ -120,7 +117,7 @@ Potential duplicated or leaked representations:
 Plausible misleading destinations:
 Dynamic, generated, configured, or convention-based entry points:
 Behavior that must remain unchanged:
-Focused completion oracle:
+Expected affected paths and completeness rationale:
 Likely incomplete solutions:
 Safety constraints:
 ```
@@ -141,12 +138,12 @@ Acceptance criteria:
 
 Keep the change focused and avoid unrelated cleanup. Work in your normal way. You do not need to narrate continuously, but please notice where you looked first, where you backtracked, what surprised you, and how you decided the change was complete.
 
-This is an evaluation-only experiment. Keep every edit and test artifact inside this disposable worktree; do not merge or push the result. The worktree will remain available for the debrief and result inspection, then it may be deleted.
+This is an evaluation-only experiment. Keep every edit and generated artifact inside this disposable worktree; do not merge or push the result. The worktree will remain available for the debrief and result inspection, then it may be deleted.
 
 Reply when you are done, blocked, or want a hint. I will not reveal the expected location unless you request help.
 ```
 
-Do not include likely file names, symbols, architecture terms, search terms, or test names when they reveal the answer. It is acceptable to state safety constraints and externally observable behavior.
+Do not include likely file names, symbols, architecture terms, search terms, or code paths when they reveal the answer. It is acceptable to state safety constraints and externally observable behavior.
 
 ## Hint ladder
 
@@ -180,7 +177,7 @@ Rate each from 1 to 5 using developer report plus observable evidence:
 - **Locality:** how well related knowledge was kept together.
 - **Change surface:** how many coordinated representations or owners had to change.
 - **Mental load:** how many facts, states, exceptions, or sequencing rules had to be remembered.
-- **Verification confidence:** how directly the developer could establish correctness and completeness.
+- **Affected-path confidence:** how directly the developer could explain why the relevant code locations and dependencies had been found.
 
 Use `not observed` when evidence is insufficient. Never invent numerical precision by averaging these ratings into a pseudo-scientific score.
 
@@ -191,8 +188,10 @@ Ask one question per turn when practical:
 1. Request the overall difficulty selection.
 2. Ask where the developer first looked and why.
 3. Ask about the highest-signal observed friction: backtracking, memory burden, surprise, or uncertainty.
-4. Ask what established completeness and confidence.
+4. Ask which code path or relationship established confidence that the affected surface was understood.
 5. Ask one counterfactual question only if it will clarify a refactoring goal.
+
+Do not ask whether the developer opened the browser, manually exercised the feature, or ran automated tests. Do not treat the absence of runtime verification as evidence against their code understanding.
 
 Inspect the diff after collecting the developer's experience so the expected solution does not lead their report. If operational constraints require inspecting earlier, do not reveal conclusions until debriefing is complete.
 
@@ -203,10 +202,10 @@ Ask the developer to:
 1. Identify the first place they would inspect.
 2. Trace likely affected behavior.
 3. Name expected edits without making them.
-4. Explain how they would verify completeness.
+4. Explain why those locations cover the affected behavior.
 5. Stop when they believe the plan is sufficient.
 
-Rate discoverability, cognitive load, and unknown-unknown risk, but label change-surface and verification conclusions as predicted rather than observed.
+Rate discoverability, cognitive load, and unknown-unknown risk, but label change-surface and affected-path-confidence conclusions as predicted rather than observed.
 
 ## Retrospective mode
 
@@ -216,7 +215,7 @@ Start from the developer's unprompted narrative before inspecting the diff. Ask 
 - unexpected locations;
 - backtracking or discarded approaches;
 - information held in memory;
-- final verification and confidence.
+- final reasoning about affected paths and confidence.
 
 Use version-control evidence to reconstruct the change surface, but acknowledge that searches and abandoned paths may be unavailable.
 
@@ -224,12 +223,12 @@ Use version-control evidence to reconstruct the change surface, but acknowledge 
 
 After refactoring, choose a different task with similar:
 
-- expected effort and product familiarity;
+- expected effort and product context;
 - number and kinds of legitimate boundaries;
 - need to locate an owner;
-- propagation and verification demands;
+- propagation and code-comprehension demands;
 - risk level.
 
-Do not compare a cross-cutting rule change before refactoring with a local text edit afterward. Document why the probes are structurally comparable and note any familiarity advantage.
+Do not compare a cross-cutting rule change before refactoring with a local text edit afterward. Document why the probes are structurally comparable and note the unavoidable familiarity gained from the first probe.
 
 Run the repeat probe in a fresh disposable worktree created from the refactored baseline. Do not carry probe edits forward from the before worktree.

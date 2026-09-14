@@ -1,11 +1,11 @@
 ---
 name: evaluate-maintainability-for-humans
-description: Evaluate how maintainable a real repository is for a human by running live maintenance probes in isolated disposable worktrees, withholding location hints, interviewing the developer about navigation and cognitive load, inspecting the resulting change and verification, and producing an evidence-backed complexity diagnosis and refactor handoff. Use when Codex must measure change friction before or after a refactor, diagnose unclear ownership, duplication, coupling, obscurity, change amplification, cognitive load, or unknown-unknown risk, or compare whether one design is easier for developers to modify. Supports any language or framework and live-change, read-only walkthrough, retrospective, and before/after evaluation modes.
+description: Evaluate how maintainable an AI-generated repository is for a repository-new human by running live maintenance probes in isolated disposable worktrees, withholding location hints, interviewing the developer about navigation and cognitive load, inspecting the resulting change and change reasoning, and producing an evidence-backed complexity diagnosis and refactor handoff. Use when Codex must measure change friction before or after a refactor, diagnose unclear ownership, duplication, coupling, obscurity, change amplification, cognitive load, or unknown-unknown risk, or compare whether one design is easier for developers to modify. Supports any language or framework and live-change, read-only walkthrough, retrospective, and before/after evaluation modes.
 ---
 
 # Evaluate Maintainability for Humans
 
-Measure how easily a developer can make a realistic change. Treat successful maintenance as the ability to find the right owner, understand only the necessary concepts, make few coordinated edits, and verify completeness with confidence.
+Measure how easily a developer who is new to an AI-generated repository can make a realistic change. Treat successful maintenance as the ability to find the right owner, understand only the necessary concepts, make few coordinated edits, and explain the affected change surface with confidence.
 
 Do not substitute static taste, code metrics, or agent confidence for a developer's experience. Do not use line count, function length, file count, abstraction count, or elapsed time alone as measures of maintainability.
 
@@ -27,8 +27,8 @@ Run every live-change or repeat probe in a dedicated disposable Git worktree so 
 - Before presenting a live probe, confirm that the current task is attached to a new evaluation worktree created from the committed baseline being evaluated. Treat a branch name or ref as the baseline; record it for the report.
 - If the current task is operating in the user's normal checkout, default to a fresh Codex task created with **Worktree** selected. Do not fork the current task because a fork carries its completed conversation history into the evaluation. Give the user a concise copy-ready prompt that invokes this skill, identifies the repository and committed baseline, and contains no location hints or hidden change-model details. Ask them to open a new task, select **Worktree**, choose that committed baseline, and submit the prompt; then pause without presenting the probe in the original task. If the current task is already dedicated to this evaluation and the user explicitly prefers to keep its history, they may use **Hand off → Worktree** instead. Do not switch branches, stash changes, construct a worktree inside the normal checkout, or create a task or fork on the user's behalf.
 - If the intended baseline includes uncommitted changes that cannot be represented safely in a new worktree, ask the user to choose a committed baseline or use a read-only walkthrough or retrospective instead. Never copy, stash, or commit those changes implicitly.
-- Keep all probe edits, test artifacts, and experimental cleanup inside the evaluation worktree. Do not merge, cherry-pick, push, or present the probe as product work.
-- Keep the worktree available until the debrief, diff inspection, verification inspection, and report are complete. Then state that the evaluation is complete and the disposable worktree may be deleted. Delete it only when the user explicitly asks.
+- Keep all probe edits, generated artifacts, and experimental cleanup inside the evaluation worktree. Do not merge, cherry-pick, push, or present the probe as product work.
+- Keep the worktree available until the debrief, diff inspection, change-surface inspection, and report are complete. Then state that the evaluation is complete and the disposable worktree may be deleted. Delete it only when the user explicitly asks.
 - For an after-refactor probe, create a fresh disposable worktree from the refactored baseline. Do not reuse the before-probe worktree.
 
 If the repository is not Git-backed or an isolated worktree cannot be used, do not run a live-change probe. Use a read-only walkthrough or retrospective and label the limitation.
@@ -40,30 +40,30 @@ Always read [references/complexity-diagnostics.md](references/complexity-diagnos
 Use the least artificial mode that fits the user's circumstances:
 
 1. **Live-change probe, preferred:** ask the developer to implement one small, reversible change in a dedicated disposable worktree while using their normal tools and workflow.
-2. **Read-only walkthrough:** ask the developer to identify the owner, describe the edits, and explain verification without changing files.
-3. **Retrospective:** evaluate a change the developer has just completed using their recollection, the diff, searches, and verification evidence.
+2. **Read-only walkthrough:** ask the developer to identify the owner, describe the edits, and explain why those locations cover the affected behavior without changing files.
+3. **Retrospective:** evaluate a change the developer has just completed using their recollection, the diff, searches, and code-path reasoning.
 4. **Before/after comparison:** run one probe before refactoring and a different but structurally comparable probe afterward.
 
 If no human participant is available, perform only a static maintainability hypothesis. Label it explicitly as unvalidated and do not manufacture developer observations.
 
-Record whether the developer is new to the repository, occasionally familiar, or a regular maintainer. Also record material unfamiliarity with the language, framework, tools, or domain so it is not mistaken for structural complexity.
+Treat the developer as new to the repository by design. Do not ask a repository-familiarity question or open with a language, framework, and domain survey. Record language, framework, tooling, or domain unfamiliarity only when the developer volunteers it or it materially blocks the probe, so it is not mistaken for structural complexity.
 
 ## Build a hidden change model
 
-Inspect repository instructions, nearby conventions, implementation, callers, tests, configuration, generated entry points, and worktree state. Before presenting a probe, determine privately:
+Inspect repository instructions, nearby conventions, implementation, callers, configuration, generated entry points, and worktree state. Before presenting a probe, determine privately:
 
 - the behavior and product concept being changed;
 - the likely owner and expected change surface;
 - plausible but incorrect or incomplete locations;
 - duplicated rules, coupled decisions, and non-obvious dependencies that may matter;
-- the narrowest credible verification and signs of incomplete work;
+- the code paths that establish the expected change surface and signs of incomplete work;
 - safety boundaries and behavior that must remain unchanged.
 
-This is an evaluator's hypothesis, not ground truth. Revise it when the developer uncovers evidence the initial inspection missed. Do not expose file names, symbols, architecture labels, search terms, or tests that would reveal the path unless they are part of the public task or a requested hint.
+This is an evaluator's hypothesis, not ground truth. Revise it when the developer uncovers evidence the initial inspection missed. Do not expose file names, symbols, architecture labels, search terms, or completion paths that would reveal the answer unless they are part of the public task or a requested hint.
 
 ## Select one maintenance probe
 
-Choose a routine, product-realistic change that is normally completable in about 5–20 minutes. Prefer a probe that exercises ownership, propagation, or verification without requiring broad implementation.
+Choose a routine, product-realistic change that is normally completable in about 5–20 minutes. Prefer a probe that exercises ownership, propagation, or code comprehension without requiring broad implementation.
 
 The probe must be:
 
@@ -72,7 +72,7 @@ The probe must be:
 - representative of ordinary maintenance in this repository;
 - dependent on understanding the code, not trivia or obscure framework knowledge;
 - capable of revealing at least one of discoverability, change amplification, cognitive load, dependency, obscurity, or unknown-unknown risk;
-- supported by a credible completion check.
+- supported by a credible code-based rationale for judging whether the affected paths were found.
 
 Avoid mechanical renames, formatting, generated-file edits, dependency upgrades, broad migrations, speculative features, compiler-guided scavenger hunts, and tasks whose difficulty mainly comes from missing product requirements. Do not deliberately select the worst hotspot unless the user asks for a stress test.
 
@@ -101,13 +101,15 @@ Prefer experiential wording:
 - Ask what had to be remembered, not whether cognitive load was high.
 - Ask what was discovered late, not whether unknown unknowns existed.
 - Ask what a name suggested, not whether naming was poor.
-- Ask which verification created confidence, not whether the tests were good.
+- Ask which code path or relationship created confidence that the affected surface was understood.
+
+Do not ask whether the developer tried the change in a browser or ran automated tests. Those activities assess runtime correctness, not the code-understanding experience this skill measures.
 
 Do not reveal the expected change surface until the developer has rated the experience and answered the relevant debrief questions.
 
 ## Inspect the result
 
-After the subjective debrief, inspect the developer's diff, changed files, relevant tests, and other available verification. Compare them with the hidden change model and update that model when warranted.
+After the subjective debrief, inspect the developer's diff, changed files, searches, and relevant caller, configuration, registration, generation, and dispatch paths. Compare them with the hidden change model and update that model when warranted.
 
 Look for:
 
@@ -115,11 +117,11 @@ Look for:
 - repeated representations of one decision;
 - edits made only to keep layers or formats synchronized;
 - relevant behavior the developer missed or found late;
-- verification that depends on broad manual confidence rather than a focused oracle;
-- hints or failing checks that exposed hidden dependencies;
+- confidence that depends on a broad guess rather than a coherent trace of the affected code;
+- hints or late searches that exposed hidden dependencies;
 - unrelated tooling, environment, or domain obstacles that should be treated as confounders.
 
-Do not treat a missing text search result as proof that no dynamic, generated, configured, or convention-based caller exists. Do not penalize a correct design merely because repository setup or external tooling failed.
+Do not treat a missing text search result as proof that no dynamic, generated, configured, or convention-based caller exists. Do not penalize the participant for not running the application, browser checks, or automated tests. Treat repository setup or external-tool failures as confounders rather than code-understanding evidence.
 
 ## Diagnose from evidence
 
@@ -141,11 +143,11 @@ Produce the compact report defined in [references/reporting.md](references/repor
 
 1. Probe and developer context.
 2. Evaluated baseline and worktree isolation.
-3. Observed path and verification.
+3. Observed path and affected-surface reasoning.
 4. Overall difficulty plus dimension ratings.
 5. Evidence-backed complexity findings.
 6. Confounders and uncertainty.
-7. A refactor handoff describing the experienced friction, concrete dependency, desired cognitive outcome, behavior to preserve, and how to retest.
+7. A refactor handoff describing the experienced friction, concrete dependency, desired cognitive outcome, behavior to preserve, and how to re-probe.
 
 Do not prescribe a new abstraction unless the evidence makes its responsibility clear. The evaluator should define what must become easier; the refactoring workflow should compare possible designs.
 
@@ -163,6 +165,6 @@ Compare:
 - coordinated edit locations;
 - late discoveries and missed paths;
 - hint use;
-- verification confidence.
+- affected-path confidence.
 
 Claim improvement only when the new evidence shows lower change friction. A changed score without supporting observations is not sufficient.

@@ -24,7 +24,7 @@ Treat a module generically: it may be a function, module, package, component, co
 
 Diagnose in this order:
 
-1. **Observation:** what the developer did, reported, changed, missed, or verified.
+1. **Observation:** what the developer did, reported, changed, missed, or traced.
 2. **Experienced symptom:** change amplification, cognitive load, or unknown-unknown risk.
 3. **Likely cause:** dependency or obscurity, optionally refined by a design red flag.
 4. **Maintenance consequence:** extra work, inconsistent behavior, fragile confidence, or future defect risk.
@@ -40,7 +40,7 @@ A conceptually small change requires many coordinated modifications.
 Evidence includes:
 
 - the same decision edited in multiple files or representations;
-- tests, fixtures, schemas, UI, configuration, and runtime code each restating one fact;
+- schemas, UI, configuration, registration, and runtime code each restating one fact;
 - compatibility or synchronization edits that do not add behavior;
 - a change that cannot be completed through one authoritative owner.
 
@@ -81,7 +81,7 @@ Important information or affected behavior is not discoverable before the develo
 
 Evidence includes:
 
-- a required location discovered only after a failing test or late search;
+- a required location discovered only after a late search or caller trace;
 - an affected path omitted from the change despite high confidence;
 - convention, registration, generation, configuration, or runtime dispatch hiding a dependency;
 - surprising side effects or distant coupling;
@@ -92,10 +92,10 @@ Ask:
 - What did you discover later than you wish you had?
 - What caused you to search beyond the first apparent owner?
 - What evidence tells you there is not another affected path?
-- Did a test or runtime result reveal a dependency you had not considered?
-- If the relevant test did not exist, what would probably have been missed?
+- Which code relationship revealed a dependency you had not considered?
+- Without the late search or trace, what would probably have been missed?
 
-Do not ask only “Were there unknown unknowns?” Compare the developer's result with the evaluator's hidden model and available verification. Report uncertainty when neither can establish completeness.
+Do not ask only “Were there unknown unknowns?” Compare the developer's result with the evaluator's hidden model and available code evidence. Report uncertainty when neither can establish completeness.
 
 ## Primary causes
 
@@ -216,12 +216,12 @@ Separate structural complexity from:
 - unfamiliar language or framework syntax;
 - missing domain requirements;
 - broken environment or dependency setup;
-- slow tools or tests;
+- slow or broken navigation and search tools;
 - lack of repository access;
 - unrelated dirty-worktree changes;
 - a deliberately rare or adversarial task;
 - developer fatigue, interruption, or accessibility needs;
-- prior familiarity that makes a difficult structure feel easy through memorization.
+- unexpected prior exposure that makes a difficult structure feel easy through memorization.
 
 Record confounders; do not “correct” a developer's rating mathematically. Explain which conclusions remain supported despite them.
 
@@ -233,7 +233,7 @@ Ask the fewest questions that distinguish between plausible causes. Prefer one c
 2. First destination and why.
 3. Greatest uncertainty or memory burden.
 4. Late discovery or completeness evidence.
-5. Verification source.
+5. Code-based completeness rationale.
 6. One counterfactual: what structural change would have helped most?
 
 Skip questions already answered by the developer's narrative. Ask follow-ups when the rating, diff, and confidence conflict.
