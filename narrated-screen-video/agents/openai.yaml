@@ -1,0 +1,4 @@
+interface:
+  display_name: "Narrated Screen Video"
+  short_description: "Plan and record app demos with voice and music"
+  default_prompt: "Use $narrated-screen-video to plan and produce a narrated app video with background music."
