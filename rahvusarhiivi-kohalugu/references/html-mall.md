@@ -1,13 +1,13 @@
 # HTML-malli kasutamine
 
-Lõppraporti vormistamiseks kasuta olemasolevat malli; ära loo igal uurimisel uut kujundust. Mall järgib uuritud raporti üldist struktuuri: sisukord, lühivastus, põhifaktid, ajajoon, tabelid, pildid, dokumendilugemid ja allikad. See ei sisalda Kohalugu kontotoiminguid ega teenuse logo.
+Lõppraporti vormistamiseks kasuta kaasasolevat malli. See toetab sisukorda, lühivastust, põhifakte, ajajoont, tabeleid, pilte, dokumendilugemeid ja allikaviiteid. Vali sisu ja peatükid uurimisülesande järgi.
 
 Kaasasolev andmefail kasutab täielikult väljamõeldud juhtumit: Ranniku talu, endine Lepiku talu, Saluoja külas. Ka nimed, daatumid, dokumendipealkiri ja leidandmed on fiktiivsed; võimalik nimekattuvus on juhuslik. `NAIDIS`-tähised ja `example.invalid`-lingid ei osuta päris arhiivikirjetele. Ära otsi nende järgi ega esita neid kontrollitud allikatena.
 
 ## Genereerimine
 
 1. Kopeeri `assets/report-data.example.json` uurimise töökausta failiks `report-data.json`.
-2. Asenda näitetekstid kontrollitud sisuga. Säilita peatükkide järjekord; tühjade `blocks`-loenditega peatükid jäetakse välja. Ära jäta näitetekste lõppraportisse. Kui näites kasutatud allikas ei kuulu uurimusse, eemalda see.
+2. Asenda näitetekstid kontrollitud sisuga. Kohanda peatükkide pealkirjad, valik ja järjekord ülesandele; tühjade `blocks`-loenditega peatükid jäetakse välja. Nummerda kasutatud peatükid loetavalt ning säilita unikaalsed ID-d. Eemalda kõik näidisallikad ja kasutamata viited.
 3. Sea `demo` väärtuseks `false` alles siis, kui näidisandmed on asendatud. Lisa kuupäev, uurija nimi või koostamisviis ning tegelikud piirangud `method`-loendisse. Näidise märkuse eemaldamine ei kinnita automaatselt ajaloolist kvaliteeti.
 4. Käivita, kasutades skilli tegelikku asukohta:
 
@@ -25,8 +25,8 @@ Tekstiväljad on lihttekst, mitte HTML ega Markdown. Sisu HTML-märgid turvataks
 
 - `title`, `date` ja `sections` on vajalikud; `subtitle`, `author`, `notice`, `footer` on valikulised tekstid.
 - `demo: true` kuvab nähtava näidisehoiatuse ja lubab pildikohatäitjaid. Lõppraportis `false`.
-- `facts`: objektid väljadega `label`, `value`, valikuline `note` ja `refs`. Erista küla esmamainimine ning talu vanim tõend juba sildis.
-- `sections`: objektid `id` (`sec-1` … `sec-16`), `title` (koos jaotisenumbriga), `blocks`. Allikate osa 17 lisatakse automaatselt `sources` põhjal.
+- `facts`: objektid väljadega `label`, `value`, valikuline `note` ja `refs`. Silt peab täpsustama, millist kohta, aega või tunnust väärtus kirjeldab.
+- `sections`: objektid `id` (`sec-` ja positiivne täisarv), `title` (koos jaotisenumbriga), `blocks`. Allikate osa lisatakse automaatselt `sources` põhjal ja nummerdatakse kuvatud peatükkide arvu järgi.
 - `sources`: objektid `id` (nt `S1`), `title`, `url` (HTTP/HTTPS), valikulised `citation` (leidandmed, aasta, leht/kaader) ja `access` (mida kontrolliti, millal, ligipääsu seis).
 - `method`: lihttekstide loend uurimise ulatuse ja piirangutega.
 

@@ -8,6 +8,14 @@ Salvesta sisend sõnasõnalt, uurimise kuupäev, küsimused ning kandidaadid. Ig
 
 Väldi isikunimede ühendamist pelgalt nimekuju järgi. Isiku ID ja koha ID võivad olla lihtsad `P01`, `L01`; eraldi kandidaadid säilivad kuni samastus on põhjendatud.
 
+Lisa põhiküsimuste katvustabel ja uuenda seda oluliste leidude järel:
+
+| Põhiküsimus | Sobiv allikas | Tehtud otsing / loetud lehed | Vastus või takistus | Järgmine samm / lõpetamisalus |
+|---|---|---|---|---|
+| Nimi, talu vanim tõend, peremehed/elanikud, maad või hooned | Konkreetne register/säilik | Tegelik ulatus | Tõend või konkreetne puudus | Miks jätkata või miks see suund lõpetada |
+
+„Otsimata“ ei ole lõpetamisalus. Kui kasutaja küsimus mõnd suunda ei hõlma, märgi see ülesandeväliseks.
+
 ## 2. Allikad
 
 Iga allikas saab ID `S001` ja järgmised väljad:
@@ -19,12 +27,12 @@ Iga allikas saab ID `S001` ja järgmised väljad:
 | Link | Kontrollitud kirje/püsiviide; vajadusel eraldi vaaturilink |
 | Aeg | Dokumendi dateering; sündmuse aeg eraldi; kontrollimise kuupäev |
 | Liik ja sõltuvus | Algdokument, kataloogikirje, mälestus, ümbertrükk, OCR/HTR; millist allikat kordab |
-| Ligipääs | Täpne digipildi olek juhendist, mitte oletus |
+| Ligipääs | Täpne digipildi olek juhendist, mitte oletus; Saaga puhul AISi kirje URL, „Vaata allikat“ nupu seis ja kontrollkuupäev |
 | Tegelikult vaadatud | Kirjeldus / tervikpilt / konkreetne lõik / kõik kande lehed |
 | Kohalik tõend | Pildifail ja lõikeinfo, lugemi asukoht/versioon, kui salvestatud |
 | Panus ja piirang | Millisele küsimusele vastab; mis jäi lugemata |
 
-Kaader pole sama mis originaalleht. Üks kaader võib sisaldada kaht lehekülge; raamatu lk 196 ja digikaader 108 säilita mõlemad.
+Kaader pole sama mis originaalleht. Üks kaader võib sisaldada kaht lehekülge; säilita nii originaali leheküljenumber kui ka digikaadri number.
 
 ## 3. Väited
 

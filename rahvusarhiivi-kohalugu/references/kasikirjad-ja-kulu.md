@@ -30,7 +30,7 @@ Seos uuritava kohaga: tõendatud / tõenäoline / kontrollimata, põhjendus
 Järgmine vajalik kontroll: ...
 ```
 
-Märgistus: `[loetamatu]`, `Ranniku[?]`, `[Ranniku / Ranniko]`, `d[essen]` kindla lühendi avamiseks. Tõlge säilitab ebakindluse. Kolm risti kirjelda nähtava märgina; üksnes neist ei saa kindlalt väita kirjaoskamatust.
+Märgistus: `[loetamatu]`, `Ranniku[?]`, `[Ranniku / Ranniko]`, `d[essen]` kindla lühendi avamiseks. Tõlge säilitab ebakindluse. Allkirju, parandusi ja muid märke kirjelda esmalt nähtaval kujul; nende tähendus vajab konteksti või lisatõendit.
 
 Kindlus anna väljade kaupa (kindel / tõenäoline / ebakindel), mitte lehele ühe protsendina. Selge nime, kuid ebaselge aastaarvu korral kasuta nime ja piira ajalist väidet. Vanusest arvutatud sünd on hinnang. Vana/uue kalendri teisendus vajab ajastule sobivat kontrolli, mitte alati sama päevade arvu liitmist.
 

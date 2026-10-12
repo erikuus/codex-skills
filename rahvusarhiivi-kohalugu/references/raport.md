@@ -4,20 +4,20 @@ Vaikimisi kirjuta eesti keeles. Esita kõigepealt vastus kasutaja küsimusele ja
 
 Lõppvormistuseks kasuta [HTML-malli](html-mall.md), mis renderdab tõenduspäevikust koostatud andmed ühtlaseks iseseisvaks HTML-raportiks. Näidisandmed tuleb enne üleandmist asendada uuritud koha andmetega.
 
-## Näidisraportist tuletatud struktuur
+## Raporti võimalikud osad
 
-Täismahus raport võib järgida järgmisi 17 osa. Lühikese töö puhul ühenda osi; puuduvat tulemust ei tohi asendada väljamõeldud sisuga.
+Järgmised osad on valik, mitte kohustuslik peatükiloend. Vali, ühenda ja järjesta need koha liigi, kasutaja küsimuste ning leitud materjali järgi. Lühivastus, tõendatud käsitlus, allikad ja uurimise piirangud peavad olema leitavad ka lühikeses raportis. Näiteks küla puhul võivad olla keskmes asustus ja haldusmuutused, kinnistu puhul piirid ja kasutus, hoone puhul ehitus- ja kasutuslugu.
 
-1. **Lühivastus.** Mida koha kohta saab kindlalt öelda, mida ainult tõenäoliselt; vastus eriküsimustele. Vanim teade külast ja konkreetne teade talust eraldi.
-2. **Koha lugu.** Sidus kronoloogiline jutustus koos lähedal asuvate viidetega. Erista talu lugu ümbruskonna üldajaloost.
+1. **Lühivastus.** Mida koha kohta saab kindlalt öelda, mida ainult tõenäoliselt; vastus eriküsimustele. Täpsusta, millise koha või objekti kohta vanim tõend käib.
+2. **Koha lugu.** Sidus kronoloogiline jutustus koos lähedal asuvate viidetega. Seo ümbruskonna sündmused uuritava koha looga.
 3. **Registriandmed.** Aadress, katastritunnus, pindala, ajalooline kuuluvus; seisuga-kuupäev ja registri piirangud.
 4. **Ajajoon.** Aeg või vahemik, sündmus, tõendi liik/kindlus, täpne viide. Oletus ei muutu ajajoones faktiks.
 5. **Omanikud ja elanikud.** Nimi, roll, tõendatud ajavahemik, seose alus. Ära täida dokumentide vahelisi lünki katkematu omandijadaga.
 6. **Kaardid ja plaanid.** Võimalusel ajalooline taluplaan, eri aegade kaardid ja tänane asukoht. Selgita õue, piiri, naabrite ja nime muutumist.
 7. **Hooned ja koht täna.** Registriandmed ja ajaloolised kirjeldused. Ehitusaasta, registriaasta ja oletatav samastus eraldi.
 8. **Ajalehtedes.** Väljaanne, kuupäev, artikkel/lehekülg, leid ja kindlus. Kasuta artikli püsiviidet, mitte ainult portaali avalehte.
-9. **Fotod.** Täpne kujutatu, aeg, autor, kogu/ID ja seos taluga. Kaudne foto märgi kaudseks.
-10. **Ümbruskond.** Ainult talu samastamise või ajaloo mõistmise jaoks olulised naabrid ja objektid.
+9. **Fotod.** Täpne kujutatu, aeg, autor, kogu/ID ja seos uuritava kohaga. Kaudne foto märgi kaudseks.
+10. **Ümbruskond.** Ainult koha samastamise või ajaloo mõistmise jaoks olulised naabrid ja objektid.
 11. **Tõlgendused.** Hüpotees, seda toetavad tõendid, vastuargumendid ja puuduv kontroll. Ära esita nõrka isikusamastust kindla perekonnaloona.
 12. **Tellimist väärt toimikud.** Leidandmed, pealkiri, aeg, tegelikult kontrollitud digiseis ning küsimus, millele toimik võiks vastata. Siin ei esitata tellimusi.
 13. **Mida ei leitud või ei kontrollitud.** Eraldi otsimata, osaliselt uuritud, juurdepääsuta ja otsitud ulatuses tulemuseta. Kaadrivahemikud ja päringud võta päevikust.
@@ -40,6 +40,12 @@ Erista „kataloogikirje järgi“ ja „toimiku lehelt loetud“. Viite olemaso
 
 ## Lõpukontroll
 
+Enne vormistuse kontrolli rakenda [SKILL.md lõpetamiskriteeriume](../SKILL.md#millal-lõpetada). Ära anna pooleliolevat eeluuringut üle lõpetatud uurimusena ainult seetõttu, et lüngad on raportis nimetatud.
+
+- Kas põhiküsimuste katvustabelis on tegelikud otsingud/lugemised ja põhjendatud lõpetamisalus?
+- Kas põhiküsimustele sobivad isiku-, omandi-, haldus-, kaardi- või hooneallikad on läbi otsitud ning olulised leiud loetud?
+- Kas mõni ligipääsetav põhiküsimust lahendav dokument on põhjendamatult jäetud ainult edasiste tööde nimekirja? Kui jah, jätka uurimist.
+- Kas iga Saaga allikas avati AISi aktiivsest „Vaata allikat“ nupust ja nupu seis talletati?
 - Kas pealkiri ja sissejuhatus käsitlevad kasutaja tegelikku kohta/küsimust?
 - Kas tänase ja ajaloolise koha seos on tõendatud ning sarnased nimed hoitud lahus?
 - Kas kõik kesksete väidete originaaliviited, lehed/kaadrid ja lugemid on kontrollitavad?

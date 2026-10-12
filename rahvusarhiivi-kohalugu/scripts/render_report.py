@@ -120,7 +120,7 @@ class Renderer:
         sections, toc, seen = [], [], set()
         for section in self.data['sections']:
             ident = section['id']
-            if not re.fullmatch(r'sec-[1-9][0-9]*', ident) or ident in seen or int(ident.split('-')[1]) > 16:
+            if not re.fullmatch(r'sec-[1-9][0-9]*', ident) or ident in seen:
                 raise ValueError(f'Vigane või korduv peatüki ID: {ident}')
             seen.add(ident)
             blocks = section.get('blocks', [])
@@ -130,13 +130,14 @@ class Renderer:
             toc.append(f'<li><a href="#{ident}">{esc(heading)}</a></li>')
             sections.append(f'<section class="report-section" id="{ident}"><h2>{esc(heading)}</h2>' + ''.join(self.block(b) for b in blocks) + '</section>')
         if self.sources:
-            toc.append('<li><a href="#sources">17. Allikad ja meetod</a></li>')
+            sources_heading = f'{len(sections) + 1}. Allikad ja meetod'
+            toc.append(f'<li><a href="#sources">{sources_heading}</a></li>')
             sources = []
             for ident, s in self.sources.items():
                 href = url(s['url'])
                 sources.append(f'<li id="source-{ident}"><span class="source-id">{ident}</span><a href="{href}">{esc(s["title"])}</a><span class="source-detail">{esc(s.get("citation", ""))}</span><span class="source-detail">{esc(s.get("access", ""))}</span><span class="source-url">{esc(s["url"])}</span></li>')
             method = ''.join('<p>' + esc(p) + '</p>' for p in self.data.get('method', []))
-            sections.append('<section class="report-section" id="sources"><h2>17. Allikad ja meetod</h2>' + method + '<ul class="source-list">' + ''.join(sources) + '</ul></section>')
+            sections.append(f'<section class="report-section" id="sources"><h2>{sources_heading}</h2>' + method + '<ul class="source-list">' + ''.join(sources) + '</ul></section>')
         facts = []
         for fact in self.data.get('facts', []):
             facts.append(f'<div class="fact"><dt>{esc(fact["label"])}</dt><dd>{esc(fact["value"])}<small>{esc(fact.get("note", ""))}{self.refs(fact.get("refs", []))}</small></dd></div>')

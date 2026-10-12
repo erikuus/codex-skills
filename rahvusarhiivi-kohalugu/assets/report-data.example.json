@@ -45,7 +45,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Näidisraport seob Ranniku talu varasema Lepiku taluga. Selle seose käsitlemisel tuleb eraldi kontrollida kohasamastust, nimevahetust ja seal elanud inimesi.",
+          "text": "Fiktiivne näide seob Ranniku talu varasema Lepiku taluga. Selle seose käsitlemisel tuleb eraldi kontrollida kohasamastust, nimevahetust ja seal elanud inimesi.",
           "refs": [
             "S1"
           ]
@@ -62,7 +62,7 @@
       "blocks": [
         {
           "type": "paragraph",
-          "text": "Koha lugu kujuneb kaartide, elanike nimekirjade, tehingute ja mälestuste võrdlemisel. Näidisraportis ühendavad eri ajastuid nimed Lepiku ja Ranniku. Jutustuse iga oluline pööre peab jääma seotuks konkreetse dokumendiga.",
+          "text": "Koha lugu kujuneb kaartide, elanike nimekirjade, tehingute ja mälestuste võrdlemisel. Fiktiivses näites ühendavad eri ajastuid nimed Lepiku ja Ranniku. Jutustuse iga oluline pööre peab jääma seotuks konkreetse dokumendiga.",
           "refs": [
             "S1"
           ]
@@ -187,9 +187,9 @@
           "rows": [
             [
               "Johannes Aru",
-              "Näidisraportis taluga seotud elanik",
+              "Fiktiivses näites taluga seotud elanik",
               {
-                "text": "Algallikas uuesti kontrollimata",
+                "text": "Algallika kontroll on näites lõpetamata",
                 "refs": [
                   "S1"
                 ],
@@ -198,7 +198,7 @@
             ],
             [
               "Peeter Kask",
-              "Näidisraporti järgi nimi plaani allkirjaosas",
+              "Fiktiivses näites nimi plaani allkirjaosas",
               {
                 "text": "Ostutehing ja kuupäev vajavad eraldi tõendit",
                 "refs": [
@@ -255,7 +255,7 @@
       "blocks": [
         {
           "type": "paragraph",
-          "text": "Fotod lisatakse koos kujutatu, autori, dateeringu ja arhiiviviitega. Talu elaniku hauafoto või naaberhoone foto ei esinda talu enda väljanägemist. Selles näites fotosid ei kasutata."
+          "text": "Fotod lisatakse koos kujutatu, autori, dateeringu ja arhiiviviitega. Selgita, mida pilt kujutab ja kuidas see on uuritava kohaga seotud. Selles näites fotosid ei kasutata."
         }
       ]
     },
@@ -277,7 +277,7 @@
           "type": "notice",
           "tone": "warning",
           "title": "Nimevahetus vajab tõendite ahelat",
-          "text": "Näidisraport seostab nime Ranniku Jaan Rannikuga. See tuleb esitada tõlgendusena koos toetavate allikate ja puuduva kontrolliga, mitte pelga nimelise kokkulangevuse põhjal.",
+          "text": "Fiktiivne näide seostab nime Ranniku Jaan Rannikuga. See tuleb esitada tõlgendusena koos toetavate allikate ja puuduva kontrolliga, mitte pelga nimelise kokkulangevuse põhjal.",
           "status": "oletus",
           "refs": [
             {
@@ -296,7 +296,7 @@
           "type": "list",
           "items": [
             {
-              "text": "NAIDIS.3.2.41 — näidisraportis nimetatud kinnistutoimik. Enne tellimise soovitamist kontrollida AISi ja Saaga praegust digiseisu.",
+              "text": "NAIDIS.3.2.41 — fiktiivne kinnistutoimik. Enne tellimise soovitamist kontrollida AISis aktiivset nuppu „Vaata allikat“; Saagasse liikuda ainult selle kaudu.",
               "refs": [
                 "S1"
               ],
@@ -321,7 +321,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Vormistusnäite loomisel uut Saaga uurimist ei tehtud. Siin ei esitata uusi negatiivseid otsingutulemusi."
+          "text": "Päris uurimuses nimeta siin tehtud otsingud, nende ulatus ja tulemus ning ligipääsu või lugemise takistused."
         }
       ]
     },
