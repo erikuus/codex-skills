@@ -1,0 +1,413 @@
+{
+  "title": "Ranniku talu",
+  "subtitle": "Endine Lepiku talu · Saluoja küla",
+  "date": "18.09.2025",
+  "author": "Väljamõeldud kohaajaloo vormistusnäidis",
+  "demo": true,
+  "facts": [
+    {
+      "label": "Ajalooline nimi",
+      "value": "Ranniku nr 57",
+      "note": "Taluplaani kirje",
+      "refs": [
+        "S2"
+      ]
+    },
+    {
+      "label": "Mõis",
+      "value": "Nurmevälja",
+      "note": "Plaani ajalooline kuuluvus",
+      "refs": [
+        "S2"
+      ]
+    },
+    {
+      "label": "Kihelkond",
+      "value": "Laaneoru",
+      "note": "Plaani ajalooline kuuluvus",
+      "refs": [
+        "S2"
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "id": "sec-1",
+      "title": "1. Lühivastus",
+      "blocks": [
+        {
+          "type": "notice",
+          "title": "Ühe koha lugu mitmest allikast",
+          "text": "Väljamõeldud näites pärineb Ranniku nr 57 taluplaan aastatest 1864–1868. Päris uurimuses oleks kontrollitud plaan lähtekoht talunime, ajaloolise kuuluvuse ja naabrite uurimiseks.",
+          "refs": [
+            "S2"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Näidisraport seob Ranniku talu varasema Lepiku taluga. Selle seose käsitlemisel tuleb eraldi kontrollida kohasamastust, nimevahetust ja seal elanud inimesi.",
+          "refs": [
+            "S1"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Küla esmamainimine ei ole talu asutamisaasta. Talu vanuse kohta esitatakse lõppraportis kõige varasem just selle talukohaga seostatav tõend."
+        }
+      ]
+    },
+    {
+      "id": "sec-2",
+      "title": "2. Koha lugu",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Koha lugu kujuneb kaartide, elanike nimekirjade, tehingute ja mälestuste võrdlemisel. Näidisraportis ühendavad eri ajastuid nimed Lepiku ja Ranniku. Jutustuse iga oluline pööre peab jääma seotuks konkreetse dokumendiga.",
+          "refs": [
+            "S1"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Fiktiivse plaanikirje koostajaks on märgitud Karl Heinrich Rosenfeld ning dateeringuks 1864–1868. Mõõdistamise aeg ei tõenda iseenesest talu müügi ega hilisemate allkirjade aega.",
+          "refs": [
+            "S2"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Lõppraportis jätkub siin tõendatud kronoloogiline jutustus: kuidas muutusid talu nimi, kasutajad, maad ja hooned."
+        }
+      ]
+    },
+    {
+      "id": "sec-3",
+      "title": "3. Registriandmed",
+      "blocks": [
+        {
+          "type": "table",
+          "caption": "Ajaloolise taluplaani kirjeldus",
+          "columns": [
+            "Tunnus",
+            "Andmed",
+            "Alus"
+          ],
+          "rows": [
+            [
+              "Talunimi",
+              "Ranniku nr 57",
+              {
+                "text": "Kaardikogu kirje",
+                "refs": [
+                  "S2"
+                ]
+              }
+            ],
+            [
+              "Ajalooline kuuluvus",
+              "Nurmevälja mõis, Laaneoru kihelkond",
+              {
+                "text": "Kaardikogu kirje",
+                "refs": [
+                  "S2"
+                ]
+              }
+            ],
+            [
+              "Leidandmed",
+              "NAIDIS.2.4.17, leht 7",
+              {
+                "text": "Väljamõeldud allikakirje",
+                "refs": [
+                  "S2"
+                ]
+              }
+            ]
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Tänase katastri ja hooneregistri andmed lisatakse eraldi koos kontrollimise kuupäevaga."
+        }
+      ]
+    },
+    {
+      "id": "sec-4",
+      "title": "4. Ajajoon",
+      "blocks": [
+        {
+          "type": "timeline",
+          "events": [
+            {
+              "date": "1838–1864",
+              "kind": "Personaalraamat",
+              "text": "Fiktiivne uurimismärge osutab Aru perekonna kandele: lk 196, kaader 108. Need on vorminäite asukohaandmed.",
+              "status": "kontrollimata",
+              "refs": [
+                {
+                  "source": "S1",
+                  "locator": "osa 16"
+                }
+              ]
+            },
+            {
+              "date": "1864–1868",
+              "kind": "Taluplaan",
+              "text": "Ranniku nr 57 plaan; koostaja Karl Heinrich Rosenfeld.",
+              "status": "otsene",
+              "refs": [
+                "S2"
+              ]
+            },
+            {
+              "date": "1936",
+              "kind": "Majapidamisleht",
+              "text": "Fiktiivses uurimismärkmes paikneb Ranniku nr 57 majapidamisleht Nurmevälja valla köite kaadritel 217–219.",
+              "status": "kontrollimata",
+              "refs": [
+                "S3"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sec-5",
+      "title": "5. Omanikud ja elanikud",
+      "blocks": [
+        {
+          "type": "table",
+          "caption": "Rollid tuleb eristada omandiõigusest",
+          "columns": [
+            "Nimi",
+            "Roll või seos",
+            "Tõendi seis"
+          ],
+          "rows": [
+            [
+              "Johannes Aru",
+              "Näidisraportis taluga seotud elanik",
+              {
+                "text": "Algallikas uuesti kontrollimata",
+                "refs": [
+                  "S1"
+                ],
+                "status": "kontrollimata"
+              }
+            ],
+            [
+              "Peeter Kask",
+              "Näidisraporti järgi nimi plaani allkirjaosas",
+              {
+                "text": "Ostutehing ja kuupäev vajavad eraldi tõendit",
+                "refs": [
+                  "S1"
+                ],
+                "status": "kontrollimata"
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sec-6",
+      "title": "6. Kaardid ja plaanid",
+      "blocks": [
+        {
+          "type": "figure",
+          "title": "Ranniku nr 57 taluplaan, 1864–1868",
+          "caption": "Lõppraportis paikneb siin kontrollitud arhiivipilt. Pildi alla jäävad leidandmed, leht, kuupäev ning algallika viide.",
+          "refs": [
+            "S2"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Eri aegade kaartidel võrreldakse õue, veekogu, teid, piire ja naabreid. Täpse joonduseta esitatakse kaardid kõrvuti; üksnes sarnane kohanimi ei tõenda sama talukohta."
+        }
+      ]
+    },
+    {
+      "id": "sec-7",
+      "title": "7. Hooned ja koht täna",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Siia lisatakse kontrollitud hoonete tabel: nimetus, registris märgitud aeg, materjal ja seos ajalooliste kirjeldustega. See väljamõeldud näide ei sisalda hoonete registriandmeid."
+        }
+      ]
+    },
+    {
+      "id": "sec-8",
+      "title": "8. Ajalehtedes",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Ajaleheleiu juures esitatakse väljaanne, kuupäev, artikli pealkiri või lehekülg ja täpne link. OCR-i lugem kontrollitakse originaallehelt. Hilisem mälestus märgitakse mälestuseks."
+        }
+      ]
+    },
+    {
+      "id": "sec-9",
+      "title": "9. Fotod",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Fotod lisatakse koos kujutatu, autori, dateeringu ja arhiiviviitega. Talu elaniku hauafoto või naaberhoone foto ei esinda talu enda väljanägemist. Selles näites fotosid ei kasutata."
+        }
+      ]
+    },
+    {
+      "id": "sec-10",
+      "title": "10. Ümbruskond",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Naabertalude ja maastiku kirjeldus aitab kinnitada koha samasust. Lõppraportisse jäävad vaid need ümbruskonna leiud, mis selgitavad uuritava talu lugu."
+        }
+      ]
+    },
+    {
+      "id": "sec-11",
+      "title": "11. Tõlgendused",
+      "blocks": [
+        {
+          "type": "notice",
+          "tone": "warning",
+          "title": "Nimevahetus vajab tõendite ahelat",
+          "text": "Näidisraport seostab nime Ranniku Jaan Rannikuga. See tuleb esitada tõlgendusena koos toetavate allikate ja puuduva kontrolliga, mitte pelga nimelise kokkulangevuse põhjal.",
+          "status": "oletus",
+          "refs": [
+            {
+              "source": "S1",
+              "locator": "osa 11"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sec-12",
+      "title": "12. Tellimist väärt toimikud",
+      "blocks": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "NAIDIS.3.2.41 — näidisraportis nimetatud kinnistutoimik. Enne tellimise soovitamist kontrollida AISi ja Saaga praegust digiseisu.",
+              "refs": [
+                "S1"
+              ],
+              "status": "kontrollimata"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sec-13",
+      "title": "13. Mida ei leitud või ei kontrollitud",
+      "blocks": [
+        {
+          "type": "notice",
+          "tone": "warning",
+          "title": "Leitud dokument võib olla osaliselt lugemata",
+          "text": "Fiktiivses näites on majapidamislehe kaadrid 217–219 leitud, kuid kaadri 218 parem pool ja kaader 219 lugemata. Päris uurimuses peab selline piirang jääma nähtavaks ka kokkuvõttes.",
+          "refs": [
+            "S3"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Vormistusnäite loomisel uut Saaga uurimist ei tehtud. Siin ei esitata uusi negatiivseid otsingutulemusi."
+        }
+      ]
+    },
+    {
+      "id": "sec-14",
+      "title": "14. Kuidas edasi uurida",
+      "blocks": [
+        {
+          "type": "list",
+          "ordered": true,
+          "items": [
+            "Kinnitada ajaloolise ja tänase talukoha seos kaardi ning naabrite järgi.",
+            {
+              "text": "Kontrollida personaalraamatu kanne koos veerupäiste ja kõrvallehtedega.",
+              "refs": [
+                "S1"
+              ]
+            },
+            {
+              "text": "Lugeda leitud 1936. aasta majapidamislehe kõik küljed ning viia parandused kogu raportisse.",
+              "refs": [
+                "S3"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sec-15",
+      "title": "15. Kirjandus",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Siia tulevad kasutatud uurimused koos autori, pealkirja, ilmumisandmete ja lehekülgedega. Kataloogist leitud, kuid lugemata raamat eristatakse kasutatud kirjandusest."
+        }
+      ]
+    },
+    {
+      "id": "sec-16",
+      "title": "16. Dokumendid",
+      "blocks": [
+        {
+          "type": "document",
+          "title": "Väljamõeldud näide: taluplaani pealkiri",
+          "original": "Charte des zu dem Privatgute Nurmenfeld gehörigen Gesindes Ranniku no 57",
+          "translation": {
+            "text": "Nurmevälja eramõisa juurde kuuluva Ranniku nr 57 talu kaart."
+          },
+          "note": {
+            "text": "See saksakeelne pealkiri on vormistuse näitamiseks välja mõeldud, mitte arhiividokumendist transkribeeritud. Päris transkriptsioonis märgitakse ebakindlus kujul sõna[?]."
+          },
+          "refs": [
+            "S2"
+          ]
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "S1",
+      "title": "Ranniku talu — fiktiivne uurimismärge",
+      "url": "https://example.invalid/uurimus/ranniku",
+      "citation": "Väljamõeldud vorminäide, 18.09.2025. Sisaldab personaalraamatu ja kinnistutoimiku näidisviiteid.",
+      "access": "Näidislink ei avane; tegelikku allikat ei ole."
+    },
+    {
+      "id": "S2",
+      "title": "Ranniku nr 57 taluplaan — fiktiivne kirje",
+      "url": "https://example.invalid/kaart/ranniku-57",
+      "citation": "Väljamõeldud leidandmed NAIDIS.2.4.17, leht 7; 1864–1868; Karl Heinrich Rosenfeld.",
+      "access": "Näidislink ei avane; tegelikku arhiivipilti ega kontrollitoimingut ei ole."
+    },
+    {
+      "id": "S3",
+      "title": "1936. aasta majapidamisleht — fiktiivne kirje",
+      "url": "https://example.invalid/dokument/majapidamisleht",
+      "citation": "Väljamõeldud leidandmed NAIDIS.4.1.28, kaadrid 217–219.",
+      "access": "Näidislink ei avane; lugemispiirang kirjeldab väljamõeldud olukorda."
+    }
+  ],
+  "method": [
+    "See on väljamõeldud andmetega HTML-malli eelvaade. Nimed, daatumid, dokumendipealkiri, leidandmed ja lingid ei pärine tegelikest arhiivileidudest.",
+    "Tõendi liigi sildid näitavad vormistusvõimalusi. Need ei kinnita näite ajaloolist tõesust. Lõppraportis asendatakse kõik näidisandmed kontrollitud sisuga."
+  ],
+  "footer": "Kohaajaloo raport · Väljamõeldud vormistusnäidis. Ei ole ajalooline uurimistulemus.",
+  "notice": "Kõik selle näite kohad, inimesed, daatumid ja allikakirjed on väljamõeldud. Võimalik nimekattuvus on juhuslik. NAIDIS-tähised ja example.invalid-aadressid on kohatäitjad."
+}
