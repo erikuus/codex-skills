@@ -1,0 +1,8 @@
+interface:
+  display_name: "Igakuine AI-kuluaruanne"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.png"
+  short_description: "OpenAI ja Anthropicu kuludokumentidest RTIP aruandeni"
+  default_prompt: "Kasuta $ai-kuluaruanne: kogu eelmise kalendrikuu OpenAI Pro, OpenAI API ja Anthropic API arved ning panga maksetõendid, koosta kuu kuluaruanne ja esita see pärast andmete kontrollimist RTIP-s."
+policy:
+  allow_implicit_invocation: false
