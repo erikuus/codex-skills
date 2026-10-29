@@ -12,7 +12,7 @@ Kaasasolev andmefail kasutab täielikult väljamõeldud juhtumit: Ranniku talu, 
 4. Käivita, kasutades skilli tegelikku asukohta:
 
 ```sh
-python3 /Users/erikuus/.agents/skills/rahvusarhiivi-kohalugu/scripts/render_report.py work/report-data.json outputs/raport.html
+python3 /Users/erikuus/.agents/skills/rahvusarhiivi-kohaloo-uurija/scripts/render_report.py work/report-data.json outputs/raport.html
 ```
 
 Skript kasutab ainult Pythoni standardteeki. Ta ei otsi allikaid, ei saada andmeid võrku ega telli teenuseid. Kohalikud PNG/JPEG/WebP-pildid pakitakse HTML-i sisse. Genereeritud faili saab avada otse brauseris, eraldi serverit või JavaScripti sisu kuvamiseks pole vaja. PDF-i jaoks vali nupust „Prindi / salvesta PDF“ brauseri PDF-väljund; nupu olemasolu ei tähenda, et PDF-fail on juba loodud.

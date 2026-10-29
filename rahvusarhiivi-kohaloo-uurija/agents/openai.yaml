@@ -1,0 +1,6 @@
+interface:
+  icon_small: "./assets/RA_logo_Ikoon_must.svg"
+  icon_large: "./assets/RA_logo_Ikoon_must.png"
+  display_name: "Rahvusarhiivi kohaloo uurija"
+  short_description: "Allikapõhine talulugu ja käsikirjade säästlik lugemine"
+  default_prompt: "Kasuta $rahvusarhiivi-kohaloo-uurija, et uurida talu või koha ajalugu ja koostada viidetega eestikeelne raport."

@@ -1,4 +1,0 @@
-interface:
-  display_name: "Rahvusarhiivi kohaloo uurija"
-  short_description: "Allikapõhine talulugu ja käsikirjade säästlik lugemine"
-  default_prompt: "Kasuta $rahvusarhiivi-kohalugu, et uurida talu või koha ajalugu ja koostada viidetega eestikeelne raport."

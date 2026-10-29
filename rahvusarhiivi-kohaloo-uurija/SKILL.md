@@ -1,5 +1,5 @@
 ---
-name: rahvusarhiivi-kohalugu
+name: rahvusarhiivi-kohaloo-uurija
 description: Uuri Eesti talu, kinnistu, küla või muu koha ajalugu Rahvusarhiivi ja täiendavate avalike allikate põhjal ning koosta viidatud eestikeelne raport kaartide, ajajoone ja kontrollitud käsikirjalugemitega. Kasuta ka olemasoleva kohalooraporti kontrollimiseks või täiendamiseks. Ei ole üldine sugupuu koostamise ega kinnisvara õigusliku analüüsi oskus.
 ---
 

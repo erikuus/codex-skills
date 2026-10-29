@@ -1,4 +1,6 @@
 interface:
+  icon_small: "./assets/RA_logo_Ikoon_must.svg"
+  icon_large: "./assets/RA_logo_Ikoon_must.png"
   display_name: "Rahvusarhiiv Design System"
   short_description: "Responsive Rahvusarhiiv interfaces from proven templates"
   default_prompt: "Use $rahvusarhiiv-design-system to build this interface in automatic mode, preserving its responsive component behavior."
