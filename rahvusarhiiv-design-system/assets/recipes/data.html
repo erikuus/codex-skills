@@ -1,0 +1,55 @@
+<!-- RECIPE: DataCollection. Bind toolbar, selected IDs, row actions, and pager
+     to one state owner. Neutral example has no fake filtering implementation. -->
+<div class="rounded shadow-sm p-2 prose max-w-none prose-table:m-0 prose-thead:border-none prose-tbody:border-none prose-tr:border-b prose-tr:border-b-gray-100 hover:prose-tr:bg-green-50 prose-th:bg-white prose-th:px-3 prose-td:p-3 prose-a:no-underline">
+  <div class="not-prose flex flex-wrap items-center justify-between gap-3 mb-2 p-3 text-sm text-gray-600 border-b border-gray-100">
+    <span aria-live="polite">1–1 / 1</span>
+    <button type="button" aria-expanded="false" aria-controls="collection-filters" class="rounded bg-gray-50 px-3 py-2">Filtreeri</button>
+    <label>Ridu: <select aria-label="Kirjeid lehel" class="rounded border-gray-200 text-sm"><option>20</option><option>40</option></select></label>
+  </div>
+  <div id="collection-filters" hidden class="not-prose rounded bg-gray-50 p-6">
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7"><!-- Compact Field slots --></div>
+  </div>
+  <table class="table-fixed w-full">
+    <caption class="sr-only">Kirjed</caption>
+    <thead><tr>
+      <th class="w-10"><input type="checkbox" aria-label="Vali kõik kirjed" class="h-4 w-4 rounded-sm text-green-500 border-gray-200 focus:ring-green-300"></th>
+      <th scope="col" class="w-full md:w-1/4">Kirje</th>
+      <th scope="col" class="hidden md:table-cell">Liik</th>
+      <th scope="col" class="hidden lg:table-cell">Olek</th>
+      <th scope="col" class="hidden xl:table-cell w-28">Kuupäev</th>
+      <th scope="col" class="w-14 md:w-auto"><span class="sr-only">Toimingud</span></th>
+    </tr></thead>
+    <tbody><tr>
+      <td><input type="checkbox" aria-label="Vali näidiskirje" class="h-4 w-4 rounded-sm text-green-500 border-gray-200 focus:ring-green-300"></td>
+      <td><div class="flex flex-col min-w-0 gap-y-1">
+        <a href="#record-detail" class="font-medium text-blue-600 hover:text-blue-500">Näidiskirje</a>
+        <span class="text-gray-600 truncate">Kirje lühikirjeldus</span>
+        <span class="md:hidden">Dokument</span>
+        <span class="lg:hidden">Valmis</span>
+        <span class="xl:hidden text-sm">28.10.2026</span>
+      </div></td>
+      <td class="hidden md:table-cell">Dokument</td>
+      <td class="hidden lg:table-cell">Valmis</td>
+      <td class="hidden xl:table-cell">28.10.2026</td>
+      <td><button type="button" aria-label="Näidiskirje toimingud" aria-haspopup="menu" aria-expanded="false" class="rounded p-2 hover:bg-gray-100">⋮</button></td>
+    </tr></tbody>
+  </table>
+  <nav class="not-prose flex justify-center gap-x-1.5 mt-6 mb-2" aria-label="Leheküljed">
+    <button type="button" disabled aria-label="Eelmine leht" class="px-2 py-1.5 text-gray-200">‹</button>
+    <span class="px-2 py-1.5 font-bold" aria-current="page">1</span>
+    <button type="button" disabled aria-label="Järgmine leht" class="px-2 py-1.5 text-gray-200">›</button>
+  </nav>
+</div>
+<!-- Striped variant: odd:prose-tr:bg-gray-50 prose-tr:border-none
+     first:prose-td:rounded-l last:prose-td:rounded-r; same responsive data model. -->
+
+<!-- DetailSummary: load patterns.css. Omit --surfaced for a plain review.
+     Add --stacked-phone for long labels/values that need phone stacking. -->
+<dl class="ra-details ra-details--surfaced">
+  <div><dt>Nimetus</dt><dd>Näidisväärtus</dd></div>
+  <div><dt>Olek</dt><dd>Valmis</dd></div>
+</dl>
+
+<!-- Read-only DataCollection: no selection/filters/actions unless needed.
+     Generate phone metadata and desktop cells from the same item. -->
+<div class="ra-records shadow-sm"><table><caption class="sr-only">Kirjed</caption><thead><tr><th scope="col">Kirje</th><th scope="col" class="ra-record-secondary">Liik</th></tr></thead><tbody><tr><td>Kirje A<span class="ra-record-mobile">Liik: Dokument</span></td><td class="ra-record-secondary">Dokument</td></tr><tr><td>Kirje B<span class="ra-record-mobile">Liik: Foto</span></td><td class="ra-record-secondary">Foto</td></tr></tbody></table></div>

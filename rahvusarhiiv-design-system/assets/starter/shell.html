@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="@@LANG@@">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>@@DOCUMENT_TITLE@@</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="assets/system.css">
+  <link rel="stylesheet" href="assets/patterns.css">
+  <style>:root { --ra-header-gradient: @@GRADIENT@@; }</style>
+  <script src="assets/runtime.js" defer></script>
+</head>
+<body class="flex min-h-screen flex-col bg-gray-50">
+  <a class="ra-skip" href="#main-content">Liigu põhisisu juurde</a>
+  <div class="flex grow flex-col rounded-b bg-white shadow-md lg:m-2 lg:rounded">
+    <header class="flex h-12 flex-wrap content-center">
+      <div class="ra-frame flex items-center justify-between">
+        <a href="https://www.ra.ee/" target="_blank" rel="noopener"><img class="h-7 opacity-70" src="assets/ra_logo.svg" alt="Rahvusarhiiv"></a>
+        <div class="ra-top-actions">@@LANGUAGE_LINK@@@@MENU_TRIGGER@@</div>
+      </div>
+    </header>
+    <div class="ra-gradient flex grow flex-col rounded">
+      <header class="ra-app-header">
+        <div class="ra-frame ra-header-row">
+          <a class="ra-wordmark" href="@@HOME_URL@@">@@APP_NAME@@</a>
+          @@DESKTOP_NAV@@
+          <div class="ra-header-actions">@@ACCOUNT_ACTION@@</div>
+        </div>
+      </header>
+      @@BREADCRUMBS@@
+      <main id="main-content" tabindex="-1" class="flex grow flex-col rounded rounded-b bg-white shadow-md">
+        <div class="ra-frame ra-content">@@CONTENT@@</div>
+      </main>
+    </div>
+  </div>
+  @@FOOTER@@
+  @@DRAWERS@@
+</body>
+</html>

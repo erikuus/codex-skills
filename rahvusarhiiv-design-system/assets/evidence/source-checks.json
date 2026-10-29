@@ -1,0 +1,247 @@
+[
+  {
+    "name": "vau-news-list",
+    "width": 390,
+    "clientWidth": 375,
+    "scrollWidth": 375,
+    "viewportMeta": false
+  },
+  {
+    "name": "vau-news-list",
+    "width": 768,
+    "clientWidth": 753,
+    "scrollWidth": 753,
+    "viewportMeta": false
+  },
+  {
+    "name": "vau-news-list",
+    "width": 1024,
+    "clientWidth": 1009,
+    "scrollWidth": 1009,
+    "viewportMeta": false
+  },
+  {
+    "name": "vau-news-list",
+    "width": 1280,
+    "clientWidth": 1265,
+    "scrollWidth": 1265,
+    "viewportMeta": false
+  },
+  {
+    "name": "vau-news-list",
+    "width": 1600,
+    "clientWidth": 1585,
+    "scrollWidth": 1585,
+    "viewportMeta": false
+  },
+  {
+    "name": "vau-access-files",
+    "width": 390,
+    "clientWidth": 375,
+    "scrollWidth": 375,
+    "viewportMeta": false
+  },
+  {
+    "name": "vau-access-files",
+    "width": 768,
+    "clientWidth": 753,
+    "scrollWidth": 753,
+    "viewportMeta": false
+  },
+  {
+    "name": "vau-access-files",
+    "width": 1024,
+    "clientWidth": 1009,
+    "scrollWidth": 1009,
+    "viewportMeta": false
+  },
+  {
+    "name": "vau-access-files",
+    "width": 1280,
+    "clientWidth": 1265,
+    "scrollWidth": 1265,
+    "viewportMeta": false
+  },
+  {
+    "name": "vau-access-files",
+    "width": 1600,
+    "clientWidth": 1585,
+    "scrollWidth": 1585,
+    "viewportMeta": false
+  },
+  {
+    "name": "vau-order-archived",
+    "width": 390,
+    "clientWidth": 375,
+    "scrollWidth": 375,
+    "viewportMeta": false
+  },
+  {
+    "name": "vau-order-archived",
+    "width": 768,
+    "clientWidth": 753,
+    "scrollWidth": 753,
+    "viewportMeta": false
+  },
+  {
+    "name": "vau-order-archived",
+    "width": 1024,
+    "clientWidth": 1009,
+    "scrollWidth": 1009,
+    "viewportMeta": false
+  },
+  {
+    "name": "vau-order-archived",
+    "width": 1280,
+    "clientWidth": 1265,
+    "scrollWidth": 1265,
+    "viewportMeta": false
+  },
+  {
+    "name": "vau-order-archived",
+    "width": 1600,
+    "clientWidth": 1585,
+    "scrollWidth": 1585,
+    "viewportMeta": false
+  },
+  {
+    "name": "vau-order-copy-confirm",
+    "width": 390,
+    "clientWidth": 375,
+    "scrollWidth": 375,
+    "viewportMeta": false
+  },
+  {
+    "name": "vau-order-copy-confirm",
+    "width": 768,
+    "clientWidth": 753,
+    "scrollWidth": 753,
+    "viewportMeta": false
+  },
+  {
+    "name": "vau-order-copy-confirm",
+    "width": 1024,
+    "clientWidth": 1009,
+    "scrollWidth": 1009,
+    "viewportMeta": false
+  },
+  {
+    "name": "vau-order-copy-confirm",
+    "width": 1280,
+    "clientWidth": 1265,
+    "scrollWidth": 1265,
+    "viewportMeta": false
+  },
+  {
+    "name": "vau-order-copy-confirm",
+    "width": 1600,
+    "clientWidth": 1585,
+    "scrollWidth": 1585,
+    "viewportMeta": false
+  },
+  {
+    "name": "vau-bookmark-folder-list",
+    "width": 390,
+    "clientWidth": 375,
+    "scrollWidth": 375,
+    "viewportMeta": false
+  },
+  {
+    "name": "vau-bookmark-folder-list",
+    "width": 768,
+    "clientWidth": 753,
+    "scrollWidth": 753,
+    "viewportMeta": false
+  },
+  {
+    "name": "vau-bookmark-folder-list",
+    "width": 1024,
+    "clientWidth": 1009,
+    "scrollWidth": 1009,
+    "viewportMeta": false
+  },
+  {
+    "name": "vau-bookmark-folder-list",
+    "width": 1280,
+    "clientWidth": 1265,
+    "scrollWidth": 1265,
+    "viewportMeta": false
+  },
+  {
+    "name": "vau-bookmark-folder-list",
+    "width": 1600,
+    "clientWidth": 1585,
+    "scrollWidth": 1585,
+    "viewportMeta": false
+  },
+  {
+    "name": "vau-order-draft-empty",
+    "width": 390,
+    "clientWidth": 375,
+    "scrollWidth": 375,
+    "viewportMeta": false
+  },
+  {
+    "name": "vau-order-draft-empty",
+    "width": 768,
+    "clientWidth": 753,
+    "scrollWidth": 753,
+    "viewportMeta": false
+  },
+  {
+    "name": "vau-order-draft-empty",
+    "width": 1024,
+    "clientWidth": 1009,
+    "scrollWidth": 1009,
+    "viewportMeta": false
+  },
+  {
+    "name": "vau-order-draft-empty",
+    "width": 1280,
+    "clientWidth": 1265,
+    "scrollWidth": 1265,
+    "viewportMeta": false
+  },
+  {
+    "name": "vau-order-draft-empty",
+    "width": 1600,
+    "clientWidth": 1585,
+    "scrollWidth": 1585,
+    "viewportMeta": false
+  },
+  {
+    "name": "vau-page",
+    "width": 390,
+    "clientWidth": 375,
+    "scrollWidth": 375,
+    "viewportMeta": false
+  },
+  {
+    "name": "vau-page",
+    "width": 768,
+    "clientWidth": 753,
+    "scrollWidth": 753,
+    "viewportMeta": false
+  },
+  {
+    "name": "vau-page",
+    "width": 1024,
+    "clientWidth": 1009,
+    "scrollWidth": 1009,
+    "viewportMeta": false
+  },
+  {
+    "name": "vau-page",
+    "width": 1280,
+    "clientWidth": 1265,
+    "scrollWidth": 1265,
+    "viewportMeta": false
+  },
+  {
+    "name": "vau-page",
+    "width": 1600,
+    "clientWidth": 1585,
+    "scrollWidth": 1585,
+    "viewportMeta": false
+  }
+]

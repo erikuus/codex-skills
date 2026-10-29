@@ -1,0 +1,47 @@
+[
+  {
+    "case": "modal contains tab focus",
+    "pass": true
+  },
+  {
+    "case": "Escape restores scroll and focus",
+    "pass": true
+  },
+  {
+    "case": "TOC anchor navigation",
+    "pass": true
+  },
+  {
+    "case": "TOC responsive close",
+    "pass": true
+  },
+  {
+    "case": "backdrop close",
+    "pass": true
+  },
+  {
+    "case": "local navigation with no global menu or footer",
+    "pass": true
+  },
+  {
+    "case": "custom footer and visible labels fit at320",
+    "pass": true
+  },
+  {
+    "case": "desktop drawer-only menu",
+    "pass": true
+  },
+  {
+    "case": "feedback popup includes current URL",
+    "pass": true,
+    "verification": "Awaited target URL; context decoded to the current preview URL; popup opener null; external request intercepted."
+  },
+  {
+    "case": "blocked popup fallback",
+    "pass": true
+  },
+  {
+    "case": "local section deep-link keeps destination focus after drawer close",
+    "pass": true
+  }
+]

@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  color: theme("colors.gray.900");
+  font-family: theme("fontFamily.body");
+}
+
+@layer base {
+  [x-cloak] {
+      display: none;
+  }
+  @font-face {
+    font-family: 'Raleway';
+    font-weight: 400;
+    font-display: swap;
+    font-style: normal;
+    src: url('./fonts/Raleway-VariableFont_wght.ttf') format('truetype');
+  }
+  @font-face {
+    font-family: 'Raleway';
+    font-weight: 400;
+    font-display: swap;
+    font-style: italic;
+    src: url('./fonts/Raleway-Italic-VariableFont_wght.ttf') format('truetype');
+  }
+  @font-face {
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-display: swap;
+    font-style: normal;
+    src: url('./fonts/Roboto-Regular.ttf') format('truetype');
+  }
+  @font-face {
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-display: swap;
+    font-style: normal;
+    src: url('./fonts/Roboto-Medium.ttf') format('truetype');
+  }
+  @font-face {
+    font-family: 'Roboto';
+    font-weight: 700;
+    font-display: swap;
+    font-style: normal;
+    src: url('./fonts/Roboto-Bold.ttf') format('truetype');
+  }
+  @font-face {
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-display: swap;
+    font-style: italic;
+    src: url('./fonts/Roboto-Italic.ttf') format('truetype');
+  }
+  @font-face {
+    font-family: 'Roboto';
+    font-weight: 700;
+    font-display: swap;
+    font-style: italic;
+    src: url('./fonts/Roboto-BoldItalic.ttf') format('truetype');
+  }
+}
+

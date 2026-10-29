@@ -1,0 +1,27 @@
+<!-- StepProgress: load patterns.css. One ordered list, one step model, no duplicated accessible navigation.
+     All complete steps precede the current step; pending steps follow. -->
+<nav aria-label="Töövoo edenemine"><ol class="ra-steps">
+<li class="ra-step ra-step--complete"><span class="ra-step-marker" aria-hidden="true"><span class="ra-step-number">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg></span><span class="ra-step-label">Vali<span class="sr-only"> (lõpetatud)</span></span></li>
+<li class="ra-step ra-step--complete"><span class="ra-step-marker" aria-hidden="true"><span class="ra-step-number">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg></span><span class="ra-step-label">Täida<span class="sr-only"> (lõpetatud)</span></span></li>
+<li class="ra-step ra-step--current" aria-current="step"><span class="ra-step-marker" aria-hidden="true"><span class="ra-step-number">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg></span><span class="ra-step-label">Lisa failid<span class="sr-only"> (praegune samm)</span></span></li>
+<li class="ra-step ra-step--pending"><span class="ra-step-marker" aria-hidden="true"><span class="ra-step-number">4</span></span><span class="ra-step-label">Kinnita<span class="sr-only"></span></span></li>
+<li class="ra-step ra-step--pending"><span class="ra-step-marker" aria-hidden="true"><span class="ra-step-number">5</span></span><span class="ra-step-label">Valmis<span class="sr-only"></span></span></li>
+</ol></nav>
+
+<!-- RECIPE: FileCollection; native input works; drop/upload/remove require integration. -->
+<section class="not-prose rounded bg-gray-50 my-6" aria-labelledby="files-heading">
+  <h2 id="files-heading" class="border-b border-gray-200 px-6 py-3 font-semibold leading-6 text-gray-800">Seotud failid</h2>
+  <div class="p-6">
+    <div class="flex flex-col gap-y-4 rounded border border-dashed border-gray-200 p-4">
+      <label for="attachments" class="text-sm leading-6 text-gray-600 font-semibold">Vali failid</label>
+      <input id="attachments" type="file" multiple aria-describedby="attachment-help" class="block w-full text-sm">
+      <p id="attachment-help" class="text-xs leading-5 text-gray-600">Lubatud vormingud ja suurused määrab rakendus.</p>
+    </div>
+  </div>
+  <ul class="px-6 pb-6 space-y-2" aria-label="Lisatud failid">
+    <li class="flex items-center justify-between gap-x-3 px-3 py-2 bg-white rounded">
+      <span class="min-w-0 truncate">Näidisfail.pdf</span>
+      <button type="button" aria-label="Eemalda Näidisfail.pdf" class="flex-shrink-0 rounded-full p-1 hover:bg-gray-50">×</button>
+    </li>
+  </ul>
+</section>

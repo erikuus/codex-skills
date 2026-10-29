@@ -1,0 +1,13 @@
+{
+  "responsiveCases": 64,
+  "horizontalOverflowCases": 0,
+  "allFramesAt1920": 1440,
+  "trueMobile": {
+    "innerWidth": 390,
+    "clientWidth": 390,
+    "scrollWidth": 390,
+    "tocOpenClose": true
+  },
+  "desktopTOCNavigation": true,
+  "scrollTracking": true
+}

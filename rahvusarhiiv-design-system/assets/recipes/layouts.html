@@ -1,0 +1,35 @@
+<!-- RECIPE: choose ONE container profile; frame/gutters occur once per page.
+     Requires bundled style.css + starter/system.css, or equivalent compiled tokens. -->
+<div class="ra-frame ra-content">
+  <div class="ra-width--medium">
+    <!-- Variants: ra-width--full / --narrow / --medium / --form / --summary -->
+    <div class="ra-page-title">
+      <h1>Lehe pealkiri</h1>
+      <div class="ra-title-actions">
+        <a href="#new-record" class="ra-action ra-action--primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          <span class="ra-title-label--icons">Lisa kirje</span>
+        </a>
+      </div>
+    </div>
+    <!-- CONTENT slot. Remove title-actions for plain title; use --quiet action
+         and ra-title-actions--quiet for utilities. Keep label text accessible. -->
+  </div>
+</div>
+
+<!-- RECIPE: split composition INSIDE an existing full-width frame.
+     It owns collapse at1280, gaps64/112 and sticky positioning. -->
+<div class="ra-split">
+  <div><div class="ra-sticky-first"><!-- First region: summary, instructions or preview --></div></div>
+  <div><!-- Second region: related substantive content or form --></div>
+</div>
+
+<!-- RECIPE: workspace, distinct from equal split. -->
+<div class="ra-workspace">
+  <div class="ra-workspace-panel">
+    <div class="ra-field-grid"><div><!-- Fields --></div><div><!-- Fields --></div></div>
+  </div>
+  <div class="ra-workspace-main"><!-- Title and collection --></div>
+</div>
+<!-- ArticleLayout is provided by compose.py and owned as a complete composition.
+     Do not reconstruct its independent desktop/mobile pieces at page callsites. -->

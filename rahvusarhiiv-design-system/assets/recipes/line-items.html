@@ -1,0 +1,22 @@
+<!-- Load style.css (fonts/shadow), starter/system.css, and patterns.css.
+     Generate cells/mobile details from ONE line-item model. Neutral fixtures below.
+     Static rows need no checkbox, toolbar or menu. Add those only if requested. -->
+<section class="ra-line-items shadow-sm" aria-label="Teenuste arvestus">
+  <table>
+    <caption class="sr-only">Teenused ja summad</caption>
+    <thead><tr><th scope="col" class="ra-item">Kirje</th><th scope="col" class="ra-description ra-line-desktop">Teenus</th><th scope="col" class="ra-number ra-line-desktop">Ühik</th><th scope="col" class="ra-number ra-line-desktop">Hind</th><th scope="col" class="ra-number ra-line-desktop">Kogus</th><th scope="col" class="ra-number ra-line-desktop">Kokku</th></tr></thead>
+    <tbody>
+      <tr><td>Kirje A — pikem kirjeldus
+        <div class="ra-line-mobile">Digitaalne väljavõte
+          <dl><dt>Ühik:</dt><dd>leht</dd></dl><dl><dt>Hind:</dt><dd>0,40 €</dd></dl><dl><dt>Kogus:</dt><dd>8</dd></dl><dl><dt>Kokku:</dt><dd>3,20 €</dd></dl>
+        </div></td>
+        <td class="ra-line-desktop">Digitaalne väljavõte</td><td class="ra-number ra-line-desktop">leht</td><td class="ra-number ra-line-desktop">0,40 €</td><td class="ra-number ra-line-desktop">8</td><td class="ra-number ra-line-desktop">3,20 €</td></tr>
+      <tr><td>Kirje B
+        <div class="ra-line-mobile">Teine teenus
+          <dl><dt>Ühik:</dt><dd>tk</dd></dl><dl><dt>Hind:</dt><dd>2,00 €</dd></dl><dl><dt>Kogus:</dt><dd>1</dd></dl><dl><dt>Kokku:</dt><dd>2,00 €</dd></dl>
+        </div></td>
+        <td class="ra-line-desktop">Teine teenus</td><td class="ra-number ra-line-desktop">tk</td><td class="ra-number ra-line-desktop">2,00 €</td><td class="ra-number ra-line-desktop">1</td><td class="ra-number ra-line-desktop">2,00 €</td></tr>
+    </tbody>
+    <tfoot><tr><th colspan="6" scope="row">Tasuda: 5,20 €</th></tr></tfoot>
+  </table>
+</section>

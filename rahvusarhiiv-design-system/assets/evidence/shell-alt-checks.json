@@ -1,0 +1,55 @@
+{
+  "checks": [
+    {
+      "width": 390,
+      "triggerInTopStrip": true,
+      "visible": true,
+      "top": 6,
+      "bottom": 42,
+      "overflow": false,
+      "languageNextToTrigger": true,
+      "accountInGradient": true
+    },
+    {
+      "width": 768,
+      "triggerInTopStrip": true,
+      "visible": true,
+      "top": 6,
+      "bottom": 42,
+      "overflow": false,
+      "languageNextToTrigger": true,
+      "accountInGradient": true
+    },
+    {
+      "width": 1023,
+      "triggerInTopStrip": true,
+      "visible": true,
+      "top": 6,
+      "bottom": 42,
+      "overflow": false,
+      "languageNextToTrigger": true,
+      "accountInGradient": true
+    },
+    {
+      "width": 1024,
+      "triggerInTopStrip": true,
+      "visible": false,
+      "top": 0,
+      "bottom": 0,
+      "overflow": false,
+      "languageNextToTrigger": true,
+      "accountInGradient": true
+    },
+    {
+      "width": 1600,
+      "triggerInTopStrip": true,
+      "visible": false,
+      "top": 0,
+      "bottom": 0,
+      "overflow": false,
+      "languageNextToTrigger": true,
+      "accountInGradient": true
+    }
+  ],
+  "openEscapeFocusPassed": true
+}

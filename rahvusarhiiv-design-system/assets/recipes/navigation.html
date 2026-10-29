@@ -1,0 +1,16 @@
+<!-- RECIPE: place this within the gradient region before white main content.
+     Use route data, not source app labels. Breadcrumb wrapping is an adaptation. -->
+<nav class="ra-frame" aria-label="Asukoht">
+  <ol class="ra-breadcrumbs"><li><a href="/">Avaleht</a></li><li aria-hidden="true">›</li><li><span aria-current="page">Kirjed</span></li></ol>
+  <ul class="flex mt-6 gap-x-2" style="overflow-x:auto">
+    <li><a href="#all" aria-current="page" class="inline-block whitespace-nowrap py-3 px-6 text-sm sm:px-8 sm:text-base font-medium rounded-t bg-white shadow-md">Kõik <span class="hidden sm:inline">(12)</span></a></li>
+    <li><a href="#recent" class="inline-block whitespace-nowrap py-3 px-6 text-sm sm:px-8 sm:text-base font-medium rounded-t backdrop-brightness-105 backdrop-filter hover:bg-green-50">Hiljutised</a></li>
+  </ul>
+</nav>
+<!-- RECIPE: grouped section links; visibility/drawer belongs to Sidebar/ArticleLayout. -->
+<nav aria-label="Jaotised" class="lg:-ml-4 lg:mt-0.5">
+  <section class="pb-5">
+    <h2 class="mb-2 border-b border-gray-500 px-4 py-2.5 text-sm font-bold uppercase text-gray-700">Jaotised</h2>
+    <ul class="space-y-1"><li><a href="#overview" aria-current="page" class="block rounded px-4 py-2 hover:bg-green-50">Ülevaade</a></li><li><a href="#guide" class="block rounded px-4 py-2 hover:bg-green-50">Juhend</a></li></ul>
+  </section>
+</nav>

@@ -1,0 +1,28 @@
+<!-- RECIPE: Field anatomy. Supply unique IDs, names, value and form handling. -->
+<div class="space-y-6">
+  <div>
+    <label for="record-title" class="mb-2 block text-base font-semibold leading-6 text-gray-800">Pealkiri <span aria-hidden="true">*</span></label>
+    <input id="record-title" name="title" required aria-describedby="title-hint" class="block w-full rounded border border-gray-200 px-4 py-3 text-gray-900 hover:border-gray-300 focus:border-gray-500 focus:outline-none focus:ring-2 focus:ring-green-300 sm:text-base sm:leading-6">
+    <p id="title-hint" class="mt-1 text-sm text-gray-600">Kirjelda sisu lühidalt.</p>
+  </div>
+  <div>
+    <label for="record-code" class="mb-2 block text-base font-semibold leading-6 text-red-500">Tunnus</label>
+    <input id="record-code" name="code" aria-invalid="true" aria-describedby="code-error" class="block w-full rounded border border-red-300 px-4 py-3 text-red-500 hover:border-red-400 focus:border-red-600 focus:outline-none focus:ring-2 focus:ring-red-200 sm:text-base sm:leading-6">
+    <p id="code-error" class="mt-1 text-sm text-red-600">Sisesta kehtiv tunnus.</p>
+  </div>
+  <div>
+    <label for="record-type" class="mb-2 block text-base font-semibold leading-6 text-gray-800">Liik</label>
+    <select id="record-type" name="type" disabled class="block w-full rounded border border-gray-200 px-4 py-3 text-gray-900 disabled:bg-gray-50 disabled:text-gray-400 disabled:border-gray-100"><option>Valik pole praegu saadaval</option></select>
+  </div>
+  <fieldset class="space-y-4">
+    <legend class="mb-2 text-base font-semibold text-gray-800">Kuvamise viis</legend>
+    <label class="flex items-center gap-x-3"><input type="radio" name="view" value="list" checked class="h-4 w-4 text-green-500 focus:ring-offset-0 focus:ring-2 border-gray-200 focus:ring-green-300">Loend</label>
+    <label class="flex items-center gap-x-3"><input type="radio" name="view" value="detail" class="h-4 w-4 text-green-500 focus:ring-offset-0 focus:ring-2 border-gray-200 focus:ring-green-300">Üksikasjad</label>
+  </fieldset>
+</div>
+<!-- ActionGroup: load ../patterns.css. Short forms stay full-width on desktop.
+     Add a secondary action only if requested. For wider forms use --inline;
+     for equal-width review actions use --workflow. -->
+<div class="ra-actions ra-actions--stacked">
+  <button type="submit" class="ra-action ra-action--normal ra-action--primary">Salvesta</button>
+</div>

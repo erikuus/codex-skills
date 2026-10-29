@@ -1,0 +1,578 @@
+[
+  {
+    "name": "narrow",
+    "width": 320,
+    "clientWidth": 305,
+    "scrollWidth": 305,
+    "heading": 171,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "narrow",
+    "width": 390,
+    "clientWidth": 375,
+    "scrollWidth": 375,
+    "heading": 241,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "narrow",
+    "width": 640,
+    "clientWidth": 625,
+    "scrollWidth": 625,
+    "heading": 260,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "narrow",
+    "width": 768,
+    "clientWidth": 753,
+    "scrollWidth": 753,
+    "heading": 372,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "narrow",
+    "width": 1024,
+    "clientWidth": 1009,
+    "scrollWidth": 1009,
+    "heading": 372,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "narrow",
+    "width": 1280,
+    "clientWidth": 1265,
+    "scrollWidth": 1265,
+    "heading": 404,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "narrow",
+    "width": 1600,
+    "clientWidth": 1585,
+    "scrollWidth": 1585,
+    "heading": 531,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "narrow",
+    "width": 1920,
+    "clientWidth": 1905,
+    "scrollWidth": 1905,
+    "heading": 531,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "medium",
+    "width": 320,
+    "clientWidth": 305,
+    "scrollWidth": 305,
+    "heading": 171,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "medium",
+    "width": 390,
+    "clientWidth": 375,
+    "scrollWidth": 375,
+    "heading": 241,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "medium",
+    "width": 640,
+    "clientWidth": 625,
+    "scrollWidth": 625,
+    "heading": 260,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "medium",
+    "width": 768,
+    "clientWidth": 753,
+    "scrollWidth": 753,
+    "heading": 372,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "medium",
+    "width": 1024,
+    "clientWidth": 1009,
+    "scrollWidth": 1009,
+    "heading": 468,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "medium",
+    "width": 1280,
+    "clientWidth": 1265,
+    "scrollWidth": 1265,
+    "heading": 564,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "medium",
+    "width": 1600,
+    "clientWidth": 1585,
+    "scrollWidth": 1585,
+    "heading": 659,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "medium",
+    "width": 1920,
+    "clientWidth": 1905,
+    "scrollWidth": 1905,
+    "heading": 659,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "full",
+    "width": 320,
+    "clientWidth": 305,
+    "scrollWidth": 305,
+    "heading": 171,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "full",
+    "width": 390,
+    "clientWidth": 375,
+    "scrollWidth": 375,
+    "heading": 241,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "full",
+    "width": 640,
+    "clientWidth": 625,
+    "scrollWidth": 625,
+    "heading": 388,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "full",
+    "width": 768,
+    "clientWidth": 753,
+    "scrollWidth": 753,
+    "heading": 500,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "full",
+    "width": 1024,
+    "clientWidth": 1009,
+    "scrollWidth": 1009,
+    "heading": 724,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "full",
+    "width": 1280,
+    "clientWidth": 1265,
+    "scrollWidth": 1265,
+    "heading": 980,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "full",
+    "width": 1600,
+    "clientWidth": 1585,
+    "scrollWidth": 1585,
+    "heading": 1171,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "full",
+    "width": 1920,
+    "clientWidth": 1905,
+    "scrollWidth": 1905,
+    "heading": 1171,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "form",
+    "width": 320,
+    "clientWidth": 305,
+    "scrollWidth": 305,
+    "heading": 171,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "form",
+    "width": 390,
+    "clientWidth": 375,
+    "scrollWidth": 375,
+    "heading": 241,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "form",
+    "width": 640,
+    "clientWidth": 625,
+    "scrollWidth": 625,
+    "heading": 228,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "form",
+    "width": 768,
+    "clientWidth": 753,
+    "scrollWidth": 753,
+    "heading": 340,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "form",
+    "width": 1024,
+    "clientWidth": 1009,
+    "scrollWidth": 1009,
+    "heading": 372,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "form",
+    "width": 1280,
+    "clientWidth": 1265,
+    "scrollWidth": 1265,
+    "heading": 340,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "form",
+    "width": 1600,
+    "clientWidth": 1585,
+    "scrollWidth": 1585,
+    "heading": 403,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "form",
+    "width": 1920,
+    "clientWidth": 1905,
+    "scrollWidth": 1905,
+    "heading": 403,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "summary",
+    "width": 320,
+    "clientWidth": 305,
+    "scrollWidth": 305,
+    "heading": 171,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "summary",
+    "width": 390,
+    "clientWidth": 375,
+    "scrollWidth": 375,
+    "heading": 241,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "summary",
+    "width": 640,
+    "clientWidth": 625,
+    "scrollWidth": 625,
+    "heading": 260,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "summary",
+    "width": 768,
+    "clientWidth": 753,
+    "scrollWidth": 753,
+    "heading": 372,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "summary",
+    "width": 1024,
+    "clientWidth": 1009,
+    "scrollWidth": 1009,
+    "heading": 468,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "summary",
+    "width": 1280,
+    "clientWidth": 1265,
+    "scrollWidth": 1265,
+    "heading": 468,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "summary",
+    "width": 1600,
+    "clientWidth": 1585,
+    "scrollWidth": 1585,
+    "heading": 595,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "summary",
+    "width": 1920,
+    "clientWidth": 1905,
+    "scrollWidth": 1905,
+    "heading": 595,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "split",
+    "width": 320,
+    "clientWidth": 305,
+    "scrollWidth": 305,
+    "heading": 171,
+    "font": "Raleway, sans-serif",
+    "columns": "column"
+  },
+  {
+    "name": "split",
+    "width": 390,
+    "clientWidth": 375,
+    "scrollWidth": 375,
+    "heading": 241,
+    "font": "Raleway, sans-serif",
+    "columns": "column"
+  },
+  {
+    "name": "split",
+    "width": 640,
+    "clientWidth": 625,
+    "scrollWidth": 625,
+    "heading": 388,
+    "font": "Raleway, sans-serif",
+    "columns": "column"
+  },
+  {
+    "name": "split",
+    "width": 768,
+    "clientWidth": 753,
+    "scrollWidth": 753,
+    "heading": 500,
+    "font": "Raleway, sans-serif",
+    "columns": "column"
+  },
+  {
+    "name": "split",
+    "width": 1024,
+    "clientWidth": 1009,
+    "scrollWidth": 1009,
+    "heading": 724,
+    "font": "Raleway, sans-serif",
+    "columns": "column"
+  },
+  {
+    "name": "split",
+    "width": 1280,
+    "clientWidth": 1265,
+    "scrollWidth": 1265,
+    "heading": 980,
+    "font": "Raleway, sans-serif",
+    "columns": "row"
+  },
+  {
+    "name": "split",
+    "width": 1600,
+    "clientWidth": 1585,
+    "scrollWidth": 1585,
+    "heading": 1171,
+    "font": "Raleway, sans-serif",
+    "columns": "row"
+  },
+  {
+    "name": "split",
+    "width": 1920,
+    "clientWidth": 1905,
+    "scrollWidth": 1905,
+    "heading": 1171,
+    "font": "Raleway, sans-serif",
+    "columns": "row"
+  },
+  {
+    "name": "workspace",
+    "width": 320,
+    "clientWidth": 305,
+    "scrollWidth": 305,
+    "heading": 171,
+    "font": "Raleway, sans-serif",
+    "columns": "column"
+  },
+  {
+    "name": "workspace",
+    "width": 390,
+    "clientWidth": 375,
+    "scrollWidth": 375,
+    "heading": 241,
+    "font": "Raleway, sans-serif",
+    "columns": "column"
+  },
+  {
+    "name": "workspace",
+    "width": 640,
+    "clientWidth": 625,
+    "scrollWidth": 625,
+    "heading": 388,
+    "font": "Raleway, sans-serif",
+    "columns": "column"
+  },
+  {
+    "name": "workspace",
+    "width": 768,
+    "clientWidth": 753,
+    "scrollWidth": 753,
+    "heading": 500,
+    "font": "Raleway, sans-serif",
+    "columns": "column"
+  },
+  {
+    "name": "workspace",
+    "width": 1024,
+    "clientWidth": 1009,
+    "scrollWidth": 1009,
+    "heading": 724,
+    "font": "Raleway, sans-serif",
+    "columns": "column"
+  },
+  {
+    "name": "workspace",
+    "width": 1280,
+    "clientWidth": 1265,
+    "scrollWidth": 1265,
+    "heading": 496,
+    "font": "Raleway, sans-serif",
+    "columns": "row"
+  },
+  {
+    "name": "workspace",
+    "width": 1600,
+    "clientWidth": 1585,
+    "scrollWidth": 1585,
+    "heading": 595,
+    "font": "Raleway, sans-serif",
+    "columns": "row"
+  },
+  {
+    "name": "workspace",
+    "width": 1920,
+    "clientWidth": 1905,
+    "scrollWidth": 1905,
+    "heading": 595,
+    "font": "Raleway, sans-serif",
+    "columns": "row"
+  },
+  {
+    "name": "article",
+    "width": 320,
+    "clientWidth": 305,
+    "scrollWidth": 305,
+    "heading": 171,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "article",
+    "width": 390,
+    "clientWidth": 375,
+    "scrollWidth": 375,
+    "heading": 241,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "article",
+    "width": 640,
+    "clientWidth": 625,
+    "scrollWidth": 625,
+    "heading": 332,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "article",
+    "width": 768,
+    "clientWidth": 753,
+    "scrollWidth": 753,
+    "heading": 444,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "article",
+    "width": 1024,
+    "clientWidth": 1009,
+    "scrollWidth": 1009,
+    "heading": 196,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "article",
+    "width": 1280,
+    "clientWidth": 1265,
+    "scrollWidth": 1265,
+    "heading": 380,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "article",
+    "width": 1600,
+    "clientWidth": 1585,
+    "scrollWidth": 1585,
+    "heading": 571,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  },
+  {
+    "name": "article",
+    "width": 1920,
+    "clientWidth": 1905,
+    "scrollWidth": 1905,
+    "heading": 571,
+    "font": "Raleway, sans-serif",
+    "columns": null
+  }
+]

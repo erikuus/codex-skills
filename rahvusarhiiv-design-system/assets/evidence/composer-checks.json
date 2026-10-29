@@ -1,0 +1,46 @@
+[
+  {
+    "check": "missing split secondary",
+    "passed": true
+  },
+  {
+    "check": "incompatible width",
+    "passed": true
+  },
+  {
+    "check": "hidden navigation items",
+    "passed": true
+  },
+  {
+    "check": "unsafe scheme",
+    "passed": true
+  },
+  {
+    "check": "unknown keys",
+    "passed": true
+  },
+  {
+    "check": "duplicate content IDs",
+    "passed": true
+  },
+  {
+    "check": "duplicate shell IDs",
+    "passed": true
+  },
+  {
+    "check": "unsectioned article",
+    "passed": true
+  },
+  {
+    "check": "bad custom gradient",
+    "passed": true
+  },
+  {
+    "check": "stable generated and supplied anchors",
+    "passed": true
+  },
+  {
+    "check": "refuses overwrite",
+    "passed": true
+  }
+]
