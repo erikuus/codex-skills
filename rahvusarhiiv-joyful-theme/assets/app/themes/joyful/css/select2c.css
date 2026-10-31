@@ -1,0 +1,23 @@
+.select2-container.select2-compact .select2-choice {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
+    line-height: 1.5rem;
+}
+
+.select2-container.select2-compact .select2-choice div {
+    height: 100%;
+    width: 1.75rem;
+}
+
+.select2-container.select2-compact .select2-choice abbr {
+    top: 0.5rem;
+    right: 2rem;
+    width: 1.25rem;
+    height: 1.25rem;
+    padding: 0.25rem;
+}
+
+.select2-drop.select2-compact .select2-result-label {
+    font-size: 0.875rem;
+    padding: 0.25rem 0.75rem;
+}

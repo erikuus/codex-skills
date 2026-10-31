@@ -1,0 +1,102 @@
+/* Some default button styles */
+.timeout-dialog button {
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
+  font-size: 1rem !important;
+  font-weight: 500;
+  line-height: 120%;
+  padding-left: 1.25rem !important;
+  padding-right: 1.25rem !important;
+  padding-top: 0.75rem !important;
+  padding-bottom: 0.75rem !important;
+  border-radius: 0.5rem !important;
+  border-style: none !important;
+  box-shadow: none !important;
+  cursor: pointer;
+  display: inline-block;
+  cursor: pointer;
+  margin: 0;
+  vertical-align: baseline;
+}
+
+.timeout-dialog .button:hover, button:hover {
+  text-decoration: none;
+}
+
+.timeout-dialog .button:focus, button:focus {
+  font-weight: 500 !important;
+  box-shadow: none !important;
+  outline: none;
+}
+
+/* Timeout Dialog Styles */
+.timeout-dialog {
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
+  font-size: 1rem;
+  padding: 15px;
+  position: absolute;
+  border: 1px solid #ffffff;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+.timeout-dialog .ui-widget-header {
+	background: none;
+	border: none;
+}
+.timeout-dialog .ui-dialog-titlebar {
+    background: none !important;
+  }
+.timeout-dialog .ui-dialog-title {
+  font-family: Raleway, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  font-size: 1.4375rem;
+  font-weight: 700;
+}
+#timeout-dialog {
+  padding: 18px 5px;
+}
+.timeout-dialog .ui-dialog-titlebar-close {
+  display: none;
+}
+.timeout-dialog .ui-dialog-buttonpane {
+  margin: 0;
+  padding: 0;
+  border-top: none;
+  background: none;
+}
+.timeout-dialog  ~ .ui-widget-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #000;
+  opacity: 0.4;
+}
+.timeout-dialog p {
+  margin: 5px;
+}
+.timeout-dialog #timeout-keep-signin-btn {
+  background-color: rgb(36 42 48 / 1);
+  background-image: none;
+  border: none;
+  color: #ffffff;
+  text-shadow: none;
+}
+
+.timeout-dialog #timeout-keep-signin-btn:hover {
+  background-color: rgb(78 88 99 / 1);
+}
+
+.timeout-dialog #timeout-sign-out-button {
+  color: rgb(36 42 48 / 1) !important;
+  border: 1px solid rgb(211 216 223 / 1) !important;
+  background-color: #ffffff;
+  background-image: none;
+  text-shadow: none;
+}
+
+.timeout-dialog #timeout-sign-out-button:hover {
+  background-color: rgb(232 235 240 / 1);
+}
+
+.timeout-dialog #timeout-countdown {
+  font-weight: 700;
+}

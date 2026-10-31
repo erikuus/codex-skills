@@ -1,0 +1,42 @@
+# Verification: behavior and source fidelity
+
+## Package checks in a disposable working copy
+
+Do not install dependencies or write generated assets into a shared installed skill. Copy it into a disposable work area first. Commands below run from that copy. Use the target's real Yii and PHPCS locations.
+
+```sh
+npm ci --prefix assets/app/themes/joyful/tailwind
+npm run build --prefix assets/app/themes/joyful/tailwind -- --extensions-root /absolute/work/skill/assets/extensions
+php scripts/verify.php /path/to/yii-1.1.33-dev/yii.php
+php /path/to/phpcs.phar --standard=/path/to/yii-coding-standard/Yii/ruleset.xml --extensions=php assets/extensions/components/tailwind
+php scripts/render-probe.php /path/to/yii-1.1.33-dev/yii.php /absolute/work/probe.html
+PLAYWRIGHT_MODULE=/path/to/playwright node scripts/verify-visual.cjs /absolute/work/probe.html
+PLAYWRIGHT_MODULE=/path/to/playwright node scripts/verify-browser.cjs /path/to/yii-1.1.33-dev
+```
+
+Set `CHROME_PATH` when using an installed Chrome instead of Playwright's managed Chromium. Set `JOYFUL_SCREENSHOT_DIR` to capture visual-probe screenshots. The source Yii coding standard requires PHPCS 3.x (tested with 3.13.3); deprecation notices about its old sniff names are separate from component violations.
+
+- `verify.php` runs 23 checks on actual Yii 1.1.33-dev: form validation/escaping/hidden values, concrete skin resolution, checkbox selection/header modes, custom button behavior, current grid content APIs, flag/reorder parameters, pager semantics, steps, CSRF, modern events, and exact footer-subtree equality.
+- `render-probe.php` renders the **real** bundled main layout, breadcrumb skin, CGridView, columns, pager and grid decorator without a database. It does not simulate them with unrelated static HTML.
+- `verify-visual.cjs` compares generated Tailwind 4 output against the original Joyful CSS applied to equivalent source markup at **390, 768, 1024, 1440 and 1600px**. It checks container/header geometry, spacing, actual colors/gradients, 8px radii, visible institutional shadow layers, type sizes, table padding/zebra/hover/end-cell radii, action SVG sizing, pager type, breadcrumb placement/home tile, and exact footer feedback behavior. Invisible zero-opacity shadow scaffolding is normalized because Tailwind 4 adds extra inert layers; visible shadows remain compared. This is a component baseline comparison, not a claim of whole-application pixel identity.
+- `verify-browser.cjs` exercises dynamic-field submission/disabled-state preservation, form scoping, radio toggles, separate grids, repeated initialization, AJAX row replacement, POST/CSRF, failure handling and removal of one grid while another remains.
+- Check source detection with a temporary class used **only in an external extension PHP file**, rebuild, and confirm its utility is emitted. Remove it/rebuild and confirm it disappears. This guards against accidentally scanning only theme views or relying on a frozen stylesheet.
+- Exercise stage_assets.py in a temporary app with a separate extension root: dry-run changes nothing, apply populates both correct roots, repeated apply is idempotent, conflicts cause no writes, and undeclared symlink escapes are rejected.
+
+Historical CSS/reference files are comparison fixtures, not runtime output. Do not stage node_modules, generated source paths or a fixture's generated CSS into an application as its final build.
+
+## Actual application acceptance
+
+Before changing views, identify corresponding reference surfaces. Keep reference and target screenshots at matching viewport sizes and inspect them directly. Automated geometry/style checks supplement visual inspection; they do not replace it. Record material differences and resolve them against the source rather than hiding them with broad overrides.
+
+Inspect at least:
+
+1. **Shell/navigation/footer:** source surface nesting, responsive widths/padding, institutional/application header sizes, menu grouping, mobile drawer, brand fonts, custom shadows/radii. The exact footer remains the supplied source; verify all labels, URLs, contacts and feedback popup. Application slots contain real authorized controls. Guest Login has the exact VAU account-circle SVG before the translated label, with the correct login/return URL and keyboard focus. Existing enabled bookmark/helpdesk widgets appear as accessible icons in the upper-right institutional header; both bookmark actions retain their meaning and each click opens exactly one expected popup. Check narrow-screen fit alongside language/menu controls, and retain the exact footer.
+2. **Breadcrumbs:** one gradient strip before the white content surface; white home-icon tile/ring, SVG chevrons, original type/padding, current item, long labels on mobile; no duplicate nested-layout rendering and no standalone Back button. Form cancellation and workflow navigation still work.
+3. **Public results and admin grid:** compare against the source grid decorator, not a newly invented table. Check header/body spacing, source gray/green colors, hover, corners, shadow, sorting arrows, empty state, selected rows, summary/pager and action icons. Inspect long content and scrolling without a global table min-width. Exercise filter/sort/page/selection/custom actions, including AJAX replacement and existing `ajaxUpdate=false` cases.
+4. **Forms/details:** Single-field search uses the compact shop pattern above the existing menu and remains available above content on mobile; verify Enter/icon submission, active-query clear (including `"0"`), preserved scope/query parameters, accessible names and no duplicate form IDs. Check [page-level Add/New buttons](patterns.md#addnew-buttons-in-the-title-row): aligned to the title’s right with a 16px plus icon and visible text, compact dark styling, related secondary controls before Add, and one shared underline. Verify create permissions, return/context parameters, hover, narrow-screen wrapping and no duplicate old button. Check the title row: existing Print/help actions have 16px icons plus visible text on the right above a single shared underline, and wrap without overlap on narrow screens. Titled detail groups use headings/spacing with no horizontal separators or per-group underlines. Verify [secondary button hover and radio-group layout/behavior](form-controls.md#verify-the-integrated-form), including computed white-to-gray colors, stacked labels, indented panels, keyboard changes and unchanged submission semantics. Check source title/field/button rhythm, validation errors, required/readonly/disabled controls, uploads, hidden checkbox values, dynamic areas and return URLs. Labels remain understandable on mobile; preserve domain content.
+5. **Dialogs/secondary layouts:** open/close/focus/keyboard behavior, jQuery UI/Fancybox structure and sizing (use the [close-control acceptance checks](dialog-close-buttons.md#acceptance-checks), including sprite DPR 1/2, actual glyph visibility and stable hover/focus geometry), module skins, print/export/error output. No extra document shell in AJAX partials and no desktop navigation in print/PDF.
+
+Run syntax checks and the prescribed PHPCS standard on changed non-view PHP, plus the app's relevant tests. Verify CSS is built from the **actual** application and extension paths, fonts/assets load, and browser console/network errors are resolved. Search for residual legacy CSS overrides and raw CSS design substitutions. Authentication/service limitations must be reported accurately.
+
+Do not report completion based only on header height, class names, visible elements, passing existing behavior tests or viewport fit: the rejected Pitserid result passed such checks while diverging visually. Package probes also do not prove the populated app navigation/footer composition or all routes have been verified.

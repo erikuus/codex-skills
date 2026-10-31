@@ -1,0 +1,1560 @@
+[
+  {
+    "theme": "AccountMenu/accountMenu.php",
+    "counterparts": [
+      "protected/portlets/views/accountMenu.php"
+    ]
+  },
+  {
+    "theme": "AccountMenu/loginButton.php",
+    "counterparts": [
+      "protected/portlets/views/loginButton.php"
+    ]
+  },
+  {
+    "theme": "AccountMenu/loginIcon.php",
+    "counterparts": [
+      "protected/portlets/views/loginIcon.php"
+    ]
+  },
+  {
+    "theme": "CompanySelectMenu/accountChange.php",
+    "counterparts": [
+      "protected/portlets/views/accountChange.php"
+    ]
+  },
+  {
+    "theme": "CompanySelectMenu/accountSelect.php",
+    "counterparts": [
+      "protected/portlets/views/accountSelect.php"
+    ]
+  },
+  {
+    "theme": "EnquiryMenuWidget/enquiryMenuWidget.php",
+    "counterparts": []
+  },
+  {
+    "theme": "HProductWidget/hProductWidget.php",
+    "counterparts": []
+  },
+  {
+    "theme": "HelpdeskMessageHistory/history.php",
+    "counterparts": []
+  },
+  {
+    "theme": "HelpdeskMessageHistory/historyItem.php",
+    "counterparts": []
+  },
+  {
+    "theme": "IProductWidget/iProductWidget.php",
+    "counterparts": []
+  },
+  {
+    "theme": "ImageCarousel/imageCarousel.php",
+    "counterparts": [
+      "protected/portlets/views/imageCarousel.php"
+    ]
+  },
+  {
+    "theme": "MainMenuAdmin/mainMenuAdmin.php",
+    "counterparts": [
+      "protected/portlets/views/mainMenuAdmin.php"
+    ]
+  },
+  {
+    "theme": "MainMenuMobile/mainMenuMobile.php",
+    "counterparts": [
+      "protected/portlets/views/mainMenuMobile.php"
+    ]
+  },
+  {
+    "theme": "MainMenuStatic/mainMenuStatic.php",
+    "counterparts": [
+      "protected/portlets/views/mainMenuStatic.php"
+    ]
+  },
+  {
+    "theme": "MessengerWidget/messengerWidget.php",
+    "counterparts": []
+  },
+  {
+    "theme": "MockupCollage/mockupCollage.php",
+    "counterparts": [
+      "protected/portlets/views/mockupCollage.php"
+    ]
+  },
+  {
+    "theme": "NewsArchivePortlet/newsArchivePortlet.php",
+    "counterparts": []
+  },
+  {
+    "theme": "NewsLatestWidget/_important.php",
+    "counterparts": []
+  },
+  {
+    "theme": "NewsLatestWidget/_normal.php",
+    "counterparts": []
+  },
+  {
+    "theme": "NewsLatestWidget/newsLatestWidget.php",
+    "counterparts": []
+  },
+  {
+    "theme": "OrderClientMenu/orderClientMenu.php",
+    "counterparts": [
+      "protected/portlets/views/orderClientMenu.php"
+    ]
+  },
+  {
+    "theme": "PageMenuWidget/pageMenuWidget.php",
+    "counterparts": []
+  },
+  {
+    "theme": "PageSizeMenu/pageSizeMenu.php",
+    "counterparts": [
+      "protected/portlets/views/pageSizeMenu.php"
+    ]
+  },
+  {
+    "theme": "SProductWidget/sProductWidget.php",
+    "counterparts": []
+  },
+  {
+    "theme": "ShopAdminWidget/shopAdminWidget.php",
+    "counterparts": []
+  },
+  {
+    "theme": "ShopLatestWidget/shopLatestWidget.php",
+    "counterparts": []
+  },
+  {
+    "theme": "ShopMenuWidget/shopMenuWidget.php",
+    "counterparts": []
+  },
+  {
+    "theme": "accessApplication/_data.php",
+    "counterparts": [
+      "protected/views/accessApplication/_data.php"
+    ]
+  },
+  {
+    "theme": "accessApplication/_decision.php",
+    "counterparts": [
+      "protected/views/accessApplication/_decision.php"
+    ]
+  },
+  {
+    "theme": "accessApplication/_form.php",
+    "counterparts": [
+      "protected/views/accessApplication/_form.php"
+    ]
+  },
+  {
+    "theme": "accessApplication/_handleDownloadFailure.php",
+    "counterparts": [
+      "protected/views/accessApplication/_handleDownloadFailure.php"
+    ]
+  },
+  {
+    "theme": "accessApplication/_handleDownloadSuccess.php",
+    "counterparts": [
+      "protected/views/accessApplication/_handleDownloadSuccess.php"
+    ]
+  },
+  {
+    "theme": "accessApplication/_selectPurpose.php",
+    "counterparts": [
+      "protected/views/accessApplication/_selectPurpose.php"
+    ]
+  },
+  {
+    "theme": "accessApplication/_view.php",
+    "counterparts": [
+      "protected/views/accessApplication/_view.php"
+    ]
+  },
+  {
+    "theme": "accessApplication/_viewItems.php",
+    "counterparts": [
+      "protected/views/accessApplication/_viewItems.php"
+    ]
+  },
+  {
+    "theme": "accessApplication/_viewOrders.php",
+    "counterparts": [
+      "protected/views/accessApplication/_viewOrders.php"
+    ]
+  },
+  {
+    "theme": "accessApplication/create.php",
+    "counterparts": [
+      "protected/views/accessApplication/create.php"
+    ]
+  },
+  {
+    "theme": "accessApplication/dokobitSign.php",
+    "counterparts": [
+      "protected/views/accessApplication/dokobitSign.php"
+    ]
+  },
+  {
+    "theme": "accessApplication/forms/_default.php",
+    "counterparts": [
+      "protected/views/accessApplication/forms/_default.php"
+    ]
+  },
+  {
+    "theme": "accessApplication/forms/_personal.php",
+    "counterparts": [
+      "protected/views/accessApplication/forms/_personal.php"
+    ]
+  },
+  {
+    "theme": "accessApplication/forms/_research.php",
+    "counterparts": [
+      "protected/views/accessApplication/forms/_research.php"
+    ]
+  },
+  {
+    "theme": "accessApplication/forms/_rights.php",
+    "counterparts": [
+      "protected/views/accessApplication/forms/_rights.php"
+    ]
+  },
+  {
+    "theme": "accessApplication/preview.php",
+    "counterparts": [
+      "protected/views/accessApplication/preview.php"
+    ]
+  },
+  {
+    "theme": "accessApplication/repeat.php",
+    "counterparts": [
+      "protected/views/accessApplication/repeat.php"
+    ]
+  },
+  {
+    "theme": "accessApplication/reviseSelection.php",
+    "counterparts": [
+      "protected/views/accessApplication/reviseSelection.php"
+    ]
+  },
+  {
+    "theme": "accessApplication/update.php",
+    "counterparts": [
+      "protected/views/accessApplication/update.php"
+    ]
+  },
+  {
+    "theme": "accessApplication/view.php",
+    "counterparts": [
+      "protected/views/accessApplication/view.php"
+    ]
+  },
+  {
+    "theme": "accessApplicationFile/_admin.php",
+    "counterparts": [
+      "protected/views/accessApplicationFile/_admin.php"
+    ]
+  },
+  {
+    "theme": "accessApplicationFile/_index.php",
+    "counterparts": [
+      "protected/views/accessApplicationFile/_index.php"
+    ]
+  },
+  {
+    "theme": "accessApplicationFile/_update.php",
+    "counterparts": [
+      "protected/views/accessApplicationFile/_update.php"
+    ]
+  },
+  {
+    "theme": "accessApplicationFile/_upload.php",
+    "counterparts": [
+      "protected/views/accessApplicationFile/_upload.php"
+    ]
+  },
+  {
+    "theme": "accessApplicationFile/_view.php",
+    "counterparts": []
+  },
+  {
+    "theme": "account/_connect.php",
+    "counterparts": []
+  },
+  {
+    "theme": "account/_connectEmployee.php",
+    "counterparts": []
+  },
+  {
+    "theme": "account/_connected.php",
+    "counterparts": []
+  },
+  {
+    "theme": "account/_connectedEmployee.php",
+    "counterparts": []
+  },
+  {
+    "theme": "account/_form.php",
+    "counterparts": [
+      "protected/views/account/_form.php"
+    ]
+  },
+  {
+    "theme": "account/_providePhone.php",
+    "counterparts": [
+      "protected/views/account/_providePhone.php"
+    ]
+  },
+  {
+    "theme": "account/changePassword.php",
+    "counterparts": [
+      "protected/views/account/changePassword.php"
+    ]
+  },
+  {
+    "theme": "account/connectIdNumber.php",
+    "counterparts": [
+      "protected/views/account/connectIdNumber.php"
+    ]
+  },
+  {
+    "theme": "account/connectIdNumberEmployee.php",
+    "counterparts": [
+      "protected/views/account/connectIdNumberEmployee.php"
+    ]
+  },
+  {
+    "theme": "account/create.php",
+    "counterparts": [
+      "protected/views/account/create.php"
+    ]
+  },
+  {
+    "theme": "account/forgotPassword.php",
+    "counterparts": [
+      "protected/views/account/forgotPassword.php"
+    ]
+  },
+  {
+    "theme": "account/related/_searchAccessApplications.php",
+    "counterparts": [
+      "protected/views/account/related/_searchAccessApplications.php"
+    ]
+  },
+  {
+    "theme": "account/related/_viewAccessApplications.php",
+    "counterparts": [
+      "protected/views/account/related/_viewAccessApplications.php"
+    ]
+  },
+  {
+    "theme": "account/setTheme.php",
+    "counterparts": [
+      "protected/views/account/setTheme.php"
+    ]
+  },
+  {
+    "theme": "account/update.php",
+    "counterparts": [
+      "protected/views/account/update.php"
+    ]
+  },
+  {
+    "theme": "account/view.php",
+    "counterparts": [
+      "protected/views/account/view.php"
+    ]
+  },
+  {
+    "theme": "addUserCompany/_form.php",
+    "counterparts": [
+      "protected/views/addUserCompany/_form.php"
+    ]
+  },
+  {
+    "theme": "bookmark/collection/_form.php",
+    "counterparts": [
+      "protected/modules/bookmark/views/collection/_form.php"
+    ]
+  },
+  {
+    "theme": "bookmark/collection/admin.php",
+    "counterparts": [
+      "protected/modules/bookmark/views/collection/admin.php"
+    ]
+  },
+  {
+    "theme": "bookmark/collection/create.php",
+    "counterparts": [
+      "protected/modules/bookmark/views/collection/create.php"
+    ]
+  },
+  {
+    "theme": "bookmark/collection/update.php",
+    "counterparts": [
+      "protected/modules/bookmark/views/collection/update.php"
+    ]
+  },
+  {
+    "theme": "bookmark/layouts/dialog.php",
+    "counterparts": [
+      "protected/modules/bookmark/views/layouts/dialog.php"
+    ]
+  },
+  {
+    "theme": "bookmark/link/_form.php",
+    "counterparts": [
+      "protected/modules/bookmark/views/link/_form.php"
+    ]
+  },
+  {
+    "theme": "bookmark/link/_moveForm.php",
+    "counterparts": []
+  },
+  {
+    "theme": "bookmark/link/_search.php",
+    "counterparts": [
+      "protected/modules/bookmark/views/link/_search.php"
+    ]
+  },
+  {
+    "theme": "bookmark/link/admin.php",
+    "counterparts": [
+      "protected/modules/bookmark/views/link/admin.php"
+    ]
+  },
+  {
+    "theme": "bookmark/link/create.php",
+    "counterparts": [
+      "protected/modules/bookmark/views/link/create.php"
+    ]
+  },
+  {
+    "theme": "bookmark/link/empty.php",
+    "counterparts": [
+      "protected/modules/bookmark/views/link/empty.php"
+    ]
+  },
+  {
+    "theme": "bookmark/link/move.php",
+    "counterparts": [
+      "protected/modules/bookmark/views/link/move.php"
+    ]
+  },
+  {
+    "theme": "bookmark/link/shared/_view.php",
+    "counterparts": []
+  },
+  {
+    "theme": "bookmark/link/tag/_addForm.php",
+    "counterparts": [
+      "protected/modules/bookmark/views/link/tag/_addForm.php"
+    ]
+  },
+  {
+    "theme": "bookmark/link/tag/_removeForm.php",
+    "counterparts": [
+      "protected/modules/bookmark/views/link/tag/_removeForm.php"
+    ]
+  },
+  {
+    "theme": "bookmark/link/tag/add.php",
+    "counterparts": [
+      "protected/modules/bookmark/views/link/tag/add.php"
+    ]
+  },
+  {
+    "theme": "bookmark/link/tag/remove.php",
+    "counterparts": [
+      "protected/modules/bookmark/views/link/tag/remove.php"
+    ]
+  },
+  {
+    "theme": "bookmark/link/update.php",
+    "counterparts": [
+      "protected/modules/bookmark/views/link/update.php"
+    ]
+  },
+  {
+    "theme": "common/_copyOrderEmailConfirmation.php",
+    "counterparts": [
+      "protected/views/common/_copyOrderEmailConfirmation.php"
+    ]
+  },
+  {
+    "theme": "common/_formProfile.php",
+    "counterparts": [
+      "protected/views/common/_formProfile.php"
+    ]
+  },
+  {
+    "theme": "common/_restricted.php",
+    "counterparts": [
+      "protected/views/common/_restricted.php"
+    ]
+  },
+  {
+    "theme": "common/_viewProfileSelect.php",
+    "counterparts": [
+      "protected/views/common/_viewProfileSelect.php"
+    ]
+  },
+  {
+    "theme": "company/_form.php",
+    "counterparts": [
+      "protected/views/company/_form.php"
+    ]
+  },
+  {
+    "theme": "company/_view.php",
+    "counterparts": [
+      "protected/views/company/_view.php"
+    ]
+  },
+  {
+    "theme": "company/_viewPendingServices.php",
+    "counterparts": [
+      "protected/views/company/_viewPendingServices.php"
+    ]
+  },
+  {
+    "theme": "company/_viewProvidedServices.php",
+    "counterparts": [
+      "protected/views/company/_viewProvidedServices.php"
+    ]
+  },
+  {
+    "theme": "company/create.php",
+    "counterparts": [
+      "protected/views/company/create.php"
+    ]
+  },
+  {
+    "theme": "company/select.php",
+    "counterparts": [
+      "protected/views/company/select.php"
+    ]
+  },
+  {
+    "theme": "company/update.php",
+    "counterparts": [
+      "protected/views/company/update.php"
+    ]
+  },
+  {
+    "theme": "company/view.php",
+    "counterparts": [
+      "protected/views/company/view.php"
+    ]
+  },
+  {
+    "theme": "companyInvoice/_grid.php",
+    "counterparts": [
+      "protected/views/companyInvoice/_grid.php"
+    ]
+  },
+  {
+    "theme": "companyInvoice/view.php",
+    "counterparts": [
+      "protected/views/companyInvoice/view.php"
+    ]
+  },
+  {
+    "theme": "decorators/alertGreen.php",
+    "counterparts": []
+  },
+  {
+    "theme": "decorators/alertRed.php",
+    "counterparts": []
+  },
+  {
+    "theme": "decorators/alertYellow.php",
+    "counterparts": []
+  },
+  {
+    "theme": "decorators/detailTable.php",
+    "counterparts": []
+  },
+  {
+    "theme": "decorators/detailTableWithHeader.php",
+    "counterparts": []
+  },
+  {
+    "theme": "decorators/envLabel.php",
+    "counterparts": [
+      "protected/views/decorators/envLabel.php"
+    ]
+  },
+  {
+    "theme": "decorators/paymentLinks.php",
+    "counterparts": [
+      "protected/views/decorators/paymentLinks.php"
+    ]
+  },
+  {
+    "theme": "decorators/shadowGrid.php",
+    "counterparts": []
+  },
+  {
+    "theme": "decorators/shadowTable.php",
+    "counterparts": []
+  },
+  {
+    "theme": "enquiry/application/_data.php",
+    "counterparts": [
+      "protected/modules/enquiry/views/application/_data.php"
+    ]
+  },
+  {
+    "theme": "enquiry/application/_form.php",
+    "counterparts": [
+      "protected/modules/enquiry/views/application/_form.php"
+    ]
+  },
+  {
+    "theme": "enquiry/application/_pay.php",
+    "counterparts": [
+      "protected/modules/enquiry/views/application/_pay.php"
+    ]
+  },
+  {
+    "theme": "enquiry/application/_view.php",
+    "counterparts": [
+      "protected/modules/enquiry/views/application/_view.php"
+    ]
+  },
+  {
+    "theme": "enquiry/application/create.php",
+    "counterparts": [
+      "protected/modules/enquiry/views/application/create.php"
+    ]
+  },
+  {
+    "theme": "enquiry/application/forms/_biography.php",
+    "counterparts": [
+      "protected/modules/enquiry/views/application/forms/_biography.php"
+    ]
+  },
+  {
+    "theme": "enquiry/application/forms/_birth.php",
+    "counterparts": [
+      "protected/modules/enquiry/views/application/forms/_birth.php"
+    ]
+  },
+  {
+    "theme": "enquiry/application/forms/_citizenship.php",
+    "counterparts": [
+      "protected/modules/enquiry/views/application/forms/_citizenship.php"
+    ]
+  },
+  {
+    "theme": "enquiry/application/forms/_film.php",
+    "counterparts": [
+      "protected/modules/enquiry/views/application/forms/_film.php"
+    ]
+  },
+  {
+    "theme": "enquiry/application/forms/_military.php",
+    "counterparts": [
+      "protected/modules/enquiry/views/application/forms/_military.php"
+    ]
+  },
+  {
+    "theme": "enquiry/application/forms/_other.php",
+    "counterparts": [
+      "protected/modules/enquiry/views/application/forms/_other.php"
+    ]
+  },
+  {
+    "theme": "enquiry/application/forms/_personal.php",
+    "counterparts": [
+      "protected/modules/enquiry/views/application/forms/_personal.php"
+    ]
+  },
+  {
+    "theme": "enquiry/application/forms/_property.php",
+    "counterparts": [
+      "protected/modules/enquiry/views/application/forms/_property.php"
+    ]
+  },
+  {
+    "theme": "enquiry/application/forms/_repression.php",
+    "counterparts": [
+      "protected/modules/enquiry/views/application/forms/_repression.php"
+    ]
+  },
+  {
+    "theme": "enquiry/application/forms/_resettlement.php",
+    "counterparts": [
+      "protected/modules/enquiry/views/application/forms/_resettlement.php"
+    ]
+  },
+  {
+    "theme": "enquiry/application/forms/_study.php",
+    "counterparts": [
+      "protected/modules/enquiry/views/application/forms/_study.php"
+    ]
+  },
+  {
+    "theme": "enquiry/application/forms/_succession.php",
+    "counterparts": [
+      "protected/modules/enquiry/views/application/forms/_succession.php"
+    ]
+  },
+  {
+    "theme": "enquiry/application/forms/_transliteration.php",
+    "counterparts": [
+      "protected/modules/enquiry/views/application/forms/_transliteration.php"
+    ]
+  },
+  {
+    "theme": "enquiry/application/forms/_work.php",
+    "counterparts": [
+      "protected/modules/enquiry/views/application/forms/_work.php"
+    ]
+  },
+  {
+    "theme": "enquiry/application/pay.php",
+    "counterparts": [
+      "protected/modules/enquiry/views/application/pay.php"
+    ]
+  },
+  {
+    "theme": "enquiry/application/preview.php",
+    "counterparts": [
+      "protected/modules/enquiry/views/application/preview.php"
+    ]
+  },
+  {
+    "theme": "enquiry/application/refine.php",
+    "counterparts": [
+      "protected/modules/enquiry/views/application/refine.php"
+    ]
+  },
+  {
+    "theme": "enquiry/applicationFile/_admin.php",
+    "counterparts": [
+      "protected/modules/enquiry/views/applicationFile/_admin.php"
+    ]
+  },
+  {
+    "theme": "enquiry/applicationFile/_update.php",
+    "counterparts": [
+      "protected/modules/enquiry/views/applicationFile/_update.php"
+    ]
+  },
+  {
+    "theme": "enquiry/applicationFile/_upload.php",
+    "counterparts": [
+      "protected/modules/enquiry/views/applicationFile/_upload.php"
+    ]
+  },
+  {
+    "theme": "enquiry/applicationFile/_view.php",
+    "counterparts": []
+  },
+  {
+    "theme": "enquiry/file/download.php",
+    "counterparts": [
+      "protected/modules/enquiry/views/file/download.php"
+    ]
+  },
+  {
+    "theme": "enquiry/form/index.php",
+    "counterparts": [
+      "protected/modules/enquiry/views/form/index.php"
+    ]
+  },
+  {
+    "theme": "enquiry/invoice/_view.php",
+    "counterparts": [
+      "protected/modules/enquiry/views/invoice/_view.php"
+    ]
+  },
+  {
+    "theme": "helpdesk/faq/_view.php",
+    "counterparts": [
+      "protected/modules/helpdesk/views/faq/_view.php"
+    ]
+  },
+  {
+    "theme": "helpdesk/faq/index.php",
+    "counterparts": [
+      "protected/modules/helpdesk/views/faq/index.php"
+    ]
+  },
+  {
+    "theme": "helpdesk/message/feedback.php",
+    "counterparts": [
+      "protected/modules/helpdesk/views/message/feedback.php"
+    ]
+  },
+  {
+    "theme": "helpdesk/message/thankyou.php",
+    "counterparts": [
+      "protected/modules/helpdesk/views/message/thankyou.php"
+    ]
+  },
+  {
+    "theme": "invoice/_view.php",
+    "counterparts": [
+      "protected/views/invoice/_view.php"
+    ]
+  },
+  {
+    "theme": "invoice/_viewInOrders.php",
+    "counterparts": [
+      "protected/views/invoice/_viewInOrders.php"
+    ]
+  },
+  {
+    "theme": "invoice/_viewOutOrders.php",
+    "counterparts": [
+      "protected/views/invoice/_viewOutOrders.php"
+    ]
+  },
+  {
+    "theme": "invoice/_viewProfile.php",
+    "counterparts": [
+      "protected/views/invoice/_viewProfile.php"
+    ]
+  },
+  {
+    "theme": "invoice/paid.php",
+    "counterparts": [
+      "protected/views/invoice/paid.php"
+    ]
+  },
+  {
+    "theme": "invoice/pay.php",
+    "counterparts": [
+      "protected/views/invoice/pay.php"
+    ]
+  },
+  {
+    "theme": "invoice/view.php",
+    "counterparts": [
+      "protected/views/invoice/view.php"
+    ]
+  },
+  {
+    "theme": "layouts/dialog.php",
+    "counterparts": [
+      "protected/views/layouts/dialog.php"
+    ]
+  },
+  {
+    "theme": "layouts/main.php",
+    "counterparts": [
+      "protected/views/layouts/main.php"
+    ]
+  },
+  {
+    "theme": "layouts/minimal.php",
+    "counterparts": [
+      "protected/views/layouts/minimal.php"
+    ]
+  },
+  {
+    "theme": "layouts/print.php",
+    "counterparts": [
+      "protected/views/layouts/print.php"
+    ]
+  },
+  {
+    "theme": "layouts/topbar.php",
+    "counterparts": [
+      "protected/views/layouts/topbar.php"
+    ]
+  },
+  {
+    "theme": "news/article/_view.php",
+    "counterparts": [
+      "protected/modules/news/views/article/_view.php"
+    ]
+  },
+  {
+    "theme": "news/article/index.php",
+    "counterparts": [
+      "protected/modules/news/views/article/index.php"
+    ]
+  },
+  {
+    "theme": "news/article/view.php",
+    "counterparts": [
+      "protected/modules/news/views/article/view.php"
+    ]
+  },
+  {
+    "theme": "news/layouts/news.php",
+    "counterparts": [
+      "protected/modules/news/views/layouts/news.php"
+    ]
+  },
+  {
+    "theme": "openid/_loginFields.php",
+    "counterparts": [
+      "protected/views/openid/_loginFields.php"
+    ]
+  },
+  {
+    "theme": "openid/_userFields.php",
+    "counterparts": [
+      "protected/views/openid/_userFields.php"
+    ]
+  },
+  {
+    "theme": "openid/create.php",
+    "counterparts": [
+      "protected/views/openid/create.php"
+    ]
+  },
+  {
+    "theme": "order/_apps.php",
+    "counterparts": [
+      "protected/views/order/_apps.php"
+    ]
+  },
+  {
+    "theme": "order/_batchMenu.php",
+    "counterparts": [
+      "protected/views/order/_batchMenu.php"
+    ]
+  },
+  {
+    "theme": "order/_filter.php",
+    "counterparts": []
+  },
+  {
+    "theme": "order/_form.php",
+    "counterparts": [
+      "protected/views/order/_form.php"
+    ]
+  },
+  {
+    "theme": "order/_grid.php",
+    "counterparts": [
+      "protected/views/order/_grid.php"
+    ]
+  },
+  {
+    "theme": "order/_menuPrimary.php",
+    "counterparts": [
+      "protected/views/order/_menuPrimary.php"
+    ]
+  },
+  {
+    "theme": "order/_menuSecondary.php",
+    "counterparts": [
+      "protected/views/order/_menuSecondary.php"
+    ]
+  },
+  {
+    "theme": "order/_reminder.php",
+    "counterparts": [
+      "protected/views/order/_reminder.php"
+    ]
+  },
+  {
+    "theme": "order/confirmCopyOrder.php",
+    "counterparts": [
+      "protected/views/order/confirmCopyOrder.php"
+    ]
+  },
+  {
+    "theme": "order/confirmInterArchivalLoanOrder.php",
+    "counterparts": [
+      "protected/views/order/confirmInterArchivalLoanOrder.php"
+    ]
+  },
+  {
+    "theme": "order/empty/clientActive.php",
+    "counterparts": []
+  },
+  {
+    "theme": "order/empty/clientArchived.php",
+    "counterparts": []
+  },
+  {
+    "theme": "order/empty/clientDraft.php",
+    "counterparts": []
+  },
+  {
+    "theme": "order/index.php",
+    "counterparts": [
+      "protected/views/order/index.php"
+    ]
+  },
+  {
+    "theme": "order/shared/_data.php",
+    "counterparts": [
+      "protected/views/order/shared/_data.php"
+    ]
+  },
+  {
+    "theme": "order/shared/_view.php",
+    "counterparts": [
+      "protected/views/order/shared/_view.php"
+    ]
+  },
+  {
+    "theme": "order/update.php",
+    "counterparts": [
+      "protected/views/order/update.php"
+    ]
+  },
+  {
+    "theme": "order/updateLabels.php",
+    "counterparts": [
+      "protected/views/order/updateLabels.php"
+    ]
+  },
+  {
+    "theme": "order/view.php",
+    "counterparts": [
+      "protected/views/order/view.php"
+    ]
+  },
+  {
+    "theme": "orderBatch/_addLabels.php",
+    "counterparts": [
+      "protected/views/orderBatch/_addLabels.php"
+    ]
+  },
+  {
+    "theme": "orderBatch/_removeLabels.php",
+    "counterparts": [
+      "protected/views/orderBatch/_removeLabels.php"
+    ]
+  },
+  {
+    "theme": "orderBatch/addLabels.php",
+    "counterparts": [
+      "protected/views/orderBatch/addLabels.php"
+    ]
+  },
+  {
+    "theme": "orderBatch/confirmCopyOrder.php",
+    "counterparts": [
+      "protected/views/orderBatch/confirmCopyOrder.php"
+    ]
+  },
+  {
+    "theme": "orderBatch/confirmInterArchivalLoanOrder.php",
+    "counterparts": [
+      "protected/views/orderBatch/confirmInterArchivalLoanOrder.php"
+    ]
+  },
+  {
+    "theme": "orderBatch/removeLabels.php",
+    "counterparts": [
+      "protected/views/orderBatch/removeLabels.php"
+    ]
+  },
+  {
+    "theme": "orderBatch/view.php",
+    "counterparts": [
+      "protected/views/orderBatch/view.php"
+    ]
+  },
+  {
+    "theme": "orderVirtual/_apply.php",
+    "counterparts": [
+      "protected/views/orderVirtual/_apply.php"
+    ]
+  },
+  {
+    "theme": "orderVirtual/_applySaved.php",
+    "counterparts": [
+      "protected/views/orderVirtual/_applySaved.php"
+    ]
+  },
+  {
+    "theme": "orderVirtual/_form.php",
+    "counterparts": [
+      "protected/views/orderVirtual/_form.php"
+    ]
+  },
+  {
+    "theme": "orderVirtual/_grid.php",
+    "counterparts": [
+      "protected/views/orderVirtual/_grid.php"
+    ]
+  },
+  {
+    "theme": "orderVirtual/apply.php",
+    "counterparts": [
+      "protected/views/orderVirtual/apply.php"
+    ]
+  },
+  {
+    "theme": "orderVirtual/block.php",
+    "counterparts": [
+      "protected/views/orderVirtual/block.php"
+    ]
+  },
+  {
+    "theme": "page/article/_admin.php",
+    "counterparts": [
+      "protected/modules/page/views/article/_admin.php"
+    ]
+  },
+  {
+    "theme": "page/article/index.php",
+    "counterparts": [
+      "protected/modules/page/views/article/index.php"
+    ]
+  },
+  {
+    "theme": "page/layouts/page.php",
+    "counterparts": [
+      "protected/modules/page/views/layouts/page.php"
+    ]
+  },
+  {
+    "theme": "shop/cart/_add.php",
+    "counterparts": [
+      "protected/modules/shop/views/cart/_add.php"
+    ]
+  },
+  {
+    "theme": "shop/cart/_addLink.php",
+    "counterparts": [
+      "protected/modules/shop/views/cart/_addLink.php"
+    ]
+  },
+  {
+    "theme": "shop/cart/_addLinkDark.php",
+    "counterparts": []
+  },
+  {
+    "theme": "shop/cart/_openLink.php",
+    "counterparts": [
+      "protected/modules/shop/views/cart/_openLink.php"
+    ]
+  },
+  {
+    "theme": "shop/cart/_view.php",
+    "counterparts": [
+      "protected/modules/shop/views/cart/_view.php"
+    ]
+  },
+  {
+    "theme": "shop/cart/index.php",
+    "counterparts": [
+      "protected/modules/shop/views/cart/index.php"
+    ]
+  },
+  {
+    "theme": "shop/home/_view.php",
+    "counterparts": [
+      "protected/modules/shop/views/home/_view.php"
+    ]
+  },
+  {
+    "theme": "shop/home/index.php",
+    "counterparts": [
+      "protected/modules/shop/views/home/index.php"
+    ]
+  },
+  {
+    "theme": "shop/layouts/pdf.php",
+    "counterparts": [
+      "protected/modules/shop/views/layouts/pdf.php"
+    ]
+  },
+  {
+    "theme": "shop/layouts/pdfinvoice.php",
+    "counterparts": [
+      "protected/modules/shop/views/layouts/pdfinvoice.php"
+    ]
+  },
+  {
+    "theme": "shop/layouts/shop.php",
+    "counterparts": [
+      "protected/modules/shop/views/layouts/shop.php"
+    ]
+  },
+  {
+    "theme": "shop/order/_form.php",
+    "counterparts": [
+      "protected/modules/shop/views/order/_form.php"
+    ]
+  },
+  {
+    "theme": "shop/order/_view.php",
+    "counterparts": [
+      "protected/modules/shop/views/order/_view.php"
+    ]
+  },
+  {
+    "theme": "shop/order/_viewBilling.php",
+    "counterparts": [
+      "protected/modules/shop/views/order/_viewBilling.php"
+    ]
+  },
+  {
+    "theme": "shop/order/_viewDelivery.php",
+    "counterparts": [
+      "protected/modules/shop/views/order/_viewDelivery.php"
+    ]
+  },
+  {
+    "theme": "shop/order/create.php",
+    "counterparts": [
+      "protected/modules/shop/views/order/create.php"
+    ]
+  },
+  {
+    "theme": "shop/order/done.php",
+    "counterparts": [
+      "protected/modules/shop/views/order/done.php"
+    ]
+  },
+  {
+    "theme": "shop/order/pay.php",
+    "counterparts": [
+      "protected/modules/shop/views/order/pay.php"
+    ]
+  },
+  {
+    "theme": "shop/product/_view.php",
+    "counterparts": [
+      "protected/modules/shop/views/product/_view.php"
+    ]
+  },
+  {
+    "theme": "shop/product/index.php",
+    "counterparts": [
+      "protected/modules/shop/views/product/index.php"
+    ]
+  },
+  {
+    "theme": "shop/product/search.php",
+    "counterparts": [
+      "protected/modules/shop/views/product/search.php"
+    ]
+  },
+  {
+    "theme": "shop/product/view.php",
+    "counterparts": [
+      "protected/modules/shop/views/product/view.php"
+    ]
+  },
+  {
+    "theme": "site/_infoBookmark.php",
+    "counterparts": []
+  },
+  {
+    "theme": "site/_infoOrder.php",
+    "counterparts": []
+  },
+  {
+    "theme": "site/_login.php",
+    "counterparts": [
+      "protected/views/site/_login.php"
+    ]
+  },
+  {
+    "theme": "site/_loginDokobit.php",
+    "counterparts": [
+      "protected/views/site/_loginDokobit.php"
+    ]
+  },
+  {
+    "theme": "site/_loginDokobitPlaceholder.php",
+    "counterparts": []
+  },
+  {
+    "theme": "site/_loginOpenid.php",
+    "counterparts": [
+      "protected/views/site/_loginOpenid.php"
+    ]
+  },
+  {
+    "theme": "site/error.php",
+    "counterparts": [
+      "protected/views/site/error.php"
+    ]
+  },
+  {
+    "theme": "site/index.php",
+    "counterparts": [
+      "protected/views/site/index.php"
+    ]
+  },
+  {
+    "theme": "site/login.php",
+    "counterparts": [
+      "protected/views/site/login.php"
+    ]
+  },
+  {
+    "theme": "site/pages/accessDenied.php",
+    "counterparts": [
+      "protected/views/site/pages/accessDenied.php"
+    ]
+  },
+  {
+    "theme": "site/pages/afterRegistration.php",
+    "counterparts": [
+      "protected/views/site/pages/afterRegistration.php"
+    ]
+  },
+  {
+    "theme": "site/pages/brokenLinks.php",
+    "counterparts": [
+      "protected/views/site/pages/brokenLinks.php"
+    ]
+  },
+  {
+    "theme": "site/pages/changelogs/2013.php",
+    "counterparts": [
+      "protected/views/site/pages/changelogs/2013.php"
+    ]
+  },
+  {
+    "theme": "site/pages/changelogs/2014.php",
+    "counterparts": [
+      "protected/views/site/pages/changelogs/2014.php"
+    ]
+  },
+  {
+    "theme": "site/pages/changelogs/2015.php",
+    "counterparts": [
+      "protected/views/site/pages/changelogs/2015.php"
+    ]
+  },
+  {
+    "theme": "site/pages/changelogs/2016.php",
+    "counterparts": [
+      "protected/views/site/pages/changelogs/2016.php"
+    ]
+  },
+  {
+    "theme": "site/pages/changelogs/2017.php",
+    "counterparts": [
+      "protected/views/site/pages/changelogs/2017.php"
+    ]
+  },
+  {
+    "theme": "site/pages/changelogs/2018.php",
+    "counterparts": [
+      "protected/views/site/pages/changelogs/2018.php"
+    ]
+  },
+  {
+    "theme": "site/pages/changelogs/2019.php",
+    "counterparts": [
+      "protected/views/site/pages/changelogs/2019.php"
+    ]
+  },
+  {
+    "theme": "site/pages/changelogs/2020.php",
+    "counterparts": [
+      "protected/views/site/pages/changelogs/2020.php"
+    ]
+  },
+  {
+    "theme": "site/pages/changelogs/all.php",
+    "counterparts": [
+      "protected/views/site/pages/changelogs/all.php"
+    ]
+  },
+  {
+    "theme": "site/pages/dialogs/selectRegisterMethod.php",
+    "counterparts": [
+      "protected/views/site/pages/dialogs/selectRegisterMethod.php"
+    ]
+  },
+  {
+    "theme": "site/pages/howToConnectID.php",
+    "counterparts": [
+      "protected/views/site/pages/howToConnectID.php"
+    ]
+  },
+  {
+    "theme": "site/pages/isSuspended.php",
+    "counterparts": [
+      "protected/views/site/pages/isSuspended.php"
+    ]
+  },
+  {
+    "theme": "site/pages/serviceUnavailable.php",
+    "counterparts": [
+      "protected/views/site/pages/serviceUnavailable.php"
+    ]
+  },
+  {
+    "theme": "site/requireSmartLogin.php",
+    "counterparts": [
+      "protected/views/site/requireSmartLogin.php"
+    ]
+  },
+  {
+    "theme": "site/viewMessages.php",
+    "counterparts": [
+      "protected/views/site/viewMessages.php"
+    ]
+  },
+  {
+    "theme": "skins/CCaptcha.php",
+    "counterparts": []
+  },
+  {
+    "theme": "skins/CDetailView.php",
+    "counterparts": [
+      "protected/views/skins/CDetailView.php"
+    ]
+  },
+  {
+    "theme": "skins/CGridView.php",
+    "counterparts": [
+      "protected/views/skins/CGridView.php"
+    ]
+  },
+  {
+    "theme": "skins/CJuiAutoComplete.php",
+    "counterparts": [
+      "protected/views/skins/CJuiAutoComplete.php"
+    ]
+  },
+  {
+    "theme": "skins/CJuiDatePicker.php",
+    "counterparts": [
+      "protected/views/skins/CJuiDatePicker.php"
+    ]
+  },
+  {
+    "theme": "skins/CListView.php",
+    "counterparts": [
+      "protected/views/skins/CListView.php"
+    ]
+  },
+  {
+    "theme": "skins/CMaskedTextField.php",
+    "counterparts": []
+  },
+  {
+    "theme": "skins/LinkPager.php",
+    "counterparts": []
+  },
+  {
+    "theme": "skins/XAlert.php",
+    "counterparts": []
+  },
+  {
+    "theme": "skins/XDateSelect.php",
+    "counterparts": []
+  },
+  {
+    "theme": "skins/XGroupGridView.php",
+    "counterparts": [
+      "protected/views/skins/XGroupGridView.php"
+    ]
+  },
+  {
+    "theme": "skins/XSelect2.php",
+    "counterparts": [
+      "protected/views/skins/XSelect2.php"
+    ]
+  },
+  {
+    "theme": "skins/XTagInput.php",
+    "counterparts": []
+  },
+  {
+    "theme": "test/newDesignProgress.php",
+    "counterparts": [
+      "protected/views/test/newDesignProgress.php"
+    ]
+  },
+  {
+    "theme": "test/nightlyUpdateProgress.php",
+    "counterparts": []
+  },
+  {
+    "theme": "test/relocationProgress.php",
+    "counterparts": []
+  },
+  {
+    "theme": "test/relocationProgressRepo.php",
+    "counterparts": []
+  },
+  {
+    "theme": "test/relocationRepoMismatch.php",
+    "counterparts": []
+  },
+  {
+    "theme": "userOpenid/_connected.php",
+    "counterparts": []
+  },
+  {
+    "theme": "userOpenid/admin.php",
+    "counterparts": [
+      "protected/views/userOpenid/admin.php"
+    ]
+  },
+  {
+    "theme": "userOrderProfile/_form.php",
+    "counterparts": [
+      "protected/views/userOrderProfile/_form.php"
+    ]
+  },
+  {
+    "theme": "userOrderProfile/_view.php",
+    "counterparts": [
+      "protected/views/userOrderProfile/_view.php"
+    ]
+  },
+  {
+    "theme": "userOrderProfile/create.php",
+    "counterparts": [
+      "protected/views/userOrderProfile/create.php"
+    ]
+  },
+  {
+    "theme": "userOrderProfile/index.php",
+    "counterparts": [
+      "protected/views/userOrderProfile/index.php"
+    ]
+  },
+  {
+    "theme": "userOrderProfile/shared/_billing.php",
+    "counterparts": [
+      "protected/views/userOrderProfile/shared/_billing.php"
+    ]
+  },
+  {
+    "theme": "userOrderProfile/shared/_delivery.php",
+    "counterparts": [
+      "protected/views/userOrderProfile/shared/_delivery.php"
+    ]
+  },
+  {
+    "theme": "userOrderProfile/shared/_viewBilling.php",
+    "counterparts": [
+      "protected/views/userOrderProfile/shared/_viewBilling.php"
+    ]
+  },
+  {
+    "theme": "userOrderProfile/shared/_viewDelivery.php",
+    "counterparts": [
+      "protected/views/userOrderProfile/shared/_viewDelivery.php"
+    ]
+  },
+  {
+    "theme": "userOrderProfile/shared/updateBilling.php",
+    "counterparts": [
+      "protected/views/userOrderProfile/shared/updateBilling.php"
+    ]
+  },
+  {
+    "theme": "userOrderProfile/update.php",
+    "counterparts": [
+      "protected/views/userOrderProfile/update.php"
+    ]
+  }
+]

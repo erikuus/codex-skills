@@ -1,0 +1,64 @@
+@import "tailwindcss" source(none);
+@import "./sources.generated.css";
+@import "./widgets.css";
+@import "./yii.css";
+@config "./tailwind.config.cjs";
+@plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/typography";
+
+/* Preserve source base defaults rather than v4's new currentColor defaults. */
+@layer base {
+  *, ::before, ::after, ::backdrop, ::file-selector-button { border-color: theme(colors.gray.200); }
+  body { color: theme(colors.gray.900); font-family: theme(fontFamily.body); }
+  input::placeholder, textarea::placeholder { color: theme(colors.gray.400); }
+  [x-cloak] { display: none !important; }
+  @font-face {
+    font-family: 'Raleway';
+    font-weight: 100 900;
+    font-display: swap;
+    font-style: normal;
+    src: url('../css/fonts/Raleway-VariableFont_wght.ttf') format('truetype');
+  }
+  @font-face {
+    font-family: 'Raleway';
+    font-weight: 100 900;
+    font-display: swap;
+    font-style: italic;
+    src: url('../css/fonts/Raleway-Italic-VariableFont_wght.ttf') format('truetype');
+  }
+  @font-face {
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-display: swap;
+    font-style: normal;
+    src: url('../css/fonts/Roboto-Regular.ttf') format('truetype');
+  }
+  @font-face {
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-display: swap;
+    font-style: normal;
+    src: url('../css/fonts/Roboto-Medium.ttf') format('truetype');
+  }
+  @font-face {
+    font-family: 'Roboto';
+    font-weight: 700;
+    font-display: swap;
+    font-style: normal;
+    src: url('../css/fonts/Roboto-Bold.ttf') format('truetype');
+  }
+  @font-face {
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-display: swap;
+    font-style: italic;
+    src: url('../css/fonts/Roboto-Italic.ttf') format('truetype');
+  }
+  @font-face {
+    font-family: 'Roboto';
+    font-weight: 700;
+    font-display: swap;
+    font-style: italic;
+    src: url('../css/fonts/Roboto-BoldItalic.ttf') format('truetype');
+  }
+}

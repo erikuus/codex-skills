@@ -1,0 +1,119 @@
+@layer components {
+  .fancybox-skin {
+    @apply rounded!;
+  }
+  .fancybox-image {
+    @apply rounded!;
+  }
+  .ui-autocomplete {
+    @apply text-base!;
+  }
+  .ui-menu-item {
+    @apply px-2 py-1 odd:bg-gray-50/60;
+  }
+  .ui-datepicker {
+    @apply font-body! text-base! border! border-gray-200! rounded!;
+  }
+  .ui-datepicker-header {
+    @apply bg-gray-100! border-b! border-gray-300!;
+  }
+  .ui-datepicker-prev, .ui-datepicker-next {
+    @apply text-gray-600!;
+  }
+  .ui-datepicker-title {
+    @apply text-gray-600!;
+  }
+  .ui-datepicker-calendar {
+    @apply bg-white!;
+  }
+  .ui-datepicker .ui-state-default {
+    @apply text-base! rounded-sm!;
+  }
+  .ui-multiselect {
+    @apply block! w-full! rounded! border! border-gray-200! px-4! py-3! text-gray-900! hover:border-gray-300! focus:border-green-500! focus:outline-hidden! focus:ring-1! focus:ring-green-300! font-body! text-base! leading-6! bg-none! bg-white!;
+  }
+  .ui-multiselect .ui-icon {
+    @apply bg-none!;
+  }
+  .ui-multiselect.ui-state-default {
+    @apply shadow-none!;
+  }
+  .ui-multiselect-menu {
+    @apply mr-4! p-0! w-auto! min-w-[14rem]! max-w-[42rem]! max-h-80! overflow-y-auto! shadow-md!;
+  }
+  .ui-multiselect-menu.ui-widget-content {
+    @apply border! border-gray-200!;
+  }
+  .ui-multiselect-menu.ui-corner-all {
+    @apply rounded!;
+  }
+  .ui-multiselect-checkboxes {
+    @apply relative! overflow-y-auto!;
+  }
+  .ui-multiselect-checkboxes label {
+    @apply flex! items-start! gap-1! block! p-4! font-body! text-base! text-gray-900! hover:bg-gray-100! cursor-pointer!;
+  }
+  .ui-multiselect-checkboxes input[type="checkbox"] {
+    @apply mr-2! h-4! w-4! rounded-sm! text-green-500! focus:ring-offset-0! focus:ring-2! border! border-gray-200! hover:border-gray-300! focus:border-green-500! focus:ring-green-300!;
+  }
+  .ui-multiselect-checkboxes li {
+    @apply m-0! p-0!;
+  }
+  .ui-multiselect-checkboxes li.ui-multiselect-optgroup-label {
+    @apply py-2! text-center! font-body! text-base! border-b! border-gray-200!;
+  }
+  .ui-multiselect-checkboxes li .ui-corner-all {
+    @apply rounded-none!;
+  }
+  .ui-multiselect .ui-icon.ui-icon-triangle-2-n-s {
+    content: "";
+    @apply inline-block! w-5! h-5! mt-0.5! -mr-1!;
+    background: url("data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22%236C7683%22%20xmlns%3D%22http://www.w3.org/2000/svg%22%3E%3Cpath%20d%3D%22M12%205.83L15.17%209L16.58%207.59L12%203L7.40997%207.59L8.82997%209L12%205.83ZM12%2018.17L8.82997%2015L7.41997%2016.41L12%2021L16.59%2016.41L15.17%2015L12%2018.17Z%22/%3E%3C/svg%3E") no-repeat center center !important;
+    background-size: contain !important;
+  }
+  .ui-dialog {
+    @apply w-auto! min-w-[300px]! max-w-[300px]! border! border-gray-200! shadow-lg! md:max-w-md! lg:max-w-lg! xl:max-w-xl! 2xl:max-w-2xl!;
+  }
+  .ui-dialog.ui-corner-all {
+    @apply rounded!;
+  }
+  .ui-dialog .ui-dialog-titlebar {
+    @apply border-0! bg-gray-50!;
+  }
+  .ui-dialog .ui-dialog-titlebar,
+  .ui-dialog .ui-dialog-content {
+    @apply py-3! px-4!;
+  }
+  .ui-dialog .ui-dialog-title {
+    @apply font-body! text-gray-900! text-base! leading-6! font-bold!;
+  }
+  .ui-dialog .ui-dialog-titlebar-close .ui-icon {
+    @apply hidden!;
+  }
+  .ui-dialog .ui-dialog-titlebar-close:before {
+    content: "";
+    @apply inline-block! w-5! h-5! mr-2!;
+    background: url("data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22currentColor%22%20xmlns%3D%22http://www.w3.org/2000/svg%22%3E%3Cpath%20d%3D%22M19%206.41L17.59%205L12%2010.59L6.41%205L5%206.41L10.59%2012L5%2017.59L6.41%2019L12%2013.41L17.59%2019L19%2017.59L13.41%2012L19%206.41Z%22/%3E%3C/svg%3E") no-repeat center center !important;
+    background-size: contain !important;
+  }
+  /* Current jQuery UI indents the whole icon-only button's text offscreen.
+     Keep its accessible label hidden, but position Joyful's SVG independently. */
+  .ui-dialog .ui-dialog-titlebar-close.ui-button-icon-only::before {
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    margin: 0 !important;
+    transform: translate(-50%, -50%) !important;
+  }
+  .ui-dialog .ui-dialog-titlebar-close {
+    @apply right-4!;
+  }
+  .ui-dialog .ui-dialog-titlebar-close:hover,
+  .ui-dialog .ui-dialog-titlebar-close:focus {
+    @apply p-[1px]! top-1/2! mt-[-10px]!;
+  }
+  .ui-dialog form input {
+    @apply text-base!;
+  }
+
+}

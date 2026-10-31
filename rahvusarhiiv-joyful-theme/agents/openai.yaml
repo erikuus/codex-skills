@@ -1,0 +1,6 @@
+interface:
+  display_name: "Rahvusarhiiv Joyful Theme"
+  short_description: "Apply the Joyful theme to Yii 1.1.33-dev apps"
+  default_prompt: "Use $rahvusarhiiv-joyful-theme to apply the Joyful theme to this Yii application, preserving its routes and behavior."
+  icon_small: "./assets/RA_logo_Ikoon_must.svg"
+  icon_large: "./assets/RA_logo_Ikoon_must.png"
