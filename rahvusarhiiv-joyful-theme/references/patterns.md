@@ -70,9 +70,9 @@ For page/news/shop-style editable titles, follow [admin pencil controls and Impe
 
 ## Forms and button rows
 
-Read [form controls](form-controls.md) for the explicit white-to-gray hover contract, correct helper choice, the bookmark form’s stacked/indented radio layout and dynamic DOM requirements, and the mandatory label-row info icon for every existing field tip (including bulb images).
+Read [form controls](form-controls.md) for the explicit white-to-gray hover contract, correct helper choice, the bookmark form’s stacked/indented radio layout and dynamic DOM requirements, the mandatory label-row info icon for every existing field tip (including bulb images), large-screen group-body indentation, and compact range/measurement layouts.
 
-VAU's `company/_form.php` preserves model bindings and callbacks while replacing `XDynamicForm` with `XTActiveForm`, `.simple` with plain spaced rows, and inline widths with full-width controls. Group titles become `text-lg font-medium pt-6 border-t border-gray-50`. Required-field guidance uses `text-gray-700 text-sm`. The error summary moves within the same form; its presence and validation registration matter more than its location.
+VAU's `company/_form.php` preserves model bindings and callbacks while replacing `XDynamicForm` with `XTActiveForm`, `.simple` with plain spaced rows, and ordinary inline widths with full-width controls. Preserve compact range/measurement widths through the wrappers in [form controls](form-controls.md#compact-fields-ranges-and-measurements). For titled groups, follow the enquiry form’s heading outside a `space-y-6 xl:mx-6` field body. Later form group titles in the source become `text-lg font-medium pt-6 border-t border-gray-50`. Required-field guidance uses `text-gray-700 text-sm`. The error summary moves within the same form; its presence and validation registration matter more than its location.
 
 ```php
 <?php $form=$this->beginWidget('ext.components.tailwind.XTActiveForm',array(
@@ -93,7 +93,7 @@ VAU's `company/_form.php` preserves model bindings and callbacks while replacing
 <?php $this->endWidget(); ?>
 ```
 
-Keep `maxlength`, placeholders, `readonly`, `disabled`, upload settings, scenarios, validators, hidden fields and form submission unchanged. `size`/pixel width can usually go; height may express a real editor requirement. A custom form subclass is not automatically replaceable: inspect its methods and preserve its behavior when adding Joyful styling. Client validation still needs `$form->error()` calls to register fields. Use fieldsets/legends for radio groups and keep checkbox labels associated.
+Keep `maxlength`, placeholders, `readonly`, `disabled`, upload settings, scenarios, validators, hidden fields and form submission unchanged. `size`/pixel width can usually go for ordinary text inputs, but preserve compact intent for ranges and measurements with explicit wrapper widths and adjacent separators/units; height may express a real editor requirement. A custom form subclass is not automatically replaceable: inspect its methods and preserve its behavior when adding Joyful styling. Client validation still needs `$form->error()` calls to register fields. Use fieldsets/legends for radio groups and keep checkbox labels associated.
 
 The original toggles default to disabled in `XTActiveForm`, unlike `XDynamicForm`; explicitly retain `enableRadioToggle` / the historical spelling `enableChecboxToggle` when a form uses them. `dynamicDropDownList()` and `beginDynamicAreaDdl()` retain case-insensitive PHP compatibility with older calls. Scope dependent areas to the form. Inactive dropdown areas must disable their inputs on every change; originally disabled inputs remain disabled when their area becomes active.
 

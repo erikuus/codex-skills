@@ -51,6 +51,88 @@ For a group with conditional fields, explicitly set `enableRadioToggle=>true` on
 
 Preserve model names, option values/order, unique IDs, selected/default state, hidden uncheck values, readonly/disabled behavior, validators and target-specific callbacks. Selection must show the right panel on initial render and after mouse or keyboard changes. **Radio toggles preserve the source's visibility-only behavior**: they do not disable hidden panel fields. Do not silently apply the dropdown helper's disabling semantics to radios or change submitted values while restyling them. If the target already has different conditional submission behavior, preserve it deliberately.
 
+## Grouped forms: inset fields below an outdented heading
+
+**When a form has titled field groups, keep each group heading at the form's outer left edge and inset the group's field body on large screens.** Follow VAU `themes/joyful/views/enquiry/application/_form.php`, used by `enquiry/application/create`: the “Application content” / “Päringu sisu” heading precedes `<section class="space-y-6 pb-6 xl:mx-6">`, which renders `forms/_work.php` and other form partials. Applicant Data and Applicant Preferences use `space-y-6 xl:mx-6` too. The heading stands out because the **fields move inward**, not because the heading itself is indented.
+
+- Use **`xl:mx-6` on one field-body wrapper per group**: 24px on both sides at the preset's `xl` breakpoint (1280px), with no extra group inset below that breakpoint. Keep the heading outside that wrapper. All ordinary labels, inputs, field-help rows and errors share the inset; do not shift only the input or add margins again inside a rendered partial.
+- Preserve `space-y-6` (24px) between field blocks and the form's 24px heading-to-body gap. Group headings use `text-lg font-medium`, with semantic heading levels appropriate to the page, or a fieldset/legend where suitable. The example assumes the parent form already has `space-y-6`.
+- VAU's later form headings additionally use `pt-6 border-t border-gray-50`; its first heading has no separator. Preserve this distinction when matching a form that uses it. The required hierarchy is the heading/body inset; do not add dividing lines to titled **detail views**, which retain the separate no-separators rule.
+- Do not duplicate the inset around an already padded group panel (VAU's company group instead has `rounded p-6 bg-gray-50/60`). Preserve intentional panels and keep dynamic-radio indentation relative to the group body, without altering the helper's input/panel sibling contract.
+
+```php
+<h2 class="text-lg font-medium">
+    <?php echo CHtml::encode($existingGroupTitle); ?>
+</h2>
+<section class="space-y-6 xl:mx-6">
+    <div>
+        <?php echo $form->labelEx($model, $attribute); ?>
+        <?php echo $form->textField($model, $attribute); ?>
+        <?php echo $form->error($model, $attribute); ?>
+    </div>
+    <!-- Other existing fields/partials in this group; no second group inset. -->
+</section>
+```
+
+## Compact fields: ranges and measurements
+
+**Full width is the default for ordinary text fields, not for every input.** Retain meaningful compact relationships from the legacy form: `[start year/century] – [end year/century]` stays on one line, and a measurement stays `[value] mm` or `[value] cm` with its unit immediately after the input on the same line. Do not stretch either range endpoint or a measurement across the form, distribute endpoints to opposite edges, stack endpoints at ordinary phone widths, or push the unit to the far edge/below the field.
+
+Pitserid `protected/views/seal/_form.php` provides concrete cases: `datum_year_start`/`datum_year_end` use `size=>4`, century endpoints use `size=>2`, and `shape_x`/`shape_y` are followed by `mm`. These legacy sizes signal compact intent; do not discard that intent when removing old pixel/size attributes. The examples below are adaptations for these cases, not claims that VAU's enquiry form has these controls.
+
+### Width and helper contract
+
+`XTActiveForm::textField()` **appends** its `fieldCssClass`, including `block w-full`, even when `htmlOptions['class']` is supplied. Adding `w-24 inline-block` on the same input creates conflicting utilities; HTML class order does not resolve this. Prefer an explicitly sized wrapper with the ordinary full-width input inside it. Keep shared widget defaults unchanged.
+
+Useful starting widths (adjust to actual allowed values and typography): years `w-24` (6rem/96px), centuries `w-20` (5rem/80px), measurements `w-28` (7rem/112px). These are fixed, content-appropriate control widths, not percentages or `flex-1`. Check maximum permitted values, signs, decimals and any select arrow/mask with the normal input padding; enlarge the wrapper when necessary. Do not narrow widths blindly to the digit count or rely on `size` against `w-full`. Keep widths as literal Tailwind utilities so the build detects them.
+
+### Range example: two compact endpoints and a separator
+
+Put both inputs and the separator in one `flex flex-nowrap items-center gap-2` row. Give each endpoint an accessible start/end label; a shared group title alone cannot distinguish them. Keep validation messages below the control row so they do not displace the dash or the other input. In an existing radio-dependent area, put this markup **inside its content panel**, preserving the dynamic helper's outer structure and visibility/submission behavior.
+
+```php
+<fieldset class="m-0 min-w-0 border-0 p-0">
+    <legend class="mb-2 text-base font-semibold leading-6 text-gray-800">
+        <?php echo CHtml::encode($existingRangeTitle); ?>
+    </legend>
+    <div class="flex flex-nowrap items-center gap-2">
+        <div class="w-24 shrink-0">
+            <?php echo CHtml::activeLabel($model, 'datum_year_start', array('class'=>'sr-only')); ?>
+            <?php echo $form->textField($model, 'datum_year_start'); ?>
+        </div>
+        <span class="shrink-0 text-gray-700" aria-hidden="true">–</span>
+        <div class="w-24 shrink-0">
+            <?php echo CHtml::activeLabel($model, 'datum_year_end', array('class'=>'sr-only')); ?>
+            <?php echo $form->textField($model, 'datum_year_end'); ?>
+        </div>
+    </div>
+    <?php echo $form->error($model, 'datum_year_start'); ?>
+    <?php echo $form->error($model, 'datum_year_end'); ?>
+</fieldset>
+```
+
+For century ranges substitute the existing century attributes and `w-20` wrappers. Use the target's actual translated start/end labels (supply explicit label text if its model labels do not distinguish endpoints), required indicators and existing field options. At phone widths, retain the single compact row; check its total width within any radio indentation. If a genuinely narrower container cannot fit it, adapt widths within readable limits or wrap the pair as a whole within its parent. Do not introduce page overflow or orphan the dash. Do not change input types, date masks, numeric parsing, validation, allowed values or hidden/disabled behavior as a styling shortcut.
+
+### Measurement example: compact input with adjacent unit
+
+Use an `inline-flex items-center gap-2` row around a fixed-width input wrapper and nonwrapping unit text. Render the existing field label above the row and its error below it. Associate the unit text with the input via `aria-describedby`, merging any existing description/error IDs rather than replacing them. The example's ID must be unique per rendered form.
+
+```php
+<?php $unitId=CHtml::activeId($model, 'shape_x').'-unit'; ?>
+<div>
+    <?php echo $form->labelEx($model, 'shape_x'); ?>
+    <div class="inline-flex items-center gap-2">
+        <div class="w-28 shrink-0">
+            <?php echo $form->textField($model, 'shape_x', array('aria-describedby'=>$unitId)); ?>
+        </div>
+        <span id="<?php echo CHtml::encode($unitId); ?>" class="shrink-0 whitespace-nowrap text-gray-700">mm</span>
+    </div>
+    <?php echo $form->error($model, 'shape_x'); ?>
+</div>
+```
+
+Retain the target's actual unit (`mm`, `cm`, etc.), its localization policy and stored-value semantics; never infer a conversion from the design. Use the same pattern for each relevant dimension. Existing field-tip icons still belong to the label row above, not between the input and unit.
+
 ## Field tips: info icon on the right of the label row
 
 **Required whenever a legacy field has a tip/help affordance**, including a bulb image, `hint.png`, `XHtml::imageLink()`, a question-mark link, or a field-bound tooltip: use the `order/index?scope=clientDraft` “Koosta tellimus” pattern. Put a small filled-circle **i** on the far right of that field's label row, above the input. The label and required marker stay on the left. Remove the old icon/placement so there is only one help icon. This is field-local help; page-level Print/help actions still follow the title-row rule.
@@ -92,3 +174,5 @@ Use `fi-info` only when the Foundation icon font is actually loaded. Otherwise u
 Inspect actual rendered controls at desktop and narrow widths. For secondary buttons, measure white at rest and the preset's `rgb(232, 235, 240)` on hover, with unchanged dark text/border and visible keyboard focus. For radios, check stacked rows, label wrapping, 16px circles, indented dependent fields, validation errors, initial selection, label clicks and arrow-key changes. With two forms on a page, toggling one must not affect the other. Inspect submitted values and existing disabled fields; do not call the migration complete based only on class strings.
 
 For every migrated field tip, compare the label row against the order-form reference at desktop and narrow widths: circled-i at the right above the field, correct size/color, no remaining bulb or duplicate trigger, no overlap with wrapped labels. Activate it by mouse, keyboard and touch; verify the original localized content/help route, popup close behavior or tooltip access, and that it does not submit the form. Confirm required markers, label-to-input focus, persistent hints and validation errors remain intact.
+
+For grouped forms, compare a viewport below 1280px and one at/above it: heading at the outer edge, group body inset 24px on each side only at `xl`, with no double indentation. For range and measurement controls, check real maximum-length values, normal and validation-error states, and phone widths including indented radio panels: both endpoints and dash stay together, units remain adjacent to compact inputs, labels/units are accessible, and no horizontal overflow or change in submitted values occurs. Rebuild CSS and inspect actual computed widths; class-string assertions alone are insufficient.
