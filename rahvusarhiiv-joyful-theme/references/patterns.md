@@ -64,6 +64,10 @@ When a search form consists of one query field plus Go/Search and Cancel/Clear, 
 
 Keep the existing action, method, query parameter name, current value, hidden scope parameters, submit name/value when used by the controller, and clear semantics. Do not hardcode `/shop/product/search`, `q` or `sbmt` into another app. This rule targets a single-field search; retain the structure of multi-field/advanced filters. The × here clears search and is unrelated to removing a redundant page Back button.
 
+## Contextual editing
+
+For page/news/shop-style editable titles, follow [admin pencil controls and Imperavi migration](admin-editing.md). Use a small permission-gated pencil adjacent to the individual title, separate from page-level Add/Print/help controls. Replace xhEditor in shared/default rich-text forms as well as any Joyful override; editor selection cannot be implemented through a visual skin alone.
+
 ## Forms and button rows
 
 Read [secondary buttons and radio groups](form-controls.md) for the explicit white-to-gray hover contract, correct helper choice, and the bookmark form’s stacked/indented radio layout and dynamic DOM requirements.
