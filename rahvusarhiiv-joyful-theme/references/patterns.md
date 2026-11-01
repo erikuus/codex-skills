@@ -143,6 +143,41 @@ Standalone toolbar/action menus use `.joyful-actions`; narrow form submit/cancel
 
 ## Grids, lists and detail views
 
+### Detail-page content width
+
+**A view page primarily displaying record attributes (`CDetailView` or equivalent label/value content) should use a narrower, centered content column rather than stretching across the full application container.** Keep labels and values close enough to read as pairs on large screens. Put the page title, its existing actions/underline, group headings and detail content inside the same width boundary; narrowing only the table below a full-width title repeats the form-page layout error.
+
+The reference is [vau-account.html](https://erikuus.github.io/tailwindui-playground/views/pages/vau-account.html). Inside its normal responsive application container, it wraps “Minu konto”, account actions, personal details and related sections in `sm:mx-16 lg:mx-44 xl:mx-72 2xl:mx-80`. These margins are part of that full-width shell context, not margins to apply blindly inside another sidebar or bounded column.
+
+For a portable default, use **`mx-auto w-full min-w-0 max-w-[46rem]` on one outer detail-page wrapper**. The 46rem cap is derived from the reference's widest desktop content: 90rem outer container minus 4rem horizontal padding and two 20rem side margins. This bounded adaptation keeps widths stable between breakpoints; it does not reproduce every source breakpoint margin. Use the literal reference margins instead when matching its exact shell geometry. Never combine both constraints or nest the form's 36rem wrapper around the detail column.
+
+```php
+<div class="mx-auto w-full min-w-0 max-w-[46rem]">
+    <div class="mb-10 mt-px flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b-2 border-gray-500 pb-2 sm:mt-6 xl:mt-0">
+        <h2 class="min-w-0 max-w-full break-words font-heading text-lg font-bold text-gray-700 sm:text-xl">
+            <?php echo CHtml::encode($existingTitle); ?>
+        </h2>
+        <!-- Render the existing title actions here, preserving permissions and hooks. -->
+    </div>
+    <div class="[overflow-wrap:anywhere]">
+    <?php $this->beginContent('//decorators/detailTable'); ?>
+    <?php $this->widget('zii.widgets.CDetailView', array(
+        'data'=>$model,
+        'attributes'=>$existingAttributes,
+    )); ?>
+    <?php $this->endContent(); ?>
+    </div>
+</div>
+```
+
+Retain an existing shared title renderer instead of duplicating it. If several detail groups are rendered by partials, the page owns this wrapper once; each partial retains its content and decorator without adding another max-width/margin container. Group headings and detail tables share the outer column edge. **Do not copy the form-only `xl:mx-6` field-body inset into read-only detail groups.** Keep the no-horizontal-group-separators rule below; one main title underline is still allowed.
+
+The existing detail decorator can keep its label-column proportions and cell padding within this narrower parent. Do not solve excessive label/value separation with tiny text, absolute positioning, a global `th` width, or right-aligning values at the page edge. Preserve labels, data, encoding, visibility rules and actions. Wrap long values/URLs within their cells where appropriate; keep label/value associations and visible labels when the decorator stacks cells on phones. Scope any wrapping adaptation to the detail content, not every table in the app.
+
+Choose the container by content, not solely by an action named `view`. An image viewer, map, wide comparison or substantial related grid may need a wider section. Preserve that working area and constrain its metadata detail panel independently; do not shrink the whole viewer because it contains a `CDetailView`. For a standalone record page, keep the title with the narrow detail column; for a mixed workspace, keep the page title with its overall content area and align a metadata section heading with its own narrower panel. Preserve existing sidebars and normal shell/header/breadcrumb/footer widths. On phones use the available content width without extra fixed side margins.
+
+Verify a representative detail action at phone, tablet and wide desktop widths, including short values, the longest label, multiline/long values and all visible groups. The main title and dedicated detail column should have matching bounds, label/value gaps should remain readable, and no horizontal page overflow or hidden labels should appear. Check mixed viewer/grid pages separately before constraining them.
+
 ### Titled detail groups: spacing, no horizontal separators
 
 When a detail page groups attributes under section titles, separate the groups with heading hierarchy and vertical space. **Do not insert `<hr>`, `divide-y`, top/bottom separator borders, bordered spacer rows, or an underline beneath each group heading.** A source rhythm is `mt-12 mb-6 text-lg font-bold text-gray-700`, used for secondary headings in VAU `themes/joyful/views/company/view.php`; adapt the first group's top margin to avoid excess space. Preserve the groups, attribute labels, values, visibility and ordering.
@@ -151,6 +186,8 @@ Use a heading and its detail table/content as a coherent section. Remove inherit
 
 
 The source leaves most data attributes intact: `company/_view.php` is functionally identical across themes. The visual work lives in skins and its surrounding `detailTable` decorator. `CDetailView` skin disables its legacy CSS; decorator typography styles the table. Keep labels visible on phones. The portable decorator stacks label/value cells instead of copying VAU's hidden-mobile-header behavior.
+
+The following is a body-only detail fragment inside the shared page-width wrapper above, not a full-width page recipe:
 
 ```php
 <?php $this->beginContent('//decorators/detailTable'); ?>

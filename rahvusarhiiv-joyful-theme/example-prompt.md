@@ -28,7 +28,7 @@ Cover all common application surfaces:
 - Stacked radio choices with correctly indented dependent panels and unchanged submission semantics.
 - Secondary buttons transitioning from white to light gray on hover.
 - Add/New buttons with plus icons at the right of the title row; Print/help as icon + text there. Remove standalone Back buttons when breadcrumbs exist, preserving Cancel and workflow navigation.
-- Titled detail groups without horizontal separators.
+- Record-detail pages with a narrower shared title/content column, keeping labels and values close on large screens; retain suitable widths for viewers, maps and large grids. Titled detail groups without horizontal separators or the form-only field inset.
 - Correct Fancybox and CJuiDialog close controls.
 - Permission-gated admin pencils beside editable content titles.
 - Imperavi Redactor replacing xhEditor for actual rich-text fields, including default/shared forms and required upload integration. Preserve existing editing capabilities and keep plain-text fields plain.
