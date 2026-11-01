@@ -12,6 +12,13 @@
 }
 .joyful-grid .selected { background:theme(colors.green.50); }
 .joyful-grid .loading { opacity:.6; }
+/* Opt-in through a concrete XPortlet menu skin; leave other menus/portlets alone. */
+.joyful-sidebar-menu ul { @apply m-0 list-none space-y-1 p-0; }
+.joyful-sidebar-menu ul ul { @apply mt-1 ml-4; }
+.joyful-sidebar-menu li > a {
+ @apply block rounded px-4 py-2 hover:bg-green-50 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-green-300;
+}
+.joyful-sidebar-menu li.active > a { @apply bg-green-50; }
 .joyful-actions { display:flex; flex-wrap:wrap; gap:1rem; align-items:center; }
 .joyful-form-actions { display:flex; flex-direction:column; gap:1rem; padding-top:1.5rem; }
 .joyful-form-actions > * { width:100%; }

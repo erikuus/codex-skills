@@ -37,7 +37,7 @@
     "themes/joyful/tailwind/rahvusarhiiv.preset.cjs": "09a65659d4bbf47529c1784a673ea6842cfac51750f2c7967fa2cf1c0938b8bf",
     "themes/joyful/tailwind/tailwind.config.cjs": "1ccb243132dfbf2785a5ad340f49348f94c9dedd5a499153a80f833504b47ce5",
     "themes/joyful/tailwind/widgets.css": "7a494e68d439431801d0c2cacee2a18323198a9ea96fc515d6f16dc16f8a3c63",
-    "themes/joyful/tailwind/yii.css": "e72bba8b9eab4001efabb6676c1a004494e45c384d0a59d886c2b124ec4b1483",
+    "themes/joyful/tailwind/yii.css": "2ce012242393492214df55dc29e09b397de17f22cda78266fd282812033df447",
     "themes/joyful/views/decorators/alertGreen.php": "e967740f1385d57bde3c02117984f22b2bd696c1233ab289fda12de30e9bfabf",
     "themes/joyful/views/decorators/alertRed.php": "8a082f8308515d334c6cef5dda3d4d0ddfc0f5edea7e472ad0f33372e611c0c8",
     "themes/joyful/views/decorators/alertYellow.php": "d8f5981eb1d634fcaee15438f5c67c92e5d50dbaba529e5636ff935162790075",
@@ -89,5 +89,8 @@
     "source": "/Users/erikuus/Documents/Github/tailwindui-playground/views/layouts/advanced-layout-alt.html",
     "footer": "assets/app/themes/joyful/views/layouts/_footer.php",
     "footer_sha256": "0a8e0ceb53eb2d0c2165d4c7c4ecdcf02202ed35ccd658963eae5f4811c28412"
+  },
+  "examples": {
+    "skins/ManageMenu.php": "4172807190bdd8d8c7370d06830c0688fa97af31f4f91dba5193f5e4a45dd6bf"
   }
 }

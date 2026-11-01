@@ -23,6 +23,8 @@ Setting `Yii::app()->theme='joyful'` before rendering is equivalent. No preferen
 
 Theming controller views mirrors `protected/views/`; module views use `themes/joyful/views/<module>/<controller>/`; widget views use `themes/joyful/views/<ConcreteWidgetClass>/`. Explicit filesystem includes and view aliases can bypass theme lookup. Audit those separately. Native APIs and precedence were checked in the local 1.1.33-dev `CTheme`, `CWidget`, and `CWidgetFactory`, and agree with the [Yii theming guide](https://www.yiiframework.com/doc/guide/1.1/en/topics.theming) and [widget-factory API](https://www.yiiframework.com/doc/api/1.1/CWidgetFactory).
 
+For `XPortlet` menu subclasses, see [the concrete-class skin recipe](left-menus.md#apply-the-pattern-to-managemenu-extending-xportlet). It uses the same property-based skin mechanism as VAU’s `XAlert`, with a scoped menu content style. The example under `assets/examples/skins/` is opt-in and is not copied by the staging script.
+
 ## What is bundled
 
 | File/class | Role and upgrade |

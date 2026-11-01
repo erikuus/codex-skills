@@ -140,6 +140,8 @@ The source PageSizeMenu is new Joyful-only functionality: its default view is a 
 
 ## Navigation and portlets
 
+For sidebar menus, follow [left menus and extension skins](left-menus.md), including the tested `ManageMenu` skin example. VAU’s `PageMenuWidget` left navigation is distinct from the right-side article table of contents.
+
 Yii maps a widget's view by **class name**, not its source directory. Example: `protected/portlets/views/search.php`, rendered by `Search`, becomes `themes/joyful/views/Search/search.php`. A menu class that directly invokes `XNavBar` never looks for `mainMenu.php`. For these, keep its item-building/authorization logic and adjust supported widget options, or extract its existing rendering into a view with unchanged data.
 
 Desktop navigation in VAU is hidden below `lg`; mobile uses a drawer under Alpine. Keep item visibility, active-route logic, translations, badges and account state from the target. Follow the standard's right-side modal drawer rather than substituting a different navigation pattern. Implement Escape/outside/close behavior, focus trapping, focus return, background inertness and scroll-lock cleanup on every close path and desktop resize. VAU's original outside-click path does not reliably clear scroll lock; do not replicate it. The payload contains Alpine 3.12.3 core as a local asset; load it once with `defer` when implementing the standard's Alpine drawer. Its Persist/Intersect plugins are not required for basic navigation and are not bundled.

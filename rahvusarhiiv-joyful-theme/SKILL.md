@@ -51,6 +51,8 @@ Apply these presentation rules consistently:
 - **Page-level Add/New/Create buttons belong on the right of the title row**, with a plus icon before the translated label and the compact dark primary style from `bookmark/link/admin`. Place related secondary controls immediately before Add; see [Add buttons](references/patterns.md#addnew-buttons-in-the-title-row).
 - **Page-level Print and help actions sit to the right of the page title as icon + text**, following `order/index?scope=clientDraft` and the supplied screenshot. Use the [title action row](references/patterns.md#page-title-and-utility-actions); retain the single shared page-title underline.
 
+For left navigation and menus extending `XPortlet` (such as `ManageMenu`), read [left menus and extension skins](references/left-menus.md). Match VAU's uppercase underlined group titles and rounded green active/hover links. Apply a skin for the **concrete class**, disabling its legacy CSS and setting supported presentation properties; preserve the existing menu data, visibility and route logic. An `XPortlet.php` skin alone does not skin `ManageMenu`.
+
 ## Verify before reporting completion
 
 Follow [verification](references/verification.md). Run PHP/PHPCS checks, build CSS, exercise relevant application behavior, and **compare actual screenshots and computed design values with the references** at phone, tablet and desktop sizes. Inspect the header, breadcrumb, grid, form, detail and exact footer, not just a homepage. The package supplies real Yii render probes and source-CSS parity checks; they validate the reusable baseline but do not substitute for testing the integrated application.
