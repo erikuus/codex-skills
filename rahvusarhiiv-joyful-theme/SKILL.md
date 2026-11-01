@@ -14,6 +14,8 @@ Implement the existing design faithfully. Enable it for the entire web applicati
 - [View patterns](references/patterns.md): VAU supplies the breadcrumb, grid, detail, form and widget adaptations missing from the generic shell. The generic shell's absence of breadcrumbs does not mean relocate them into white content.
 - [Integration](references/integration.md): reusable PHP classes belong under the resolved **extension root's `components/tailwind/`**, imported as `ext.components.tailwind.*`.
 
+When source observations and the adapted examples differ, follow the explicit current rules below and their linked recipes. Historical VAU markup and reference snapshots are evidence, not instructions to restore superseded layout or behavior; check the current target before acting on an earlier Pitserid snapshot.
+
 Do not replace the preset with approximate colors/shadows/radii or rewrite reference utility markup as an independent handwritten theme. A successful behavioral test or absence of horizontal overflow does not establish visual fidelity.
 
 ## Inspect the application

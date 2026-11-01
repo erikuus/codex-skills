@@ -8,18 +8,18 @@ Use Roboto body text and Raleway headings from the supplied local font files. Th
 
 Typical page title: `font-heading mb-10 mt-px border-b-2 border-gray-500 pb-2 text-lg font-bold text-gray-700 sm:mt-6 sm:text-xl xl:mt-0`. Narrow create/update pages in VAU use several breakpoint margins (`sm:mx-20 lg:mx-36 xl:mx-80 2xl:mx-96`); use the bounded `.joyful-form` around **both the title row and form body**, as specified below, so intermediate widths remain usable. Wide editors need their own shared title/body content width.
 
-The sample apps' `leftbar`, `rightbar`, and `sidebars` layouts call `$this->beginContent()` and loop through controller portlets. Preserve that nesting and those loops. Replace the 960-grid markup, for example:
+The sample apps' `leftbar`, `rightbar`, and `sidebars` layouts call `$this->beginContent()` and loop through controller portlets. Preserve that nesting and those loops. For a VAU-style left menu, replace the 960-grid markup with the required 224px sidebar and 40px desktop gap, for example:
 
 ```php
 <?php $this->beginContent(); ?>
-<div class="joyful-columns joyful-columns-left">
-    <aside><?php foreach($this->leftPortlets as $class=>$properties) $this->widget($class,$properties); ?></aside>
-    <section><?php echo $content; ?></section>
+<div class="grid gap-y-6 lg:grid-cols-[14rem_minmax(0,1fr)] lg:gap-x-10">
+    <aside class="min-w-0"><?php foreach($this->leftPortlets as $class=>$properties) $this->widget($class,$properties); ?></aside>
+    <section class="min-w-0"><?php echo $content; ?></section>
 </div>
 <?php $this->endContent(); ?>
 ```
 
-Use `joyful-columns-right` or `joyful-columns-both` for corresponding layouts. Preserve print branches before changing markup; do not nest main twice. Main owns the single gradient breadcrumb strip between the application header and white content panel. Nested layouts keep their breadcrumb data but omit duplicate rendering. The payload uses the current `CBreadcrumbs` with a skin, not VAU's copied 1.1.11 `Breadcrumbs` class.
+This example stacks the existing menu above content on small screens so it remains reachable; retain an existing equivalent drawer if appropriate. Read [left menus](left-menus.md) for the concrete widget skin and negative-margin conditions. The generic `.joyful-columns-left/right/both` helpers are only scaffolding for other layouts: their 16rem/2rem or 14rem geometry is not the VAU left-menu recipe. Inspect right/both-sidebar layouts individually rather than automatically applying those helpers. Preserve print branches before changing markup; do not nest main twice. Main owns the single gradient breadcrumb strip between the application header and white content panel. Nested layouts keep their breadcrumb data but omit duplicate rendering. The payload uses the current `CBreadcrumbs` with a skin, not VAU's copied 1.1.11 `Breadcrumbs` class.
 
 ## Optional long-text previews on smaller screens
 
@@ -39,7 +39,7 @@ For a standalone form, use one outer `.joyful-form` around the existing title-ro
 ```php
 <div class="joyful-form">
     <div class="mb-10 mt-px flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b-2 border-gray-500 pb-2 sm:mt-6 xl:mt-0">
-        <h2 class="min-w-0 font-heading text-lg font-bold text-gray-700 sm:text-xl">
+        <h2 class="min-w-0 max-w-full break-words font-heading text-lg font-bold text-gray-700 sm:text-xl">
             <?php echo CHtml::encode($existingTitle); ?>
         </h2>
         <!-- Render existing icon + text title actions here, with their hooks/permissions. -->
@@ -48,7 +48,9 @@ For a standalone form, use one outer `.joyful-form` around the existing title-ro
 </div>
 ```
 
-If the target already has a shared title partial, keep that renderer and its existing arguments inside this wrapper instead of recreating it. Inspect every caller before moving/removing a width wrapper in a shared `_form` partial. In Pitserid, `themes/joyful/views/seal/create.php` and `update.php` currently render `//layouts/_pageTitle` before `_form`, while `_form.php` starts with `<div class="form joyful-form">`. Move the width ownership to the parent enclosing **both calls**, retain any functional `form` class in the partial, and avoid a second nested width constraint. Preserve other consumers such as dialogs by giving their caller the appropriate container. If a layout owns the title, adjust its existing view/slot arrangement so title and form share this container; do not render a second title or globally narrow every title in the app.
+If the target already has a shared title partial, keep that renderer and its existing arguments inside this wrapper instead of recreating it. Inspect every caller before moving/removing a width wrapper in a shared `_form` partial. In the Pitserid snapshot that produced the reported mismatch, `themes/joyful/views/seal/create.php` and `update.php` rendered `//layouts/_pageTitle` before `_form`, while `_form.php` started with `<div class="form joyful-form">`. Check the current target first; if that mismatch still exists, move the width ownership to the parent enclosing **both calls**, retain any functional `form` class in the partial, and avoid a second nested width constraint. Preserve other consumers such as dialogs by giving their caller the appropriate container. If a layout owns the title, adjust its existing view/slot arrangement so title and form share this container; do not render a second title or globally narrow every title in the app.
+
+The error-summary helper also needs explicit attention: `XTHtml::$errorSummaryCss` includes `-mx-4`. On a bounded form, pass `array('class'=>'mx-0!')` as the fourth argument to `$form->errorSummary()` so validation errors stay inside the shared column. This targeted Tailwind 4 important utility overrides the appended negative-margin default; another ordinary `mx-0` does not reliably win. Keep summary registration and existing options. Do not change the global helper just to fix one caller.
 
 The title's left edge aligns with the **outer form/group-heading edge**, and its underline ends at the outer form's right edge. The `xl:mx-6` grouped-field inset is a separate inner layer: individual inputs may sit 24px further inward on either side. Do not align the page title to those inner inputs or apply group indentation to the title row. Required-field guidance, error summary, group headings and form actions remain within the outer form column.
 
@@ -64,7 +66,7 @@ Place existing page-level Print and contextual help actions **to the right of th
 
 Source details: action wrapper `float-right flex gap-x-4 mt-2`; each link `inline-flex items-center text-center text-sm font-medium text-gray-600`; printer or circled-question SVG `h-4 w-4` (16px), with a small gap before the label. The title uses `font-heading text-lg font-bold text-gray-700 sm:text-xl`, and its row has `border-b-2 border-gray-500 pb-2 mb-6 md:mb-10`.
 
-For long translated headings, a flex row is a robust equivalent of the source float: use a wrapping `flex items-center justify-between gap-x-4 gap-y-2` row carrying the shared border/padding/margins; the heading itself has no second bottom border, and actions use `ml-auto flex flex-wrap items-center gap-x-4 gap-y-2`. Each link retains its icon/text together (`inline-flex items-center gap-x-1 whitespace-nowrap`), with the SVG `shrink-0` and `aria-hidden="true"`. At narrow widths, wrap the action group below the heading within the same title block instead of overlapping or truncating it. **Keep visible text alongside icons** as requested; the original source hides text below `sm`, but that part is not the requested rule.
+For long translated headings, a flex row is a robust equivalent of the source float: use a wrapping `flex flex-wrap items-center justify-between gap-x-4 gap-y-2` row carrying the shared border/padding/margins; the heading uses `min-w-0 max-w-full break-words` with no second bottom border, and actions use `ml-auto flex flex-wrap items-center gap-x-4 gap-y-2`. Each link retains its icon/text together (`inline-flex items-center gap-x-1 whitespace-nowrap`), with the SVG `shrink-0` and `aria-hidden="true"`. At narrow widths, wrap the action group below the heading within the same title block instead of overlapping or truncating it. **Keep visible text alongside icons** as requested; the original source hides text below `sm`, but that part is not the requested rule.
 
 Keep actual print URLs, `rel`/target behavior, visibility conditions, help routes and `openhelp`/dialog hooks. Hide these interactive utilities in print output as the source does. Preserve genuine row/batch/workflow actions in their own controls; this rule concerns page-level print/help utilities.
 
@@ -111,22 +113,23 @@ Read [form controls](form-controls.md) for the explicit white-to-gray hover cont
 
 VAU's `company/_form.php` preserves model bindings and callbacks while replacing `XDynamicForm` with `XTActiveForm`, `.simple` with plain spaced rows, and ordinary inline widths with full-width controls. Preserve compact range/measurement widths through the wrappers in [form controls](form-controls.md#compact-fields-ranges-and-measurements). For titled groups, follow the enquiry form’s heading outside a `space-y-6 xl:mx-6` field body. Later form group titles in the source become `text-lg font-medium pt-6 border-t border-gray-50`. Required-field guidance uses `text-gray-700 text-sm`. The error summary moves within the same form; its presence and validation registration matter more than its location.
 
+This is the **body-only `_form` partial**. Its caller wraps the title row and this partial together as shown in [form-page width ownership](#form-pages-title-and-body-share-one-width); do not add `.joyful-form` inside this partial. `$existingFormOptions` and `$existingFieldOptions` stand for the target's retained configuration, including validation and dynamic toggles. Merge `space-y-6` into the form's existing HTML classes. For grouped fields, the example includes one heading/body pair; omit that pair for an ungrouped form rather than inventing a group.
+
 ```php
-<?php $form=$this->beginWidget('ext.components.tailwind.XTActiveForm',array(
-    'id'=>'existing-form-id',
-    'enableAjaxValidation'=>false, // Keep the target's actual setting and callbacks.
-    'htmlOptions'=>array('class'=>'space-y-6'),
-)); ?>
-<div class="joyful-field">
-    <?php echo $form->labelEx($model,'existingAttribute'); ?>
-    <?php echo $form->textField($model,'existingAttribute'); ?>
-    <?php echo $form->error($model,'existingAttribute'); ?>
-</div>
+<?php $form=$this->beginWidget('ext.components.tailwind.XTActiveForm', $existingFormOptions); ?>
+<?php echo $form->errorSummary($model, null, null, array('class'=>'mx-0!')); ?>
+<h2 class="text-lg font-medium"><?php echo CHtml::encode($existingGroupTitle); ?></h2>
+<section class="space-y-6 xl:mx-6">
+    <div class="joyful-field">
+        <?php echo $form->labelEx($model, $attribute); ?>
+        <?php echo $form->textField($model, $attribute, $existingFieldOptions); ?>
+        <?php echo $form->error($model, $attribute); ?>
+    </div>
+</section>
 <div class="joyful-form-actions">
     <?php echo XTHtml::submitButton(Yii::t('ui','Save')); ?>
     <?php echo XTHtml::buttonLink(Yii::t('ui','Cancel'),$existingReturnUrl); ?>
 </div>
-<?php echo $form->errorSummary($model); ?>
 <?php $this->endWidget(); ?>
 ```
 

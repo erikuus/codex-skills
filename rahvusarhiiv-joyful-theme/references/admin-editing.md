@@ -50,19 +50,15 @@ Migration mapping:
 | `upImgUrl`, `upLinkUrl` | Redactor-compatible `imageUpload`, `fileUpload` routes |
 | `loadCSS` | Inspect whether styles must target the editing surface or an iframe; use supported editor content-CSS options/module CSS, not a mechanical rename |
 
-Minimal shared-form pattern, adapted to the actual attribute and required toolbar:
+Shared-form pattern after mapping the target’s existing editor configuration. `$mappedRedactorOptions` must contain the required toolbar, height, paste policy, language and upload callbacks supported by the installed Redactor version. Preserve wrapper-level `plugins`/`package` settings separately when used; do not move them into `options`. `$existingTextareaOptions` retains IDs, state and other HTML options; merge `w-full` into its classes. Do not treat a short example toolbar or `pastePlainText=>true` as a mandatory migration default: either can remove existing editing capabilities.
 
 ```php
 <?php echo $form->labelEx($model,$attribute); ?>
 <?php $this->widget('ext.widgets.redactor.ImperaviRedactor',array(
     'model'=>$model,
     'attribute'=>$attribute,
-    'options'=>array(
-        'minHeight'=>150,
-        'pastePlainText'=>true,
-        'buttons'=>array('bold','italic','unorderedlist','orderedlist','link','html'),
-    ),
-    'htmlOptions'=>array('class'=>'w-full'),
+    'options'=>$mappedRedactorOptions,
+    'htmlOptions'=>$existingTextareaOptions,
 )); ?>
 <?php echo $form->error($model,$attribute); ?>
 ```

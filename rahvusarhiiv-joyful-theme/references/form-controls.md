@@ -84,6 +84,8 @@ Pitserid `protected/views/seal/_form.php` provides concrete cases: `datum_year_s
 
 ### Width and helper contract
 
+For skinned inputs such as `CMaskedTextField` and `CJuiDatePicker`, inspect the emitted wrapper/input before applying compact sizing. The masked-field skin supplies `w-full`; the default datepicker skin also supplies `sm:w-32`, which can override a smaller wrapper’s intended width. When a caller needs a different compact width, replace that input’s conflicting width tokens while retaining the other skin classes and functional widget options. Explicit `htmlOptions` classes can replace skin classes through Yii’s merge; do not accidentally discard the border, padding and focus design. Keep the existing date format and mask.
+
 `XTActiveForm::textField()` **appends** its `fieldCssClass`, including `block w-full`, even when `htmlOptions['class']` is supplied. Adding `w-24 inline-block` on the same input creates conflicting utilities; HTML class order does not resolve this. Prefer an explicitly sized wrapper with the ordinary full-width input inside it. Keep shared widget defaults unchanged.
 
 Useful starting widths (adjust to actual allowed values and typography): years `w-24` (6rem/96px), centuries `w-20` (5rem/80px), measurements `w-28` (7rem/112px). These are fixed, content-appropriate control widths, not percentages or `flex-1`. Check maximum permitted values, signs, decimals and any select arrow/mask with the normal input padding; enlarge the wrapper when necessary. Do not narrow widths blindly to the digit count or rely on `size` against `w-full`. Keep widths as literal Tailwind utilities so the build detects them.
@@ -141,7 +143,7 @@ Retain the target's actual unit (`mm`, `cm`, etc.), its localization policy and 
 
 ### Source geometry and markup
 
-In VAU `themes/joyful/views/order/_form.php`, the `labels` (“Märksõnad”), `type` and `pricelist` fields render the help link **before** the block label. Its `float-right mt-1 mr-1 text-gray-600` classes place it on the right of the label line; the glyph is `fi-info text-xl`. With the institutional preset, this means gray `#5F6874`, a **23px** icon font size (`1.4375rem`, not stock Tailwind's `text-xl`), and 4px top/right margins. `XTActiveForm` labels use `mb-2 block text-base font-semibold leading-6 text-gray-800`. The full-width field follows below. Keep the icon out of the input, outside the label element, and away from the validation/error line.
+In VAU `themes/joyful/views/order/_form.php`, the `labels` (“Märksõnad”), `type` and `pricelist` fields render the help link **before** the block label. Its `float-right mt-1 mr-1 text-gray-600` classes place it on the right of the label line; the glyph is `fi-info text-xl`. With the institutional preset, this means gray `#5F6874`, a **23px** icon font size (`1.4375rem`, not stock Tailwind's `text-xl`), and 4px top/right margins. `XTActiveForm` labels use `mb-2 block text-base font-semibold leading-6 text-gray-800`. The control follows below: ordinary fields are full width, while ranges and measurements retain the compact layout specified above. Adding a field tip must not widen a compact control. Keep the icon out of the input, outside the label element, and away from the validation/error line.
 
 A source-faithful help-link template is below. `$existingHelpUrl` must be the target field's existing route and parameters, and `$fieldHelpLabel` its translated accessible help label (preferably naming the field). Preserve any existing IDs, data attributes and event hooks in the link options as well.
 
