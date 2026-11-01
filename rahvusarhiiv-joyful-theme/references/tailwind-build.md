@@ -39,6 +39,8 @@ The CLI handles imports/prefixing in this pipeline. Do not copy the old PostCSS 
 
 ## Preserve source appearance while changing versions
 
+The [explicit header-gradient override](layout-standard.md#header-gradient-override) is the only intentional palette difference: `theme-vau` now uses the linked basic template’s `theme-ais` gradient values. Preserve the remaining preset and the historical snapshots; the visual check tests this gradient against the approved source value while retaining its other parity assertions.
+
 - Custom radii and shadow names come from the retained preset. Do **not** blindly apply the stock v3→v4 `rounded-sm`/`shadow-sm` rename table; that table describes default scales. The bundled parity check confirms this preset's names retain the original computed values.
 - The source `xxl` value contained `!important`; the port uses a valid `90rem` token and the same responsive utility. The source typography preset referenced nonexistent `colors.info.DEFAULT`; the port resolves it to `blue.600`.
 - The variable Raleway font declares weight range `100 900`, instead of the original fixed 400 declaration.

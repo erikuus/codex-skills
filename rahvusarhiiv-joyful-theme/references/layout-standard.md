@@ -14,6 +14,22 @@ The authoritative shell is `/Users/erikuus/Documents/Github/tailwindui-playgroun
 
 The horizontal container is 80rem, increasing to 90rem at 1536px, with 16/24/32px horizontal padding. Preserve the custom 8px radius and multi-layer shadows from the preset. Sidebars belong inside main content only where the target already has that layout. Do not add a sidebar or narrow the page just because another application has one. Avoid double padding or double nested main layouts.
 
+## Header gradient override
+
+The user explicitly selected the gradient from the live [basic-layout.html](https://erikuus.github.io/tailwindui-playground/views/layouts/basic-layout.html), whose [stylesheet](https://erikuus.github.io/tailwindui-playground/style.css) defines `bg-theme-ais` as:
+
+```css
+linear-gradient(96.04deg, rgba(247, 227, 204, 0.65) -17.14%, #ECDDF4 94.45%)
+```
+
+Use this exact angle, colors, opacity and stop positions for Joyful's existing `bg-theme-vau` token. The runtime preset already contains this replacement. Change only that gradient declaration; do not switch to the basic template's layout, placeholder content or footer, rename the token, or alter any other palette value. `advanced-layout-alt.html` remains authoritative for the shell and exact footer. Historical source snapshots keep their original green gradient as evidence; it must not overwrite this explicit exception. Rebuild CSS after updating an existing application's preset.
+
+## Header navigation: no Home/Avaleht entry
+
+Do not add or retain a separate Home/Avaleht item in the Joyful main header menu, even when the default theme includes it. Apply the same omission to the corresponding mobile header navigation. Identify the actual home navigation item by its role and route as well as its translated label; do not remove unrelated links merely because their URLs contain `home`.
+
+Filter it in the Joyful header presentation while preserving the underlying default-theme menu definition and the other entries' order, permissions and behavior. Keep the existing logo/app-name link to the application home and the breadcrumb home icon. This rule does not remove home routes or unrelated contextual navigation. Thus “same authorized links on desktop/mobile” below means the remaining header menu entries after this explicit omission.
+
 ## Login button
 
 A guest Login control must include the **same account-circle SVG as VAU**, immediately before the translated Login label. The source is `/Users/erikuus/dev/php/vau/themes/joyful/views/AccountMenu/loginButton.php`:

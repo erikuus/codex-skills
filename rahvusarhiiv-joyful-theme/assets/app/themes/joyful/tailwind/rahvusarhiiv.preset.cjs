@@ -197,7 +197,7 @@ module.exports = {
       },
       backgroundImage: {
         "theme-ais": "linear-gradient(96.04deg, rgba(247, 227, 204, 0.65) -17.14%, #ECDDF4 94.45%)",
-        "theme-vau": "linear-gradient(95.19deg, #CCEAD6 0.8%, #ECDDF4 158.87%)"
+        "theme-vau": "linear-gradient(96.04deg, rgba(247, 227, 204, 0.65) -17.14%, #ECDDF4 94.45%)"
       },
       typography: ({ theme }) => ({
         DEFAULT: {

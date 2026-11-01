@@ -25,6 +25,12 @@ const fs=require('node:fs');const path=require('node:path');const assert=require
    });
    await page.goto('http://joyful.local/');await page.evaluate(()=>document.fonts.ready);pages.push(page);
   }
+  // Approved gradient-only override: the linked basic layout uses this source token.
+  const approvedGradient=await pages[0].evaluate(()=>{
+   const probe=document.createElement('div');probe.className='bg-theme-ais';document.body.append(probe);
+   const value=getComputedStyle(probe).backgroundImage;probe.remove();return value;
+  });
+  assert.notEqual(approvedGradient,'none','approved source gradient exists');
   async function metrics(page){return page.evaluate(()=>{
    const css=selector=>getComputedStyle(document.querySelector(selector));
    const shadow=selector=>css(selector).boxShadow.replaceAll('rgba(0, 0, 0, 0) 0px 0px 0px 0px, ','');
@@ -52,12 +58,13 @@ const fs=require('node:fs');const path=require('node:path');const assert=require
    for(const p of pages)await p.setViewportSize({width,height:1000});
    const expected=await metrics(pages[0]), actual=await metrics(pages[1]);
    for(const key of Object.keys(expected)){
-    if(key==='overflow')assert.equal(actual[key],false,'no page overflow at '+width);
+    if(key==='gradient')assert.equal(actual[key],approvedGradient,'approved basic-layout gradient at '+width);
+    else if(key==='overflow')assert.equal(actual[key],false,'no page overflow at '+width);
     else assert.deepEqual(actual[key],expected[key],key+' differs from original CSS at '+width);
    }
    assert.equal(actual.breadcrumbInGradient,true);assert.equal(actual.breadcrumbAboveWhitePanel,true);
    assert.equal(actual.radius,'8px');assert.equal(actual.cellPadding,'12px');assert.equal(actual.svg,20);
-   console.log('PASS visual source parity at '+width+'px (layout, tokens, breadcrumb, grid, pager)');
+   console.log('PASS visual source parity at '+width+'px (layout, tokens, approved gradient, breadcrumb, grid, pager)');
   }
   await pages[1].locator('#probe-grid tbody tr').first().hover();
   assert.equal(await pages[1].locator('#probe-grid tbody tr').first().evaluate(e=>getComputedStyle(e).backgroundColor),'rgb(233, 247, 238)');

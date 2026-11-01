@@ -18,6 +18,8 @@ For a reusable invocation, copy the [example application prompt](example-prompt.
 
 When source observations and the adapted examples differ, follow the explicit current rules below and their linked recipes. Historical VAU markup and reference snapshots are evidence, not instructions to restore superseded layout or behavior; check the current target before acting on an earlier Pitserid snapshot.
 
+The header gradient is the sole visual override to the shell reference: use the exact `basic-layout.html` gradient documented in [layout standard](references/layout-standard.md#header-gradient-override). Keep every other preset value and shell/footer detail unchanged.
+
 Do not replace the preset with approximate colors/shadows/radii or rewrite reference utility markup as an independent handwritten theme. A successful behavioral test or absence of horizontal overflow does not establish visual fidelity.
 
 ## Inspect the application
@@ -47,6 +49,8 @@ For a single search field with Go/Search and Cancel/Clear controls, use the [com
 Use `XTActiveForm`/`XTHtml` as described in the patterns reference, preserving validation, IDs, names, form method/action, uploads, hidden values and callbacks. Keep detail labels intelligible on mobile. Retain structural jQuery UI/plugin CSS and existing dialog behavior; style its appearance through the compiled integration layer. Follow [the explicit close-control rules](references/dialog-close-buttons.md): Fancybox 2 retains its 36px sprite button at -18px top/right; CJuiDialog uses the 20px SVG at a 16px right inset, with the current jQuery UI pseudo-element compatibility fix. Keep print/export documents separate from the web shell.
 
 Apply these presentation rules consistently:
+
+- **Do not include a Home/Avaleht entry in the main header menu**, even if the default theme has one. Omit that navigation entry in desktop and corresponding mobile header menus; retain the logo/app-name home link and breadcrumb home icon. See [header navigation](references/layout-standard.md#header-navigation-no-homeavaleht-entry).
 
 - **Secondary buttons, including Cancel, are white at rest and light gray on hover**: `bg-white hover:bg-gray-100`, with `text-gray-900` and `border-gray-200` retained. Follow [form controls](references/form-controls.md); avoid conflicting primary button defaults.
 - **Form-page titles, their actions and underline share the form’s narrower container**: wrap the title row and form body together, not only `_form`. Keep group-field indentation inside this outer column; see [form-page width ownership](references/patterns.md#form-pages-title-and-body-share-one-width).

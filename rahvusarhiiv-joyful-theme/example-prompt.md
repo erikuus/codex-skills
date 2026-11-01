@@ -16,7 +16,8 @@ Use the skill's bundled reference snapshots when the original source paths are u
 Enable Joyful globally with Yii::app()->theme='joyful' or equivalent application configuration. Do not implement route restrictions or user theme selection.
 
 Cover all common application surfaces:
-- Responsive shell, navigation, mobile drawer, gradient breadcrumbs and exact reference footer.
+- Responsive shell, navigation, mobile drawer, gradient breadcrumbs and exact reference footer. Omit Home/Avaleht from desktop/mobile main header menus even when the default theme includes it; preserve the logo home link and breadcrumb home icon.
+- Use the skill’s exact basic-layout header-gradient override; keep the advanced-layout-alt shell, footer and all other palette values unchanged.
 - Login with the VAU account-circle icon; existing enabled XVauBookmark/XVauHelpdesk controls in the upper-right institutional header.
 - Left menus with VAU geometry and active/hover states. Skin concrete XPortlet subclasses through supported properties, preserving their menu logic.
 - Single-field search with the compact shop-search pattern above the existing menu, including submission and clear behavior.

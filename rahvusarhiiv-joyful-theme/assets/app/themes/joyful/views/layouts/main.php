@@ -41,7 +41,7 @@ $cs->registerCssFile($themeUrl.'/css/style.css');
 						<?php // Use the target logo at h-11 sm:h-12 when available; otherwise its name. ?>
 						<?php echo CHtml::link(CHtml::encode(Yii::app()->name),Yii::app()->homeUrl,array('class'=>'font-heading text-3xl font-bold')); ?>
 						<nav class="hidden lg:flex lg:gap-x-4 xl:gap-x-8 2xl:gap-x-12 font-medium">
-							<?php // Application slot: first group of existing primary navigation links. ?>
+							<?php // Application slot: primary navigation, omitting Home/Avaleht even if the default menu has it. ?>
 						</nav>
 						<nav class="hidden lg:flex lg:gap-x-4 xl:gap-x-8 2xl:gap-x-12 font-medium">
 							<?php // Application slot: second group when the target has one. ?>
@@ -52,7 +52,7 @@ $cs->registerCssFile($themeUrl.'/css/style.css');
 						</div>
 					</div>
 				</div>
-				<?php // Add the standard's right-side mobile drawer, populated with the same authorized links. ?>
+				<?php // Add the standard's right-side mobile drawer, populated with the same authorized links, excluding the Home/Avaleht menu entry. ?>
 				<?php // See references/layout-standard.md for placement, focus and scroll-lock requirements. ?>
 			</header>
 			<?php if(isset($this->breadcrumbs) && $this->breadcrumbs): ?>
