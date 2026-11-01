@@ -7,6 +7,8 @@ description: Apply the Rahvusarhiiv Joyful design to Yii 1.1.33-dev apps using t
 
 Implement the existing design faithfully. Enable it for the entire web application with `Yii::app()->theme='joyful'` or configuration `'theme'=>'joyful'`. Keep the target's business logic, routes, permissions, inputs and integrations; theme preferences and route allowlists are out of scope.
 
+For a reusable invocation, copy the [example application prompt](example-prompt.md) and replace its target path.
+
 ## Read the design and build contracts first
 
 - [Layout standard](references/layout-standard.md): `advanced-layout-alt.html` is authoritative for the shell. **Preserve its footer information and behavior exactly.** The bundled `_footer.php` is the complete original footer subtree.
