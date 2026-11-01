@@ -70,7 +70,7 @@ For page/news/shop-style editable titles, follow [admin pencil controls and Impe
 
 ## Forms and button rows
 
-Read [secondary buttons and radio groups](form-controls.md) for the explicit white-to-gray hover contract, correct helper choice, and the bookmark form’s stacked/indented radio layout and dynamic DOM requirements.
+Read [form controls](form-controls.md) for the explicit white-to-gray hover contract, correct helper choice, the bookmark form’s stacked/indented radio layout and dynamic DOM requirements, and the mandatory label-row info icon for every existing field tip (including bulb images).
 
 VAU's `company/_form.php` preserves model bindings and callbacks while replacing `XDynamicForm` with `XTActiveForm`, `.simple` with plain spaced rows, and inline widths with full-width controls. Group titles become `text-lg font-medium pt-6 border-t border-gray-50`. Required-field guidance uses `text-gray-700 text-sm`. The error summary moves within the same form; its presence and validation registration matter more than its location.
 

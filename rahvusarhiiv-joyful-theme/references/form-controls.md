@@ -1,4 +1,4 @@
-# Secondary buttons and radio groups
+# Form controls
 
 ## Secondary buttons: white to gray on hover
 
@@ -51,6 +51,44 @@ For a group with conditional fields, explicitly set `enableRadioToggle=>true` on
 
 Preserve model names, option values/order, unique IDs, selected/default state, hidden uncheck values, readonly/disabled behavior, validators and target-specific callbacks. Selection must show the right panel on initial render and after mouse or keyboard changes. **Radio toggles preserve the source's visibility-only behavior**: they do not disable hidden panel fields. Do not silently apply the dropdown helper's disabling semantics to radios or change submitted values while restyling them. If the target already has different conditional submission behavior, preserve it deliberately.
 
+## Field tips: info icon on the right of the label row
+
+**Required whenever a legacy field has a tip/help affordance**, including a bulb image, `hint.png`, `XHtml::imageLink()`, a question-mark link, or a field-bound tooltip: use the `order/index?scope=clientDraft` “Koosta tellimus” pattern. Put a small filled-circle **i** on the far right of that field's label row, above the input. The label and required marker stay on the left. Remove the old icon/placement so there is only one help icon. This is field-local help; page-level Print/help actions still follow the title-row rule.
+
+### Source geometry and markup
+
+In VAU `themes/joyful/views/order/_form.php`, the `labels` (“Märksõnad”), `type` and `pricelist` fields render the help link **before** the block label. Its `float-right mt-1 mr-1 text-gray-600` classes place it on the right of the label line; the glyph is `fi-info text-xl`. With the institutional preset, this means gray `#5F6874`, a **23px** icon font size (`1.4375rem`, not stock Tailwind's `text-xl`), and 4px top/right margins. `XTActiveForm` labels use `mb-2 block text-base font-semibold leading-6 text-gray-800`. The full-width field follows below. Keep the icon out of the input, outside the label element, and away from the validation/error line.
+
+A source-faithful help-link template is below. `$existingHelpUrl` must be the target field's existing route and parameters, and `$fieldHelpLabel` its translated accessible help label (preferably naming the field). Preserve any existing IDs, data attributes and event hooks in the link options as well.
+
+```php
+<div class="space-y-2">
+    <?php echo CHtml::link(
+        '<i class="fi-info text-xl" aria-hidden="true"></i>',
+        $existingHelpUrl,
+        array(
+            'class'=>'openhelp float-right mt-1 mr-1 text-gray-600 focus-visible:ring-2 focus-visible:ring-green-300',
+            'title'=>$fieldHelpLabel,
+            'aria-label'=>$fieldHelpLabel,
+        )
+    ); ?>
+    <?php echo $form->labelEx($model, $attribute); ?>
+    <!-- Render the existing input/widget and persistent inline hint here. -->
+    <?php echo $form->error($model, $attribute); ?>
+</div>
+```
+
+Use `fi-info` only when the Foundation icon font is actually loaded. Otherwise use an equivalent filled-circle-i SVG, `aria-hidden="true"`, sized to `1.4375rem`; do not leave an invisible font glyph or retain the bulb. A flex label row is acceptable for long/wrapping labels if it preserves this geometry: label on the left, nonshrinking icon on the right, input on the next row spanning the same field width. On narrow screens neither the label nor its required marker may collide with the icon. Preserve the label's `for` association and a visible focus indicator on the separate help control.
+
+### Preserve what the help control does
+
+- VAU's screenshot icon is an **`openhelp` link**, not a hover-only tooltip. `themes/joyful/views/layouts/main.php` binds `a.openhelp` to `XFancyBox2` with AJAX content, padding 30 and no title. Preserve the target's real help URL/code, localization, content, visibility rules and popup handler; ensure that handler is available in Joyful. Do not substitute an empty `href="#"`, native `title` alone, or copy VAU's `order_tag` code into another app. Apply the existing [dialog close-control rules](dialog-close-buttons.md) to the popup.
+- Concrete migration: Pitserid `protected/views/seal/_form.php` puts `XHtml::imageLink('hint.png', array('help/default/view','code'=>'hint_page_file'), ...)` after `page_file`. Replace that image with the circled-i control above the field, right of the label, retaining that relative route, `hint_page_file`, `openhelp`, and the input's binding/readonly/validation behavior.
+- For an existing inline/hover tooltip rather than a help URL, keep its content and HTML/encoding policy and bind the existing tooltip to the new info control explicitly. Use a non-submitting `type="button"` trigger, with an accessible name and keyboard-focus/touch access to the same tip. Inspect the extension's selector/ID contract; do not assume adding `openhelp` converts tooltip content into a help page. VAU's separate `XTipsy` configuration for `client_comment` targets the input and does **not** implement the screenshot's info link. Preserve existing input-trigger behavior if needed while adding the required label-row affordance.
+- Persistent inline guidance (for example “Separate keywords by commas”) and validation errors remain below their input; they are not replaced by the info icon. Do not invent help text or add empty help controls to fields without a tip.
+
 ## Verify the integrated form
 
 Inspect actual rendered controls at desktop and narrow widths. For secondary buttons, measure white at rest and the preset's `rgb(232, 235, 240)` on hover, with unchanged dark text/border and visible keyboard focus. For radios, check stacked rows, label wrapping, 16px circles, indented dependent fields, validation errors, initial selection, label clicks and arrow-key changes. With two forms on a page, toggling one must not affect the other. Inspect submitted values and existing disabled fields; do not call the migration complete based only on class strings.
+
+For every migrated field tip, compare the label row against the order-form reference at desktop and narrow widths: circled-i at the right above the field, correct size/color, no remaining bulb or duplicate trigger, no overlap with wrapped labels. Activate it by mouse, keyboard and touch; verify the original localized content/help route, popup close behavior or tooltip access, and that it does not submit the form. Confirm required markers, label-to-input focus, persistent hints and validation errors remain intact.

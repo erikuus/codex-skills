@@ -45,6 +45,7 @@ Use `XTActiveForm`/`XTHtml` as described in the patterns reference, preserving v
 Apply these presentation rules consistently:
 
 - **Secondary buttons, including Cancel, are white at rest and light gray on hover**: `bg-white hover:bg-gray-100`, with `text-gray-900` and `border-gray-200` retained. Follow [form controls](references/form-controls.md); avoid conflicting primary button defaults.
+- **Every existing field tip/help control, including bulb images, becomes a small circled-i at the right of the label row above the input**, following “Koosta tellimus” in `order/index?scope=clientDraft`. Preserve its help content, URL or tooltip behavior; see [field-tip placement and migration](references/form-controls.md#field-tips-info-icon-on-the-right-of-the-label-row).
 - **Radio groups follow bookmark/link/update**: stacked radio + inline-label rows with dependent fields indented below the selected option. Preserve the dynamic helper’s sibling structure and submission behavior; see [radio group layout](references/form-controls.md#radio-groups-bookmarklinkupdate-pattern).
 - **Login includes the VAU account-circle icon before its translated text**, using the compact dark button in [login styling](references/layout-standard.md#login-button).
 - **Titled groups in detail views have no horizontal separators**: distinguish groups through headings and spacing, not `<hr>`, dividing borders or an underline on every group heading.
