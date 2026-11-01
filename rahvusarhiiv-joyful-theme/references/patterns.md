@@ -21,6 +21,10 @@ The sample apps' `leftbar`, `rightbar`, and `sidebars` layouts call `$this->begi
 
 Use `joyful-columns-right` or `joyful-columns-both` for corresponding layouts. Preserve print branches before changing markup; do not nest main twice. Main owns the single gradient breadcrumb strip between the application header and white content panel. Nested layouts keep their breadcrumb data but omit duplicate rendering. The payload uses the current `CBreadcrumbs` with a skin, not VAU's copied 1.1.11 `Breadcrumbs` class.
 
+## Optional long-text previews on smaller screens
+
+For the enquiry-style fading preview and “Näita rohkem” toggle, follow [collapsible text](collapsible-text.md). **Ask whether to collapse the identified text and how many lines should remain visible before applying it.** Full text remains the default until confirmed; yellow styling is not part of the generic pattern.
+
 ## Form pages: title and body share one width
 
 **On a dedicated form page, constrain the entire title/action row and form body together.** The title, right-hand Help/other page actions, and shared underline must occupy the same narrower content column as the form. A full-page-width title above a centered narrow form is incorrect, as in the supplied Pitserid “Lisa pitser” screenshot. Do not fix only the heading text: the action group and underline must move inside the same boundary too.

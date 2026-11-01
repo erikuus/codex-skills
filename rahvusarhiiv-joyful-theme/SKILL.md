@@ -61,6 +61,8 @@ For editable page/news/shop-style content, put the authorized admin pencil immed
 
 **Rich-text editing must use Imperavi Redactor instead of xhEditor.** Follow [the editor migration contract](references/admin-editing.md#required-editor-choice-and-scope): migrate shared/default-theme forms and supporting widget/upload integration as needed, so the editor choice is consistent across both themes. This is explicitly part of applying Joyful, not a skin-only change. Keep plain-text fields plain and preserve stored content and form behavior.
 
+**Small-screen text fading and “Show more” are opt-in.** Before collapsing any long text, ask the user whether the identified block should collapse and how many lines must remain visible; keep full text until both choices are confirmed. Existing explicit approval for the same blocks/count is sufficient. Follow [the VAU disclosure recipe and confirmation rule](references/collapsible-text.md), including background-matched fade, accessible toggle and full-text desktop/print/no-JavaScript behavior.
+
 ## Verify before reporting completion
 
 Follow [verification](references/verification.md). Run PHP/PHPCS checks, build CSS, exercise relevant application behavior, and **compare actual screenshots and computed design values with the references** at phone, tablet and desktop sizes. Inspect the header, breadcrumb, grid, form, detail and exact footer, not just a homepage. The package supplies real Yii render probes and source-CSS parity checks; they validate the reusable baseline but do not substitute for testing the integrated application.

@@ -42,3 +42,5 @@ Inspect at least:
 Run syntax checks and the prescribed PHPCS standard on changed non-view PHP, plus the app's relevant tests. Verify CSS is built from the **actual** application and extension paths, fonts/assets load, and browser console/network errors are resolved. Search for residual legacy CSS overrides and raw CSS design substitutions. Authentication/service limitations must be reported accurately.
 
 Do not report completion based only on header height, class names, visible elements, passing existing behavior tests or viewport fit: the rejected Pitserid result passed such checks while diverging visually. Package probes also do not prove the populated app navigation/footer composition or all routes have been verified.
+
+For optional fading long-text previews, follow [disclosure acceptance](collapsible-text.md#acceptance): confirm user approval and visible-line count first, then verify the actual preview, toggle/accessibility, overflow detection, and full text at desktop widths, in print and without JavaScript. A general Joyful migration request does not authorize collapsing text.
