@@ -43,3 +43,14 @@ Verify representative public and admin pages, create/update forms, validation er
 
 Complete the implementation and report changed surfaces, verification results and any genuinely unverified behavior.
 ```
+
+## Update header colors only
+
+Replace `/absolute/path/to/app`, then copy this prompt for an existing Joyful theme.
+
+```text
+Use $rahvusarhiiv-joyful-theme in /absolute/path/to/app to update only the existing header gradient to:
+linear-gradient(96.04deg, rgba(247, 227, 204, 0.65) -17.14%, #ECDDF4 94.45%)
+
+Update the existing bg-theme-vau preset value (or its actual equivalent), rebuild the theme CSS, and verify the rendered gradient. Keep all other colors, layout, navigation, footer and behavior unchanged. Do not apply other skill changes, including the Home/Avaleht menu rule, in this task. Report the changed files and verification result.
+```
