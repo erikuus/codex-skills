@@ -6,7 +6,7 @@ Use [advanced-layout-alt.html as the authoritative shell](layout-standard.md). I
 
 Use Roboto body text and Raleway headings from the supplied local font files. The source gradient is `linear-gradient(95.19deg, #CCEAD6 0.8%, #ECDDF4 158.87%)`. `bg-theme-vau` is retained as a CSS token, not as an instruction to brand the target VAU. The app's name, logo, menus and content come from that app.
 
-Typical page title: `font-heading mb-10 mt-px border-b-2 border-gray-500 pb-2 text-lg font-bold text-gray-700 sm:mt-6 sm:text-xl xl:mt-0`. Narrow create/update pages in VAU use several breakpoint margins (`sm:mx-20 lg:mx-36 xl:mx-80 2xl:mx-96`); use the equivalent bounded `.joyful-form` for target forms so intermediate widths remain usable. Wide editors need their own content width.
+Typical page title: `font-heading mb-10 mt-px border-b-2 border-gray-500 pb-2 text-lg font-bold text-gray-700 sm:mt-6 sm:text-xl xl:mt-0`. Narrow create/update pages in VAU use several breakpoint margins (`sm:mx-20 lg:mx-36 xl:mx-80 2xl:mx-96`); use the bounded `.joyful-form` around **both the title row and form body**, as specified below, so intermediate widths remain usable. Wide editors need their own shared title/body content width.
 
 The sample apps' `leftbar`, `rightbar`, and `sidebars` layouts call `$this->beginContent()` and loop through controller portlets. Preserve that nesting and those loops. Replace the 960-grid markup, for example:
 
@@ -21,7 +21,40 @@ The sample apps' `leftbar`, `rightbar`, and `sidebars` layouts call `$this->begi
 
 Use `joyful-columns-right` or `joyful-columns-both` for corresponding layouts. Preserve print branches before changing markup; do not nest main twice. Main owns the single gradient breadcrumb strip between the application header and white content panel. Nested layouts keep their breadcrumb data but omit duplicate rendering. The payload uses the current `CBreadcrumbs` with a skin, not VAU's copied 1.1.11 `Breadcrumbs` class.
 
+## Form pages: title and body share one width
+
+**On a dedicated form page, constrain the entire title/action row and form body together.** The title, right-hand Help/other page actions, and shared underline must occupy the same narrower content column as the form. A full-page-width title above a centered narrow form is incorrect, as in the supplied Pitserid “Lisa pitser” screenshot. Do not fix only the heading text: the action group and underline must move inside the same boundary too.
+
+Source evidence:
+
+- VAU `themes/joyful/views/company/create.php`, `company/update.php` and `bookmark/link/create.php` open `<div class="sm:mx-20 lg:mx-36 xl:mx-80 2xl:mx-96">` **before the heading**, render `_form` after it, and close that div after the form. Both inherit the same width.
+- `themes/joyful/views/enquiry/application/create.php` has an information sidebar and a form column. The heading, step bar and `_form` are all **inside the form column** (`flex-1 w-full pt-5 lg:flex-auto md:px-14 lg:px-32 xl:px-0 xl:w-96`); the title does not span the sidebar too. This is the same shared-boundary rule, using a column rather than a centered wrapper.
+
+For a standalone form, use one outer `.joyful-form` around the existing title-row renderer and form partial. The bundled `.joyful-form` is `width:100%; max-width:36rem; margin-inline:auto`; this is the skill's bounded adaptation, not VAU's literal breakpoint-margin implementation. If a wider editor/form already has a justified content width, apply that width once to the shared wrapper as well. Do not add the source's breakpoint margins on top of the bounded wrapper.
+
+```php
+<div class="joyful-form">
+    <div class="mb-10 mt-px flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b-2 border-gray-500 pb-2 sm:mt-6 xl:mt-0">
+        <h2 class="min-w-0 font-heading text-lg font-bold text-gray-700 sm:text-xl">
+            <?php echo CHtml::encode($existingTitle); ?>
+        </h2>
+        <!-- Render existing icon + text title actions here, with their hooks/permissions. -->
+    </div>
+    <?php echo $this->renderPartial('_form', $existingFormData); ?>
+</div>
+```
+
+If the target already has a shared title partial, keep that renderer and its existing arguments inside this wrapper instead of recreating it. Inspect every caller before moving/removing a width wrapper in a shared `_form` partial. In Pitserid, `themes/joyful/views/seal/create.php` and `update.php` currently render `//layouts/_pageTitle` before `_form`, while `_form.php` starts with `<div class="form joyful-form">`. Move the width ownership to the parent enclosing **both calls**, retain any functional `form` class in the partial, and avoid a second nested width constraint. Preserve other consumers such as dialogs by giving their caller the appropriate container. If a layout owns the title, adjust its existing view/slot arrangement so title and form share this container; do not render a second title or globally narrow every title in the app.
+
+The title's left edge aligns with the **outer form/group-heading edge**, and its underline ends at the outer form's right edge. The `xl:mx-6` grouped-field inset is a separate inner layer: individual inputs may sit 24px further inward on either side. Do not align the page title to those inner inputs or apply group indentation to the title row. Required-field guidance, error summary, group headings and form actions remain within the outer form column.
+
+This rule covers create/update and other pages whose main content is a form. A results/grid page with a search/filter form keeps its results-page width; merely finding a `<form>` is not a reason to narrow the whole page. Keep the institutional header, application header, gradient breadcrumbs and footer at their normal shell widths. In sidebar/editor layouts, retain the purposeful column structure and align the title to its form column. At phone widths, let the shared wrapper use available width and wrap title actions within it.
+
+Verify rendered bounds on create and update pages at phone, tablet and wide desktop widths: title-row left/right edges and underline match the outer form-body column, help actions remain inside it, and the group-body inset is additional only at `xl`. Check long titles, validation-error states and responsive action wrapping; compare actual screenshots and element bounds rather than accepting a narrow form alone as proof.
+
 ## Page title and utility actions
+
+On form pages, place this whole row inside the [shared title/form container](#form-pages-title-and-body-share-one-width).
 
 Place existing page-level Print and contextual help actions **to the right of the page title as icon + visible text**, as in VAU `themes/joyful/views/order/index.php` for `scope=clientDraft` and the user's screenshot (“Kinnitamata tellimused” with “Prindi”, “Värvid”, “Toimingud”). Keep them in the same heading row above one shared bottom rule; do not scatter them below the title, turn them into large boxed buttons, or move these page-specific actions to the global header. Preserve each target's existing actions and translations; do not invent order-specific help entries.
 

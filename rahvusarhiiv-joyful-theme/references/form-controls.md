@@ -53,6 +53,8 @@ Preserve model names, option values/order, unique IDs, selected/default state, h
 
 ## Grouped forms: inset fields below an outdented heading
 
+First apply the [shared page-title/form width rule](patterns.md#form-pages-title-and-body-share-one-width). The group-body inset below is inside that outer form column; it does not define the page title’s width.
+
 **When a form has titled field groups, keep each group heading at the form's outer left edge and inset the group's field body on large screens.** Follow VAU `themes/joyful/views/enquiry/application/_form.php`, used by `enquiry/application/create`: the “Application content” / “Päringu sisu” heading precedes `<section class="space-y-6 pb-6 xl:mx-6">`, which renders `forms/_work.php` and other form partials. Applicant Data and Applicant Preferences use `space-y-6 xl:mx-6` too. The heading stands out because the **fields move inward**, not because the heading itself is indented.
 
 - Use **`xl:mx-6` on one field-body wrapper per group**: 24px on both sides at the preset's `xl` breakpoint (1280px), with no extra group inset below that breakpoint. Keep the heading outside that wrapper. All ordinary labels, inputs, field-help rows and errors share the inset; do not shift only the input or add margins again inside a rendered partial.
