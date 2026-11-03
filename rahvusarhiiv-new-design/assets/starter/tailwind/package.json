@@ -1,0 +1,17 @@
+{
+  "name": "rahvusarhiiv-new-design-css",
+  "private": true,
+  "scripts": {
+    "build": "node build.mjs",
+    "dev": "node build.mjs --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "4.3.3",
+    "@tailwindcss/cli": "4.3.3",
+    "@tailwindcss/forms": "0.5.11",
+    "@tailwindcss/typography": "0.5.20"
+  },
+  "overrides": {
+    "postcss-selector-parser": "6.1.5"
+  }
+}

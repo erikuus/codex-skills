@@ -1,0 +1,19 @@
+/* Deliberately unlayered: these scoped compatibility rules must override
+   typography utilities and Tailwind 4's changed divide-border ownership. */
+.ra-detail table { width: 100%; }
+@media (max-width: 767px) {
+  .ra-detail tr, .ra-detail th, .ra-detail td { display: block; width: 100%; }
+  .ra-detail th { padding-bottom: 0; }
+}
+/* Keep the exact footer markup and the reference divider on the contact child. */
+footer > div > .divide-gray-700 > div { border-width: 0; border-color: theme(colors.gray.200); }
+footer > div > .divide-gray-700 > div + div { border-top: 2px solid theme(colors.gray.700); border-color: theme(colors.gray.700); }
+@media (min-width: 640px) {
+  footer > div > .divide-gray-700 > div + div {
+    border-top-width: 0;
+    border-left: 2px solid theme(colors.gray.700);
+  }
+}
+@media print {
+  .ra-site-header, [data-ra-drawer], [data-ra-open] { display: none !important; }
+}

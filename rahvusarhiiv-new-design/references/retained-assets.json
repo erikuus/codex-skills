@@ -1,0 +1,20 @@
+{
+  "origin": "rahvusarhiiv-joyful-theme at creation; approved gradient already included",
+  "sha256": {
+    "assets/RA_logo_Ikoon_must.png": "fb06f52d7d71be1ddb05dea75f3fe0e18c055709bb0f6f1fa39716a44e3ebc1f",
+    "assets/RA_logo_Ikoon_must.svg": "9be96770a8f2370b3b13cb638e7312253e93760ec0fc75ea6155b4d8a6b6db97",
+    "assets/html/footer.html": "0a8e0ceb53eb2d0c2165d4c7c4ecdcf02202ed35ccd658963eae5f4811c28412",
+    "assets/reference/advanced-layout-alt.html": "58abbbd6f5fe578abb16a65d8f8af88285eeb597c3b837d42d97bbe7f625fca8",
+    "assets/reference/vau-frozen.css": "c5fe985002093828b3025f5c594eb5b3c58494f21dc4d884f453717fa19b6b25",
+    "assets/starter/fonts/Raleway-Italic-VariableFont_wght.ttf": "a713bb7d585e903c8aa9d919d77a1be8114ce19b2e60b3be868aa6ecd9759eec",
+    "assets/starter/fonts/Raleway-VariableFont_wght.ttf": "8e7948221210e0bff86b70de2a2e893e24e0d9c5a16a5db0aa47834b88bf1998",
+    "assets/starter/fonts/Roboto-Bold.ttf": "ec685a46105296fe46c8744da4a11cf8118ba6c11271941766f7a546df6aa7c7",
+    "assets/starter/fonts/Roboto-BoldItalic.ttf": "61df597f73c91f238cbe88fe3c536702d120d048b79b25fa0f4f7818fd123a6f",
+    "assets/starter/fonts/Roboto-Italic.ttf": "99e4a85061136e99e052929ed0d85e36384fba5c34b773139a8f64339c609943",
+    "assets/starter/fonts/Roboto-Medium.ttf": "9d0d55a303bfd13b79a87721f65185e93f235e2d77fe398b2dca67ac519915f5",
+    "assets/starter/fonts/Roboto-Regular.ttf": "4e147ab64b9fdf6d89d01f6b8c3ca0b3cddc59d608a8e2218f9a2504b5c98e14",
+    "assets/starter/images/ra_logo.svg": "b9af1ccc322e4e070b8d7b9a67c16ad63d76e5a8c2d8ea7b348bf826e2bcc4be",
+    "assets/starter/js/alpine.3.12.3.min.js": "b6d87135d664f54a760fa80b6413715a8ff0d784e28ce451e6e360623ed73fe0",
+    "assets/starter/tailwind/rahvusarhiiv.preset.cjs": "944901c102437866245bbdf86b6a8ead7d975927da5987e617596edca0aaa948"
+  }
+}
