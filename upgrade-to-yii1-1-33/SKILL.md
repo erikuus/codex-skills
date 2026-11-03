@@ -1,11 +1,11 @@
 ---
 name: upgrade-to-yii1-1-33
-description: Plan and execute Yii 1.1 application upgrades to the pinned local yii-1.1.33-dev framework on PHP 8.5. Use for Yii 1.1.32 to 1.1.33-dev migrations, older Yii 1 applications moving to this target, and PHP 8.4/8.5 compatibility work coupled to that upgrade. Keep explicit Yii 1.1.32 targets with the separate 1.1.32 skill.
+description: Plan and execute Yii 1.1 application upgrades to the pinned local yii-1.1.33-dev framework on PHP 8.5. Use for Yii 1.1.32 to 1.1.33-dev migrations, older Yii 1 applications moving to this target, and PHP 8.4/8.5 compatibility work coupled to that upgrade.
 ---
 
 # Upgrade to Yii 1.1.33 on PHP 8.5
 
-Upgrade the application to `/Users/erikuus/dev/yii/yii-1.1.33-dev/`, preserving its behavior and making its tests runnable on PHP 8.5. This is a separate successor to `upgrade-to-yii1-1-32`; its older-app and frontend lessons are retained conditionally in [legacy-upgrades.md](references/legacy-upgrades.md).
+Upgrade the application to `/Users/erikuus/dev/yii/yii-1.1.33-dev/`, preserving its behavior and making its tests runnable on PHP 8.5. For older applications and frontend compatibility, use the conditional guidance in [legacy-upgrades.md](references/legacy-upgrades.md).
 
 ## Target and scope
 
@@ -37,7 +37,7 @@ Upgrade the application to `/Users/erikuus/dev/yii/yii-1.1.33-dev/`, preserving 
 
 The inspected 1.1.32 and target have identical JS/CSS assets: jQuery 1.12.4 and jQuery UI 1.12.1. A 1.1.32 migration still needs frontend smoke tests but does not itself require a JS version jump.
 
-For older sources, changed asset overrides, legacy widgets, mcrypt/VAU, PostgreSQL sessions, or prior Kaardid-style customizations, read [legacy-upgrades.md](references/legacy-upgrades.md). Preserve the original skill's backend/frontend coverage without making historical project fixes universal mandatory edits.
+For older sources, changed asset overrides, legacy widgets, mcrypt/VAU, PostgreSQL sessions, or prior Kaardid-style customizations, read [legacy-upgrades.md](references/legacy-upgrades.md). Cover backend and frontend compatibility without making historical project fixes universal mandatory edits.
 
 ## Verify and repair
 
@@ -45,7 +45,7 @@ Read [verification.md](references/verification.md) before adapting test runners 
 
 1. Run the supplied framework smoke script with the actual PHP 8.5 binary and target directory; run `yii.php` and `yiilite.php` in separate processes. It checks bootstrap, collections, schema conversion, RBAC assignment keys, custom sessions, HTMLPurifier and optional SQLite. It does not test the application or a real database server.
 2. Lint app PHP on PHP 8.5 with `error_reporting=-1`, then run unit and integration suites. Resolve old PHPUnit/bootstrap compatibility as described in the reference; the target still contains legacy Yii test classes.
-3. Run existing browser tests with the actual project root/base URL and disposable test data. Start the intended local server if needed. Supply missing project-local dependencies within scope; do not reuse the old skill's `~/dev/php/kaardid` path for another app.
+3. Run existing browser tests with the actual project root/base URL and disposable test data. Start the intended local server if needed. Supply missing project-local dependencies within scope.
 4. Exercise login/logout and session persistence over multiple requests, guest/admin access and AJAX authorization, CRUD/search/filter/sort/pagination, nullable inputs, uploads/CAPTCHA, CSV, sanitized HTML, translations and console/cron paths as applicable. Inspect PHP/FPM/Yii logs and browser errors with deprecations visible in tests and logs.
 5. Group failures by root cause, patch minimally, rerun the affected subset, then active full suites. Track failure fingerprints. After three unchanged full iterations or four oscillating iterations, perform one focused diagnostic pass; if still stalled, report evidence and the missing prerequisite. Do not repeat passing checks without a new change or unresolved risk.
 
