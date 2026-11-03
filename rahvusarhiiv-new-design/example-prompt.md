@@ -10,6 +10,4 @@ Use the packaged institutional Tailwind preset and reproducible build, exact foo
 Preserve backend architecture, URLs, authorization, data, escaping, form/CSRF contracts, pagination/sorting, AJAX, dialogs, uploads and existing rich-text editors. Do not install Yii or migrate editors. Before optional mobile text fading, ask which blocks should collapse and how many lines remain visible; wait for confirmation before clipping text.
 
 Verify representative public/admin table, detail, form and dialog pages at phone/tablet/desktop widths; compare actual screenshots/computed values, rebuild CSS, and run appropriate application checks. Keep print/export output suitable for its purpose. Report changes, checks and unverified behavior. Do not finish with sample links/data or unpopulated navigation.
-```
-
-For the motivating target, use `/Users/erikuus/dev/php/nimeregister` and read the skill's Nimeregister integration notes before changing templates. Those notes do not authorize changing that app until you invoke the skill for it.
+``
