@@ -1,30 +1,30 @@
 ---
 name: rahvusarhiiv-new-design
-description: Apply the exact Rahvusarhiiv Joyful-derived design to plain HTML and server-rendered templates in existing apps, including standalone PHP apps such as nimeregister. Provides a pinned Tailwind 4 build, institutional preset/fonts, exact footer, responsive shell, tables, narrow detail views and action SVGs. Preserves the app’s backend and existing editors; does not require Yii, theme engines or editor migration.
+description: Implement the exact Rahvusarhiiv Joyful-derived design as a separate application-wide theme for HTML and server-rendered apps, including standalone PHP apps such as nimeregister. Provides a pinned Tailwind 4 build, institutional preset/fonts, exact footer, responsive shell, tables, narrow detail views and action SVGs. Preserves the default design, backend and existing editors. Uses application-level theme selection only; no Yii dependency, per-user selection or route-based switching.
 ---
 
 # Rahvusarhiiv New Design
 
-Implement the established design through the target's existing HTML templates and assets. This is the framework-neutral counterpart of `rahvusarhiiv-joyful-theme`, not a new visual direction or a backend migration. It is self-contained: no other installed skill is needed. Keep URLs, permissions, data, forms, AJAX contracts, translations and existing editor behavior. Do not install or replace a rich-text editor as part of this skill.
+Implement the established design as a separate `joyful` theme through the target's HTML rendering pipeline. Preserve the existing design as `default`, selectable through one application-level configuration setting. Never replace the default templates or styles with Joyful markup/assets. This is the framework-neutral counterpart of `rahvusarhiiv-joyful-theme`, not a new visual direction or a backend migration. It is self-contained: no other installed skill is needed. Keep URLs, permissions, data, forms, AJAX contracts, translations and existing editor behavior. Do not install or replace a rich-text editor as part of this skill.
 
 Copy the [example prompt](example-prompt.md) when starting a target implementation.
 
 ## Inspect and scope
 
-Read the target's AGENTS.md and actual rendering/asset pipeline. Identify full pages, shared header/footer includes, admin pages, partial/iframe/dialog responses, print/export layouts, table generators and scripts that depend on markup. Map corresponding surfaces before editing. Prefer existing templates/helpers over introducing a theme engine or component framework. In PHP, retain existing escaping and trusted-HTML boundaries.
+Read the target's AGENTS.md and actual rendering/asset pipeline. Identify full pages, shared header/footer includes, admin pages, partial/iframe/dialog responses, print/export layouts, table generators and scripts that depend on markup. Map corresponding surfaces before editing. Reuse an existing theme mechanism when suitable; otherwise add a small centralized configuration-driven template/asset selector. Do not introduce a framework or general-purpose theme engine. In PHP, retain existing escaping and trusted-HTML boundaries.
 
-Use [integration](references/integration.md), including the read-only Nimeregister findings. Do not copy that app's domain content into another app. Modify the app only when asked to apply the skill; creating or reviewing this skill does not authorize an app migration.
+Read [application-level themes](references/themes.md) before choosing template and asset locations, then [integration](references/integration.md), including the read-only Nimeregister findings. Do not copy that app's domain content into another app. Modify the app only when asked to apply the skill; creating or reviewing this skill does not authorize an app migration.
 
 ## Build from the packaged design
 
-- Read [Tailwind setup](references/tailwind.md). Stage/merge `assets/starter/` into the target's normal asset location and run its pinned build with explicit source directories/files. No Yii paths, widget skins, PHP adapters, CDN compiler or frozen stylesheet installation.
+- Read [Tailwind setup](references/tailwind.md). Stage/merge `assets/starter/` into a separate Joyful asset location and run its pinned build with explicit source directories/files. No Yii-specific paths, widget skins or PHP component adapters, CDN compiler or frozen stylesheet installation.
 - Keep the supplied preset, fonts, radii, shadows, spacing and type scale. The runtime header gradient is `linear-gradient(96.04deg, rgba(247, 227, 204, 0.65) -17.14%, #ECDDF4 94.45%)`; the retained `bg-theme-vau` token is a style name, not application branding.
-- [shell.html](assets/html/shell.html) and [components.html](assets/html/components.html) are readable HTML specimens. Extract their structure into real target templates; replace specimen labels, links, IDs, sample forms and data with the app's actual output. Their comment markers are for the preview renderer, not a new runtime template system.
-- [footer.html](assets/html/footer.html) is the exact approved footer subtree. Preserve its information, links, artwork, markup and feedback action. Load the bundled Alpine once for that action, or preserve equivalent behavior with the existing runtime when syntax prevents direct reuse; verify exact information and popup options in either case. The default is the byte-identical HTML fragment.
+- [shell.html](assets/html/shell.html) and [components.html](assets/html/components.html) are readable HTML specimens. Extract their structure into separate Joyful templates; replace specimen labels, links, IDs, sample forms and data with the app's actual output. Their comment markers are for the preview renderer, not a new runtime template system.
+- [footer.html](assets/html/footer.html) is the exact approved footer subtree. Preserve its information, links, artwork, markup and feedback action. Load the bundled Alpine once for that action, or preserve equivalent behavior with the existing runtime when syntax prevents direct reuse; verify exact information and popup options in either case. For Joyful, prefer the byte-identical HTML fragment; leave the default theme’s footer unchanged.
 
 ## Apply the visual contract
 
-Read [design and HTML patterns](references/design.md) for dimensions, source evidence and usage:
+These visual changes apply only to the Joyful theme; keep the default header, footer, menus and content styling unchanged. Read [design and HTML patterns](references/design.md) for dimensions, source evidence and usage:
 
 - Keep the 48px institutional header, gradient application header, nested white content panel and exact footer. Use the real app identity/navigation, responsive 80rem/90rem shell and supplied mobile drawer pattern. Never invent language/authentication/menu actions.
 - Omit Home/Avaleht from desktop and corresponding mobile main menus even if the old menu contains it. Retain the app-logo home link and breadcrumb home icon. Place existing enabled bookmark/helpdesk utilities at the top right, preserving their integration.
@@ -40,6 +40,6 @@ Read [design and HTML patterns](references/design.md) for dimensions, source evi
 
 ## Verify the result
 
-Use [verification](references/verification.md). Build in a disposable skill copy for baseline checks; keep generated CSS/dependencies out of the installed skill. Compare actual screenshots and computed design values, not merely class names or lack of overflow. Exercise the target's real public/admin/detail/form/dialog interactions and print behavior. Keep source and target screenshots at matched widths.
+Use [verification](references/verification.md). Build in a disposable skill copy for baseline checks; keep generated CSS/dependencies out of the installed skill. Compare actual screenshots and computed design values, not merely class names or lack of overflow. Exercise the target's real public/admin/detail/form/dialog interactions and print behavior in both themes. Switch the single application setting from `default` to `joyful` and back; verify default appearance/behavior and absence of cross-theme asset leakage. Keep source and target screenshots at matched widths.
 
-Report migrated surfaces, checks and visual comparisons, plus unavailable routes/services. Do not declare completion with specimen navigation/data, broken assets or untested behavior. Preserve the current target technology and editor; no framework or editor upgrade is implied.
+Report the configuration key/location, how to select each theme, themed surfaces, checks and visual comparisons, plus unavailable routes/services. Do not declare completion with specimen navigation/data, broken assets or untested behavior. Preserve the current target technology and editor; no framework or editor upgrade is implied.

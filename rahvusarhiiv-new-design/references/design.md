@@ -1,10 +1,12 @@
 # Exact design translated to HTML
 
+Apply these visual rules within the separate Joyful theme only. Preserve the default presentation and select between them as described in [application-level themes](themes.md).
+
 ## Evidence and precedence
 
 The design was extracted from `rahvusarhiiv-joyful-theme`; this package carries its relevant resources independently. The bundled `assets/reference/advanced-layout-alt.html` defines the shell/footer; `assets/reference/vau-frozen.css` is comparison evidence only. Current user rules below supersede historical markup defects. The approved gradient is from [basic-layout.html](https://erikuus.github.io/tailwindui-playground/views/layouts/basic-layout.html); the [account page](https://erikuus.github.io/tailwindui-playground/views/pages/vau-account.html) supplies narrow detail-page evidence. Original local sources are under `/Users/erikuus/Documents/Github/tailwindui-playground` and `/Users/erikuus/dev/php/vau/themes/joyful/views` when available. Do not deploy their placeholders, personal data, domain routes or old stylesheet.
 
-Use `assets/html/shell.html` as a structural specimen and `assets/html/components.html` for the actual table/detail/form utility markup. The specimens contain deliberate demo labels and local fragment links. Transfer markup into the target's real templates/loops; do not ship “Näidisrakendus”, hardcoded sample rows or `#form-example` as real operations. Read the target's current implementation rather than assuming a past app snapshot is current.
+Use `assets/html/shell.html` as a structural specimen and `assets/html/components.html` for the actual table/detail/form utility markup. The specimens contain deliberate demo labels and local fragment links. Transfer markup into the target's separate Joyful templates/loops; do not ship “Näidisrakendus”, hardcoded sample rows or `#form-example` as real operations. Read the target's current implementation rather than assuming a past app snapshot is current.
 
 ## Shell and footer
 

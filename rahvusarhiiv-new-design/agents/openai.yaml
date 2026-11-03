@@ -1,6 +1,6 @@
 interface:
   display_name: "Rahvusarhiiv New Design"
-  short_description: "Apply the Rahvusarhiiv design to HTML-based apps"
-  default_prompt: "Use $rahvusarhiiv-new-design to apply the Rahvusarhiiv design to this app’s HTML templates while preserving its behavior."
+  short_description: "Add a separate Rahvusarhiiv theme to HTML-based apps"
+  default_prompt: "Use $rahvusarhiiv-new-design to add a separate Joyful theme, preserving the default design and selecting the theme through one application-wide setting."
   icon_small: "./assets/RA_logo_Ikoon_must.svg"
   icon_large: "./assets/RA_logo_Ikoon_must.png"

@@ -1,5 +1,7 @@
 # Forms and optional behavior
 
+These rules apply to Joyful form templates. Keep default form presentation intact and share the existing submission, validation and editor behavior across both themes.
+
 ## Shared width and field groups
 
 The title/action/underline and body share one `mx-auto w-full min-w-0 max-w-xl` wrapper on standalone form pages. Put a body-only shared form partial inside it, not another width wrapper. Preserve form action/method, submit names, CSRF, IDs, required/readonly/disabled state and existing validation. Normal forms are spaced `space-y-6`; keep error summaries inside the outer column without negative margins.

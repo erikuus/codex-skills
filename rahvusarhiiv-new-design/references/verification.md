@@ -20,7 +20,14 @@ Test the builder with an external template directory and an individual rendering
 
 ## Actual application acceptance
 
-Capture source and target at matched viewport sizes and inspect them. Verify:
+First verify [theme selection](themes.md):
+
+- Capture the original default design, then test `default` → `joyful` → `default` through the single application configuration value. The restored default must retain its original appearance, footer/menu and interactions.
+- Verify all public/admin entry points, full pages, nested partials, AJAX responses and dialogs honor the same setting. No user/request/route selection and no silent default-view fallback inside Joyful pages.
+- Check selected asset requests: default never loads Joyful Tailwind/preflight or drawer code; Joyful never loads legacy global layout CSS. Shared editor/plugin assets remain functional. Default asset files and build outputs stay intact.
+- Exercise both themes' sorting, pagination, form validation/submission, permissions and editor synchronization. Missing configuration retains `default`; invalid configuration is rejected clearly. Test cache separation/invalidation and document any normal restart requirement.
+
+For the Joyful visual contract, capture source and target at matched viewport sizes and inspect them. Verify:
 
 - White/gradient surface nesting, 48px/128px headers, responsive container sizes, local fonts, custom shadows/radii and approved gradient. Exact footer content/links/artwork/feedback behavior; no app-specific footer replacement.
 - Actual target branding, authorized desktop/mobile links with no Home/Avaleht menu item, working logo home link, breadcrumb home icon, useful language/auth controls and existing bookmark/helpdesk integration. Test guest and permitted/restricted roles.
@@ -33,4 +40,4 @@ Capture source and target at matched viewport sizes and inspect them. Verify:
 - Optional text collapse has explicit approval and line count. Verify both states, localized button labels, short content, resize/fonts, keyboard/touch and full text in print/without JS. Full text remains default when not approved.
 - Print/export/iframe/email response contracts remain appropriate, without an accidental interactive shell.
 
-Run the target's relevant tests and syntax/lint/build checks. Document service-dependent tests you could not run; do not label the whole migration verified from a static specimen or a single homepage screenshot. Creating this skill does not claim that Nimeregister has been themed or tested live.
+Run the target's relevant tests and syntax/lint/build checks for both theme configurations. Report the setting location, allowed values, current selection and rollback procedure. Document service-dependent tests you could not run; do not label the whole migration verified from a static specimen or a single homepage screenshot. Creating this skill does not claim that Nimeregister has been themed or tested live.
