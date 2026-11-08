@@ -28,7 +28,7 @@ The input uses Tailwind 4 `@import`, explicit `source(none)`/`@source`, `@config
 
 ## Preserve the actual design
 
-- `rounded` is 8px, `text-sm` is 13px, `text-lg` is 19px and `text-xl` is 23px. Roboto body text and Raleway headings use packaged local fonts; no font CDN required.
+- `rounded` is 8px, `text-sm` is 13px, `text-lg` is 18px (1.125rem) and `text-xl` is 23px. [Design system PR 33](https://github.com/Rahvusarhiiv2/disainisysteem/pull/33) uses local Sora at 600 for `font-heading` and prose h1–h6. Bundle the supplied variable font and OFL. Keep Roboto for body text and use `assets/reference/fonts/` only for the historical comparison.
 - Keep the preset's multi-layer shadow names and colors. Do not apply a generic Tailwind v3→v4 shadow/radius rename table to this custom scale.
 - Typography table modifiers use v4 ordering: `prose-tr:odd:*`, `prose-tr:hover:*`, `prose-td:first:*` and `prose-td:last:*`.
 - Keep explicit border colors and focus ring widths/colors. `focus:outline-hidden` retains forced-color visibility. Hover variants apply on hover-capable devices; test pointer and touch separately.

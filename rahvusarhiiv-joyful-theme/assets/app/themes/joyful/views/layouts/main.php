@@ -39,7 +39,7 @@ $cs->registerCssFile($themeUrl.'/css/style.css');
 				<div class="2xl:max-w-xxl mx-auto w-full max-w-7xl px-4 md:px-6 lg:px-8">
 					<div class="flex items-center justify-between">
 						<?php // Use the target logo at h-11 sm:h-12 when available; otherwise its name. ?>
-						<?php echo CHtml::link(CHtml::encode(Yii::app()->name),Yii::app()->homeUrl,array('class'=>'font-heading text-3xl font-bold')); ?>
+						<?php echo CHtml::link(CHtml::encode(Yii::app()->name),Yii::app()->homeUrl,array('class'=>'font-heading text-3xl')); ?>
 						<nav class="hidden lg:flex lg:gap-x-4 xl:gap-x-8 2xl:gap-x-12 font-medium">
 							<?php // Application slot: primary navigation, omitting Home/Avaleht even if the default menu has it. ?>
 						</nav>

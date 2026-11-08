@@ -14,7 +14,7 @@ PLAYWRIGHT_MODULE=/absolute/path/to/playwright CHROME_PATH=/absolute/path/to/chr
 
 `verify-assets.mjs` checks the retained source-asset hashes, exact footer subtree, and absence of unresolved assembly markers/PHP in the rendered specimen. `verify-browser.cjs` compares shell/table/detail/icon/typography values with the historical reference at 390/768/1024/1440/1600px, checking the approved gradient against the reference's `bg-theme-ais` value rather than restoring the old green gradient. It checks footer feedback interception (no real popup), drawer keyboard/close/resize behavior, mobile detail labels, title/detail/form bounds, compact controls and secondary hover.
 
-The source has intentional differences documented by the skill: approved gradient, accessible mobile detail labels, functional drawer behavior, and no Home menu entry. Do not remove assertions or rebaseline visual mismatches without a source-based explanation. Specimen tests are not application acceptance.
+The browser check verifies that local Sora loads and that titles and prose headings compute to 600, with an 18px `text-lg`. The specimen also applies the approved gradient, accessible mobile detail labels, functional drawer behavior, and no Home menu entry. Do not remove assertions or rebaseline visual mismatches without a source-based explanation. Specimen tests are not application acceptance.
 
 Test the builder with an external template directory and an individual rendering file. A class used only there must be emitted after rebuilding; missing sources should fail, and generated file paths must remain local/ignored. Confirm unrelated vendor/cache/content files are not accidentally scanned. Check the lockfile, CSS/font/image URLs, duplicate runtime registration and console errors.
 

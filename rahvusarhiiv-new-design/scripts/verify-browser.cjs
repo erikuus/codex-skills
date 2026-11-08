@@ -19,8 +19,11 @@ const assert=require('node:assert/strict');
     }
     let file=path.resolve(starter,'.'+decodeURIComponent(url.pathname));
     if(legacy&&url.pathname==='/css/style.css')file=path.join(root,'assets/reference/vau-frozen.css');
-    if(legacy&&url.pathname.startsWith('/css/fonts/'))file=path.join(starter,'fonts',path.basename(url.pathname));
-    if(!file.startsWith(starter+path.sep)&&file!==path.join(root,'assets/reference/vau-frozen.css'))return route.abort();
+    if(legacy&&url.pathname.startsWith('/css/fonts/')){
+     const name=path.basename(url.pathname);
+     file=path.join(name.startsWith('Raleway-')?path.join(root,'assets/reference'):starter,'fonts',name);
+    }
+    if(!file.startsWith(starter+path.sep)&&!file.startsWith(path.join(root,'assets/reference')+path.sep))return route.abort();
     if(!fs.existsSync(file))return route.abort();
     return route.fulfill({path:file});
    });
@@ -50,6 +53,29 @@ const assert=require('node:assert/strict');
    assert.equal(bounds.range[0].width,96);assert.equal(bounds.range[1].width,96);assert.equal(bounds.range[0].y,bounds.range[1].y);assert.equal(bounds.unit.width,112);assert.ok(bounds.fieldGap>=24,'field gap at '+width);
    console.log('PASS source design and HTML layout at '+width+'px');
   }
+  // The approved typography supersedes the historical comparison's heading tokens.
+  await pages[1].setViewportSize({width:390,height:1000});
+  const typography=await pages[1].evaluate(async()=>{
+   const fonts=await document.fonts.load('600 18px Sora','ÕÄÖÜŠŽ');
+   const prose=document.querySelector('main .prose');
+   const heading=document.createElement('h3');
+   heading.textContent='ÕÄÖÜŠŽ';
+   prose.append(heading);
+   const headings=[...document.querySelectorAll('.font-heading'),heading].map(element=>{
+    const style=getComputedStyle(element);
+    return {family:style.fontFamily,weight:style.fontWeight};
+   });
+   heading.remove();
+   return {loaded:fonts.some(font=>font.family==='Sora'&&font.status==='loaded'),headings,large:getComputedStyle(document.querySelector('main h1')).fontSize};
+  });
+  assert.equal(typography.loaded,true,'the local Sora font loads');
+  assert.ok(typography.headings.length>1);
+  for(const heading of typography.headings){
+   assert.match(heading.family,/^Sora,/);
+   assert.equal(heading.weight,'600');
+  }
+  assert.equal(typography.large,'18px','text-lg at the mobile title breakpoint');
+  console.log('PASS PR 33 typography (local Sora, 600 headings, 18px text-lg)');
   const page=pages[1];
   await page.locator('#records-table tbody tr').first().hover();
   assert.equal(await page.locator('#records-table tbody tr').first().evaluate(el=>getComputedStyle(el).backgroundColor),'rgb(233, 247, 238)');

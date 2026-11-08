@@ -39,11 +39,11 @@ The CLI handles imports/prefixing in this pipeline. Do not copy the old PostCSS 
 
 ## Preserve source appearance while changing versions
 
-The [explicit header-gradient override](layout-standard.md#header-gradient-override) is the only intentional palette difference: `theme-vau` now uses the linked basic template’s `theme-ais` gradient values. Preserve the remaining preset and the historical snapshots; the visual check tests this gradient against the approved source value while retaining its other parity assertions.
+The [explicit header-gradient override](layout-standard.md#header-gradient-override) is the only intentional palette difference: `theme-vau` now uses the linked basic template’s `theme-ais` gradient values. Preserve the historical snapshots. The visual check compares the gradient with the approved source value and checks heading typography against PR 33.
 
 - Custom radii and shadow names come from the retained preset. Do **not** blindly apply the stock v3→v4 `rounded-sm`/`shadow-sm` rename table; that table describes default scales. The bundled parity check confirms this preset's names retain the original computed values.
 - The source `xxl` value contained `!important`; the port uses a valid `90rem` token and the same responsive utility. The source typography preset referenced nonexistent `colors.info.DEFAULT`; the port resolves it to `blue.600`.
-- The variable Raleway font declares weight range `100 900`, instead of the original fixed 400 declaration.
+- [Design system PR 33](https://github.com/Rahvusarhiiv2/disainisysteem/pull/33) sets `font-heading` and prose h1–h6 to Sora at 600 and `text-lg` to 1.125rem (18px). The local variable Sora font covers weights 100–800. Bundle its OFL alongside the font and keep the Roboto body stack. The older Raleway files under `assets/reference/fonts/` are for historical comparisons.
 - V4 changes order-sensitive stacked variants. The grid decorator uses `prose-tr:odd:bg-gray-50`, `prose-tr:hover:bg-green-50`, `prose-td:first:rounded-l`, and `prose-td:last:rounded-r`. Keeping v3's `odd:prose-tr:*` order can target the wrong element.
 - `@apply` important utilities use trailing `!` in the v4 port. Fix `focus-visible::` typos, use `focus:outline-hidden` where preserving v3's accessible outline behavior, and use `shrink-0`/`grow-0` instead of removed aliases.
 - Convert prototype opacity helpers, e.g. `bg-gray-600 bg-opacity-75` → `bg-gray-600/75`, when implementing the drawer. The exact footer snapshot is preserved verbatim; do not rewrite its information or behavior during other conversions.

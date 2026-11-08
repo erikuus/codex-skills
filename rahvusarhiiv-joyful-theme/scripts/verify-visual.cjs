@@ -19,13 +19,14 @@ const fs=require('node:fs');const path=require('node:path');const assert=require
     }
     let file=path.join(theme,name.replace('/themes/joyful/',''));
     if(legacy && name.endsWith('/style.css'))file=path.join(skill,'assets/reference/vau-frozen.css');
+    if(legacy && name.startsWith('/themes/joyful/css/fonts/Raleway-'))file=path.join(skill,'assets/reference/fonts',path.basename(name));
     if(!file.startsWith(theme) && !file.startsWith(path.join(skill,'assets/reference')))return route.abort();
     if(!fs.existsSync(file))return route.abort();
     return route.fulfill({path:file});
    });
    await page.goto('http://joyful.local/');await page.evaluate(()=>document.fonts.ready);pages.push(page);
   }
-  // Approved gradient-only override: the linked basic layout uses this source token.
+  // Approved gradient override: the linked basic layout uses this source token.
   const approvedGradient=await pages[0].evaluate(()=>{
    const probe=document.createElement('div');probe.className='bg-theme-ais';document.body.append(probe);
    const value=getComputedStyle(probe).backgroundImage;probe.remove();return value;
@@ -66,6 +67,29 @@ const fs=require('node:fs');const path=require('node:path');const assert=require
    assert.equal(actual.radius,'8px');assert.equal(actual.cellPadding,'12px');assert.equal(actual.svg,20);
    console.log('PASS visual source parity at '+width+'px (layout, tokens, approved gradient, breadcrumb, grid, pager)');
   }
+  // The approved typography supersedes the historical comparison's heading tokens.
+  await pages[1].setViewportSize({width:390,height:1000});
+  const typography=await pages[1].evaluate(async()=>{
+   const fonts=await document.fonts.load('600 18px Sora','ÕÄÖÜŠŽ');
+   const prose=document.querySelector('main .prose');
+   const heading=document.createElement('h3');
+   heading.textContent='ÕÄÖÜŠŽ';
+   prose.append(heading);
+   const headings=[...document.querySelectorAll('.font-heading'),heading].map(element=>{
+    const style=getComputedStyle(element);
+    return {family:style.fontFamily,weight:style.fontWeight};
+   });
+   heading.remove();
+   return {loaded:fonts.some(font=>font.family==='Sora'&&font.status==='loaded'),headings,large:getComputedStyle(document.querySelector('main h1')).fontSize};
+  });
+  assert.equal(typography.loaded,true,'the local Sora font loads');
+  assert.ok(typography.headings.length>1);
+  for(const heading of typography.headings){
+   assert.match(heading.family,/^Sora,/);
+   assert.equal(heading.weight,'600');
+  }
+  assert.equal(typography.large,'18px','text-lg at the mobile title breakpoint');
+  console.log('PASS PR 33 typography (local Sora, 600 headings, 18px text-lg)');
   await pages[1].locator('#probe-grid tbody tr').first().hover();
   assert.equal(await pages[1].locator('#probe-grid tbody tr').first().evaluate(e=>getComputedStyle(e).backgroundColor),'rgb(233, 247, 238)');
   await pages[1].evaluate(() => { window.feedbackCalls=[]; window.open=(...args)=>feedbackCalls.push(args); });

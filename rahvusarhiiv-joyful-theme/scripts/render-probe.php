@@ -51,7 +51,7 @@ $grid=$controller->widget('zii.widgets.grid.CGridView',array(
 		array('class'=>'ext.components.tailwind.XTButtonColumn','template'=>'{view}','viewButtonUrl'=>'array("view","id"=>$data["id"])'),
 	),
 ),true);
-$content='<h1 class="font-heading mb-10 border-b-2 border-gray-500 pb-2 text-lg font-bold text-gray-700 sm:text-xl">Records</h1>';
+$content='<h1 class="font-heading mb-10 border-b-2 border-gray-500 pb-2 text-lg text-gray-700 sm:text-xl">Records</h1>';
 $content.=$controller->renderFile($root.'/themes/joyful/views/decorators/shadowGrid.php',array('content'=>$grid),true);
 $content.='<div class="mt-8"><a id="probe-link" href="#" class="hover:text-green-500">Link</a></div>';
 $html=$controller->renderFile($root.'/themes/joyful/views/layouts/main.php',array('content'=>$content),true);

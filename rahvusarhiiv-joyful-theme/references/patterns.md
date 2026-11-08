@@ -4,9 +4,9 @@
 
 Use [advanced-layout-alt.html as the authoritative shell](layout-standard.md). Its nested structure is: gray-50 body → rounded white outer surface with a 48px institutional header → growing gradient surface with a 128px application header **and a nested rounded white content panel** → separate white footer. The content panel must remain inside the gradient wrapper. Its main container is `mx-auto w-full max-w-7xl px-4 md:px-6 lg:px-8 2xl:max-w-xxl` (80rem, then 90rem at 1536px). Main content spacing is `py-6 xl:py-10`, with the standard's `flex` container and a width-constrained inner content element. The footer uses a mobile stacked / desktop split links-and-contact structure, with `sm:h-64` and responsive dividers. Do not substitute the old compact copyright-only footer or VAU's different bottom padding.
 
-Use Roboto body text and Raleway headings from the supplied local font files. The current header gradient is `linear-gradient(96.04deg, rgba(247, 227, 204, 0.65) -17.14%, #ECDDF4 94.45%)`, the [explicit basic-layout override](layout-standard.md#header-gradient-override); the historical green VAU gradient is no longer the runtime target. `bg-theme-vau` is retained as a CSS token, not as an instruction to brand the target VAU. The app's name, logo, menus and content come from that app.
+Use Roboto for body text and local Sora semibold (600) for titles and prose headings. The `font-heading` class supplies the weight. Use the packaged 18px `text-lg` token. The current header gradient is `linear-gradient(96.04deg, rgba(247, 227, 204, 0.65) -17.14%, #ECDDF4 94.45%)`, the [explicit basic-layout override](layout-standard.md#header-gradient-override); the historical green VAU gradient is no longer the runtime target. `bg-theme-vau` is retained as a CSS token, not as an instruction to brand the target VAU. The app's name, logo, menus and content come from that app.
 
-Typical page title: `font-heading mb-10 mt-px border-b-2 border-gray-500 pb-2 text-lg font-bold text-gray-700 sm:mt-6 sm:text-xl xl:mt-0`. Narrow create/update pages in VAU use several breakpoint margins (`sm:mx-20 lg:mx-36 xl:mx-80 2xl:mx-96`); use the bounded `.joyful-form` around **both the title row and form body**, as specified below, so intermediate widths remain usable. Wide editors need their own shared title/body content width.
+Typical page title: `font-heading mb-10 mt-px border-b-2 border-gray-500 pb-2 text-lg text-gray-700 sm:mt-6 sm:text-xl xl:mt-0`. Narrow create/update pages in VAU use several breakpoint margins (`sm:mx-20 lg:mx-36 xl:mx-80 2xl:mx-96`); use the bounded `.joyful-form` around **both the title row and form body**, as specified below, so intermediate widths remain usable. Wide editors need their own shared title/body content width.
 
 The sample apps' `leftbar`, `rightbar`, and `sidebars` layouts call `$this->beginContent()` and loop through controller portlets. Preserve that nesting and those loops. For a VAU-style left menu, replace the 960-grid markup with the required 224px sidebar and 40px desktop gap, for example:
 
@@ -39,7 +39,7 @@ For a standalone form, use one outer `.joyful-form` around the existing title-ro
 ```php
 <div class="joyful-form">
     <div class="mb-10 mt-px flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b-2 border-gray-500 pb-2 sm:mt-6 xl:mt-0">
-        <h2 class="min-w-0 max-w-full break-words font-heading text-lg font-bold text-gray-700 sm:text-xl">
+        <h2 class="min-w-0 max-w-full break-words font-heading text-lg text-gray-700 sm:text-xl">
             <?php echo CHtml::encode($existingTitle); ?>
         </h2>
         <!-- Render existing icon + text title actions here, with their hooks/permissions. -->
@@ -64,7 +64,7 @@ On form pages, place this whole row inside the [shared title/form container](#fo
 
 Place existing page-level Print and contextual help actions **to the right of the page title as icon + visible text**, as in VAU `themes/joyful/views/order/index.php` for `scope=clientDraft` and the user's screenshot (“Kinnitamata tellimused” with “Prindi”, “Värvid”, “Toimingud”). Keep them in the same heading row above one shared bottom rule; do not scatter them below the title, turn them into large boxed buttons, or move these page-specific actions to the global header. Preserve each target's existing actions and translations; do not invent order-specific help entries.
 
-Source details: action wrapper `float-right flex gap-x-4 mt-2`; each link `inline-flex items-center text-center text-sm font-medium text-gray-600`; printer or circled-question SVG `h-4 w-4` (16px), with a small gap before the label. The title uses `font-heading text-lg font-bold text-gray-700 sm:text-xl`, and its row has `border-b-2 border-gray-500 pb-2 mb-6 md:mb-10`.
+Source details: action wrapper `float-right flex gap-x-4 mt-2`; each link `inline-flex items-center text-center text-sm font-medium text-gray-600`; printer or circled-question SVG `h-4 w-4` (16px), with a small gap before the label. Use `font-heading text-lg text-gray-700 sm:text-xl` for the title, and its row has `border-b-2 border-gray-500 pb-2 mb-6 md:mb-10`.
 
 For long translated headings, a flex row is a robust equivalent of the source float: use a wrapping `flex flex-wrap items-center justify-between gap-x-4 gap-y-2` row carrying the shared border/padding/margins; the heading uses `min-w-0 max-w-full break-words` with no second bottom border, and actions use `ml-auto flex flex-wrap items-center gap-x-4 gap-y-2`. Each link retains its icon/text together (`inline-flex items-center gap-x-1 whitespace-nowrap`), with the SVG `shrink-0` and `aria-hidden="true"`. At narrow widths, wrap the action group below the heading within the same title block instead of overlapping or truncating it. **Keep visible text alongside icons** as requested; the original source hides text below `sm`, but that part is not the requested rule.
 
@@ -111,14 +111,14 @@ For page/news/shop-style editable titles, follow [admin pencil controls and Impe
 
 Read [form controls](form-controls.md) for the explicit white-to-gray hover contract, correct helper choice, the bookmark form’s stacked/indented radio layout and dynamic DOM requirements, the mandatory label-row info icon for every existing field tip (including bulb images), large-screen group-body indentation, and compact range/measurement layouts.
 
-VAU's `company/_form.php` preserves model bindings and callbacks while replacing `XDynamicForm` with `XTActiveForm`, `.simple` with plain spaced rows, and ordinary inline widths with full-width controls. Preserve compact range/measurement widths through the wrappers in [form controls](form-controls.md#compact-fields-ranges-and-measurements). For titled groups, follow the enquiry form’s heading outside a `space-y-6 xl:mx-6` field body. Later form group titles in the source become `text-lg font-medium pt-6 border-t border-gray-50`. Required-field guidance uses `text-gray-700 text-sm`. The error summary moves within the same form; its presence and validation registration matter more than its location.
+VAU's `company/_form.php` preserves model bindings and callbacks while replacing `XDynamicForm` with `XTActiveForm`, `.simple` with plain spaced rows, and ordinary inline widths with full-width controls. Preserve compact range/measurement widths through the wrappers in [form controls](form-controls.md#compact-fields-ranges-and-measurements). For titled groups, follow the enquiry form’s heading outside a `space-y-6 xl:mx-6` field body. Later form group titles in the source become `font-heading text-lg pt-6 border-t border-gray-50`. Required-field guidance uses `text-gray-700 text-sm`. The error summary moves within the same form; its presence and validation registration matter more than its location.
 
 This is the **body-only `_form` partial**. Its caller wraps the title row and this partial together as shown in [form-page width ownership](#form-pages-title-and-body-share-one-width); do not add `.joyful-form` inside this partial. `$existingFormOptions` and `$existingFieldOptions` stand for the target's retained configuration, including validation and dynamic toggles. Merge `space-y-6` into the form's existing HTML classes. For grouped fields, the example includes one heading/body pair; omit that pair for an ungrouped form rather than inventing a group.
 
 ```php
 <?php $form=$this->beginWidget('ext.components.tailwind.XTActiveForm', $existingFormOptions); ?>
 <?php echo $form->errorSummary($model, null, null, array('class'=>'mx-0!')); ?>
-<h2 class="text-lg font-medium"><?php echo CHtml::encode($existingGroupTitle); ?></h2>
+<h2 class="font-heading text-lg"><?php echo CHtml::encode($existingGroupTitle); ?></h2>
 <section class="space-y-6 xl:mx-6">
     <div class="joyful-field">
         <?php echo $form->labelEx($model, $attribute); ?>
@@ -154,7 +154,7 @@ For a portable default, use **`mx-auto w-full min-w-0 max-w-[46rem]` on one oute
 ```php
 <div class="mx-auto w-full min-w-0 max-w-[46rem]">
     <div class="mb-10 mt-px flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b-2 border-gray-500 pb-2 sm:mt-6 xl:mt-0">
-        <h2 class="min-w-0 max-w-full break-words font-heading text-lg font-bold text-gray-700 sm:text-xl">
+        <h2 class="min-w-0 max-w-full break-words font-heading text-lg text-gray-700 sm:text-xl">
             <?php echo CHtml::encode($existingTitle); ?>
         </h2>
         <!-- Render the existing title actions here, preserving permissions and hooks. -->
@@ -180,7 +180,7 @@ Verify a representative detail action at phone, tablet and wide desktop widths, 
 
 ### Titled detail groups: spacing, no horizontal separators
 
-When a detail page groups attributes under section titles, separate the groups with heading hierarchy and vertical space. **Do not insert `<hr>`, `divide-y`, top/bottom separator borders, bordered spacer rows, or an underline beneath each group heading.** A source rhythm is `mt-12 mb-6 text-lg font-bold text-gray-700`, used for secondary headings in VAU `themes/joyful/views/company/view.php`; adapt the first group's top margin to avoid excess space. Preserve the groups, attribute labels, values, visibility and ordering.
+When a detail page groups attributes under section titles, separate the groups with heading hierarchy and vertical space. **Do not insert `<hr>`, `divide-y`, top/bottom separator borders, bordered spacer rows, or an underline beneath each group heading.** A source rhythm is `mt-12 mb-6 font-heading text-lg text-gray-700`, used for secondary headings in VAU `themes/joyful/views/company/view.php`; adapt the first group's top margin to avoid excess space. Preserve the groups, attribute labels, values, visibility and ordering.
 
 Use a heading and its detail table/content as a coherent section. Remove inherited legacy rules and prose-generated borders that create separators between these groups; scope corrections to the grouped-detail wrapper rather than stripping borders from every table or heading. The page's main title row may retain its single shared underline, including the right-aligned Print/help actions described above. This rule does not remove form input borders, grid styling or meaningful cell structure merely because the page also contains detail groups.
 

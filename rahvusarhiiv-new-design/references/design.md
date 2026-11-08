@@ -39,13 +39,13 @@ For an existing left sidebar, use 224px width and 40px gap at desktop, e.g. `gri
 
 ## Title rows and narrow content
 
-Use one wrapping title row with one underline: `mb-10 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b-2 border-gray-500 pb-2`. Title: `min-w-0 max-w-full break-words font-heading text-lg font-bold text-gray-700 sm:text-xl`. Preserve appropriate semantic heading levels. Actions belong in the row above the shared rule, can wrap on phones, and must not duplicate a border on the heading.
+Use one wrapping title row with one underline: `mb-10 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b-2 border-gray-500 pb-2`. Title: `min-w-0 max-w-full break-words font-heading text-lg text-gray-700 sm:text-xl`. Preserve appropriate semantic heading levels. Actions belong in the row above the shared rule, can wrap on phones, and must not duplicate a border on the heading.
 
 Dedicated form pages: one parent `mx-auto w-full min-w-0 max-w-xl` (36rem) contains title/actions, required guidance, error summary, groups and form actions. No separate full-width title above a narrow form; no repeated narrowing inside a shared form partial. Keep error-summary margins inside the boundary.
 
 Dedicated record-detail pages: one parent `mx-auto w-full min-w-0 max-w-[46rem]` contains title/actions, group headings and detail content. This is the bounded adaptation of the account reference's `sm:mx-16 lg:mx-44 xl:mx-72 2xl:mx-80`; do not apply both constraints. It keeps labels near values on wide screens. A `view` route containing a map, image viewer or large grid may need a wider working area; constrain its metadata independently rather than narrowing the entire workspace. Keep the page title with the working area and a metadata heading with its own panel.
 
-Detail group headings use spacing such as `mb-6 text-lg font-bold text-gray-700` and `mt-12` on subsequent groups. **No horizontal group separators, `divide-y`, `<hr>`, or per-group underlines.** The single main title underline remains. Do not carry form-only `xl:mx-6` field-body indentation into read-only detail groups.
+Detail group headings use spacing such as `mb-6 font-heading text-lg text-gray-700` and `mt-12` on subsequent groups. **No horizontal group separators, `divide-y`, `<hr>`, or per-group underlines.** The single main title underline remains. Do not carry form-only `xl:mx-6` field-body indentation into read-only detail groups.
 
 ## Tables and detail views
 

@@ -12,19 +12,13 @@
   body { color: theme(colors.gray.900); font-family: theme(fontFamily.body); }
   input::placeholder, textarea::placeholder { color: theme(colors.gray.400); }
   [x-cloak] { display: none !important; }
+  .font-heading { @apply font-semibold; }
   @font-face {
-    font-family: 'Raleway';
-    font-weight: 100 900;
+    font-family: 'Sora';
+    font-weight: 100 800;
     font-display: swap;
     font-style: normal;
-    src: url('../css/fonts/Raleway-VariableFont_wght.ttf') format('truetype');
-  }
-  @font-face {
-    font-family: 'Raleway';
-    font-weight: 100 900;
-    font-display: swap;
-    font-style: italic;
-    src: url('../css/fonts/Raleway-Italic-VariableFont_wght.ttf') format('truetype');
+    src: url('../css/fonts/Sora-VariableFont_wght.ttf') format('truetype');
   }
   @font-face {
     font-family: 'Roboto';

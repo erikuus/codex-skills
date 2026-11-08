@@ -18,7 +18,7 @@ For a reusable invocation, copy the [example application prompt](example-prompt.
 
 When source observations and the adapted examples differ, follow the explicit current rules below and their linked recipes. Historical VAU markup and reference snapshots are evidence, not instructions to restore superseded layout or behavior; check the current target before acting on an earlier Pitserid snapshot.
 
-The header gradient is the sole visual override to the shell reference: use the exact `basic-layout.html` gradient documented in [layout standard](references/layout-standard.md#header-gradient-override). Keep every other preset value and shell/footer detail unchanged.
+Use the exact `basic-layout.html` gradient from the [layout standard](references/layout-standard.md#header-gradient-override). The packaged typography follows [design system PR 33](https://github.com/Rahvusarhiiv2/disainisysteem/pull/33): local Sora at 600 for titles and prose headings, and `text-lg` at 18px (1.125rem). Remove legacy `font-bold` overrides on `font-heading` titles. Preserve the rest of the shell and exact footer.
 
 Do not replace the preset with approximate colors/shadows/radii or rewrite reference utility markup as an independent handwritten theme. A successful behavioral test or absence of horizontal overflow does not establish visual fidelity.
 

@@ -58,12 +58,12 @@ First apply the [shared page-title/form width rule](patterns.md#form-pages-title
 **When a form has titled field groups, keep each group heading at the form's outer left edge and inset the group's field body on large screens.** Follow VAU `themes/joyful/views/enquiry/application/_form.php`, used by `enquiry/application/create`: the “Application content” / “Päringu sisu” heading precedes `<section class="space-y-6 pb-6 xl:mx-6">`, which renders `forms/_work.php` and other form partials. Applicant Data and Applicant Preferences use `space-y-6 xl:mx-6` too. The heading stands out because the **fields move inward**, not because the heading itself is indented.
 
 - Use **`xl:mx-6` on one field-body wrapper per group**: 24px on both sides at the preset's `xl` breakpoint (1280px), with no extra group inset below that breakpoint. Keep the heading outside that wrapper. All ordinary labels, inputs, field-help rows and errors share the inset; do not shift only the input or add margins again inside a rendered partial.
-- Preserve `space-y-6` (24px) between field blocks and the form's 24px heading-to-body gap. Group headings use `text-lg font-medium`, with semantic heading levels appropriate to the page, or a fieldset/legend where suitable. The example assumes the parent form already has `space-y-6`.
+- Preserve `space-y-6` (24px) between field blocks and the form's 24px heading-to-body gap. Group headings use `font-heading text-lg`, with semantic heading levels appropriate to the page, or a fieldset/legend where suitable. The example assumes the parent form already has `space-y-6`.
 - VAU's later form headings additionally use `pt-6 border-t border-gray-50`; its first heading has no separator. Preserve this distinction when matching a form that uses it. The required hierarchy is the heading/body inset; do not add dividing lines to titled **detail views**, which retain the separate no-separators rule.
 - Do not duplicate the inset around an already padded group panel (VAU's company group instead has `rounded p-6 bg-gray-50/60`). Preserve intentional panels and keep dynamic-radio indentation relative to the group body, without altering the helper's input/panel sibling contract.
 
 ```php
-<h2 class="text-lg font-medium">
+<h2 class="font-heading text-lg">
     <?php echo CHtml::encode($existingGroupTitle); ?>
 </h2>
 <section class="space-y-6 xl:mx-6">
