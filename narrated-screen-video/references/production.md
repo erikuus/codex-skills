@@ -14,32 +14,73 @@ A subtle visible cursor helps explain clicks. Keep it small, move it deliberatel
 
 ## Speech and timing
 
-Use the configured speech provider supporting Cedar. In the tested workflow this was OpenAI speech generation with `gpt-4o-mini-tts`, voice `cedar`, and WAV output. Check current supported APIs and voices before use. Keep credentials in their existing secure configuration; never print them or include them in production files.
+### OpenAI
 
-Useful delivery direction:
+Use the existing OpenAI speech generation workflow with `gpt-4o-mini-tts`, voice `cedar` unless explicitly overridden, and WAV output. Check current supported APIs and voices before use. Keep credentials in their existing secure configuration and out of logs and production files.
 
 > Speak like a relaxed person showing a useful app to a friend. Warm, gentle lower register. Keep phrases connected and flowing. Pause between complete thoughts, not inside short clauses. No announcer delivery or exaggerated emphasis.
+
+### ElevenLabs
+
+Use a voice explicitly requested by name or ID. For a female or male Estonian voice request, use the matching option below. Record reusable voices here by name and ID.
+
+| Language | Option | Voice | Voice ID |
+| --- | --- | --- | --- |
+| Estonian (`et`) | Female | Sarah | `EXAVITQu4vr4xnSDxMaL` |
+| Estonian (`et`) | Male | George | `JBFqnCBsd6RMkjVDRZzb` |
+
+ElevenLabs lists both IDs as voices that expire on December 31, 2026. If an option is unavailable, offer to audition its suggested successor in Estonian. For Sarah, audition Talia (`OZ0L6eISlOejga3XjDFt`). For George, audition Eldrin (`6WwXjDDEMyNmFG95zycZ`). Show the proposed voice with the storyboard. [ElevenLabs voice transition guide](https://elevenlabs.io/docs/help-center/product/voices/my-voices/what-are-default-voices)
+
+For Estonian, audition a native voice when one is available to the account. Use a short sample with real product terms, names, and numbers. Listen for natural Estonian stress and rhythm, a gentle lower register, and a relaxed conversational delivery. Write complete thoughts with natural punctuation. Spell out tricky numbers or abbreviations as spoken when needed.
+
+Provide `ELEVENLABS_API_KEY` through the environment of the process running the helper. Pass the selected ID with `--voice-id` and use it across the video. Replace `VOICE_ID` in the examples with the selected ID.
+
+Run the [chunk helper](../scripts/synthesize_elevenlabs.py) with Python 3, using paths relative to the current working directory or absolute paths. The output directory must already exist.
+
+```sh
+python3 /path/to/narrated-screen-video/scripts/synthesize_elevenlabs.py \
+  --language et --voice-id VOICE_ID --text-file chunk-01.txt --output chunk-01.wav
+```
+
+If the user exports the API key in `~/.zshrc` and the command environment lacks it, run the helper through interactive zsh so it loads the export.
+
+```sh
+/bin/zsh -ic 'exec python3 "$@"' zsh \
+  /path/to/narrated-screen-video/scripts/synthesize_elevenlabs.py \
+  --language et --voice-id VOICE_ID --text-file chunk-01.txt --output chunk-01.wav
+```
+
+The helper sends the UTF-8 spoken text to the [ElevenLabs Create speech API](https://elevenlabs.io/docs/api-reference/text-to-speech/convert) using `eleven_v4`, the selected voice ID, and the primary language code (`et` for `et-EE`). It wraps the returned mono 24 kHz PCM in a WAV with a finalized length header. Put only the spoken lines in the text file. Shape the delivery through voice choice, phrasing, and punctuation.
+
+### Shared timing and captions
 
 Generate narration in coherent chunks, each tied to a timeline segment. Store the text, start times, and filenames in working production notes. Measure real chunk durations before finalizing the timeline. Audition the opening and any tricky wording early. Correct unnatural pauses in text or delivery rather than globally slowing the narration.
 
 Some streamed WAV responses have placeholder length headers, causing audio libraries to report an enormous duration. Remux such files through FFmpeg to normal PCM WAV, with a sensible maximum duration for that chunk, before reading durations or padding. Use `ffprobe` on the normalized file.
 
-Every command that pads or loops media must have an explicit finite duration. For example, `apad` without an output `-t` can produce an effectively endless file. Set subprocess timeouts as well. Finalize a silent narration timeline of exactly the target duration, placing chunks at their approved start times, so the music-only ending has the correct length.
+Check the measured end of each chunk against the next shot or narration cue. If captions are requested, take the cue text from the approved script and time cues against the audible speech on the final timeline. Account for any leading or trailing silence and recheck the cues after moving or regenerating a chunk.
 
-## Tested subtle mix
+Every command that pads or loops media must have an explicit finite duration. For example, `apad` without an output `-t` can produce an effectively endless file. Set subprocess timeouts as well. Finalize a silent narration timeline of exactly the target duration, placing chunks at their approved start times, so the ending has the correct length.
 
-For a complete narration WAV and a music track already extended to at least the film duration, the following filter graph is a useful starting point. Substitute the numeric last-five-seconds start for `FADE_START` (for a 130-second video, 125). Input 0 is narration; input 1 is music.
+## Soundtrack
+
+The sole bundled track is the user-supplied ElevenLabs soundtrack. Use the [bundled WAV](../assets/elevenlabs-soundtrack-trimmed.wav) when selected. It runs about 30 seconds. For longer videos, crossfade between suitable phrase boundaries and check the join at the final playback level.
+
+Use the same quiet mix for a user-supplied track unless the brief calls for a different level. For a video without music, use the narration track on its own and keep the planned visual hold after the last line.
+
+## Quiet music mix
+
+Use the approved 7.5-second Estonian preview as the reference. Its narration measured −20 LUFS and its soundtrack measured −46 LUFS, a difference of 26 LU. Set narration for comfortable listening first, then set the music 26 LU below it. Measure representative speech and the chosen music passage separately with FFmpeg's `ebur128` filter in the same stereo layout. To find the gain in dB, subtract the measured loudness from the target for each track.
+
+Keep the same music gain under speech, in pauses, and through the ending hold before the fade. At normal playback volume it should barely fill the silence and be easiest to notice when muted. If the music draws attention in a gap or at a crossfade, lower it further.
+
+Fade the music in and out at the ends. In the filter below, input 0 is the narration timeline and input 1 is music already trimmed or extended to the film duration. Replace `VOICE_GAIN` and `MUSIC_GAIN` with the gain adjustments in dB. Set `FADE_START` to the duration minus five seconds for a full video. For a short sample, shorten the fades to fit.
 
 ```text
-[0:a]volume=1.25,equalizer=f=4500:t=q:w=0.7:g=-2,asplit=2[voice][detector];
-[1:a]volume=0.38,afade=t=in:d=1,afade=t=out:st=FADE_START:d=5[music];
-[music][detector]sidechaincompress=threshold=0.012:ratio=3:attack=40:release=700[ducked];
-[voice][ducked]amix=inputs=2:normalize=0,alimiter=limit=0.93:level=false,aresample=48000[mix]
+[0:a]aformat=sample_rates=48000:channel_layouts=stereo,volume=VOICE_GAINdB[voice];
+[1:a]aformat=sample_rates=48000:channel_layouts=stereo,volume=MUSIC_GAINdB,afade=t=in:d=1,afade=t=out:st=FADE_START:d=5[music];
+[voice][music]amix=inputs=2:normalize=0,alimiter=limit=0.89:level=false:latency=1[mix]
 ```
-
-The gain values depend on the input files. Audition and adjust them; `volume=1.25` is a gain on a relatively quiet source, not a request for loud voiceover. The modest high-frequency reduction softens the voice. Compression lowers music gently during speech and releases slowly between phrases. The approved films measured approximately −23 dB RMS, with peaks around −3 to −5 dBFS. Use listening judgment as well as measurements; these values are references, not loudness guarantees.
-
-The bundled track is about 172 seconds long. For longer films, extend a suitable passage with a musically sensible crossfade, preferably behind narration. Avoid an obvious restart. One tested 180-second extension combined the first 90 seconds with the portion starting at 80 seconds, using a two-second triangular crossfade; cap the result at 180 seconds. For other durations choose suitable phrase boundaries instead of mechanically repeating these offsets.
 
 ## Editing and export
 
@@ -55,4 +96,4 @@ ffmpeg -v error -i final.mp4 -f null -
 ffmpeg -i final.mp4 -vn -af astats -f null -
 ```
 
-Extract and view frames at the opening, important choices, generated or saved results, edit transitions, and the ending. Listen across the film, not just to isolated narration. Confirm the final seconds contain the intended visual hold or gentle scroll and music tail.
+Extract and view frames at the opening, important choices, generated or saved results, edit transitions, and the ending. Listen across the film, not just to isolated narration. Confirm the final seconds contain the intended visual hold or gentle scroll and the music tail if selected.
