@@ -1,0 +1,5 @@
+interface:
+  display_name: "YouTube Publish"
+  short_description: "Upload videos to YouTube Studio and share links"
+  icon_small: "./assets/icon.svg"
+  icon_large: "./assets/icon.png"
