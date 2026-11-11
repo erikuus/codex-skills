@@ -64,7 +64,7 @@ Every command that pads or loops media must have an explicit finite duration. Fo
 
 ## Soundtrack
 
-The sole bundled track is the user-supplied ElevenLabs soundtrack. Use the [bundled WAV](../assets/elevenlabs-soundtrack-trimmed.wav) when selected. It runs about 30 seconds. For longer videos, crossfade between suitable phrase boundaries and check the join at the final playback level.
+The sole bundled track is the user-supplied [Clean UI Product Demo Background](../assets/clean-ui-product-demo-background.mp3). It runs about 32 seconds. For longer videos, crossfade between suitable phrase boundaries and check the join at the final playback level.
 
 Use the same quiet mix for a user-supplied track unless the brief calls for a different level. For a video without music, use the narration track on its own and keep the planned visual hold after the last line.
 
