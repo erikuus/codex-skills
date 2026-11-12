@@ -4,13 +4,21 @@ These settings reproduce the approved high-resolution app films. Treat them as s
 
 ## Native capture and layout
 
-The successful browser capture used Playwright/Chromium with a 1280 × 960 CSS-pixel viewport, `deviceScaleFactor: 2`, and `recordVideo.size` set to 2560 × 1920. The final frames were inspected to confirm sharp native UI. The same recorder settings can behave differently with another browser or installation: record a short test and inspect it with `ffprobe` and extracted frames.
+Choose the CSS viewport for the app layout and the device scale factor for native detail. A tested 4:3 capture used Playwright/Chromium with a 1280 × 960 CSS-pixel viewport, `deviceScaleFactor: 2`, and `recordVideo.size` set to 2560 × 1920. Check the actual recording size with `ffprobe`. Prefer lossless source frames or a lossless recording when the tool can sustain the required frame rate. Evaluate another capture method with the same test when lossless capture is impractical.
 
-For 16:9, a possible starting point is 1920 × 1080 logical pixels at scale factor 2, with 3840 × 2160 capture. For a smaller, more readable app layout, use a smaller logical viewport at an appropriate scale factor and verify the result. Portrait requires a genuinely usable responsive layout. Do not crop important controls or choose dimensions merely because an encoder accepts them.
+For 16:9, a possible starting point is 1920 × 1080 CSS pixels at scale factor 2, with 3840 × 2160 capture. Use a smaller viewport when it makes the app easier to read. Check the responsive layout for the chosen aspect ratio, including portrait. Preserve important controls in frame.
+
+Before the full recording, capture a browser screenshot and a short clip from the same viewport. Include a stable frame that matches the screenshot, plus representative cursor movement and scrolling. Encode at the intended delivery dimensions, frame rate, and quality settings. Compare the matching stills at the same displayed size and watch the encoded motion. Look for banding in gradients, soft or broken small text, and compression artifacts during movement. Change the capture or export settings and repeat the test if needed.
 
 Browser video may be buffered until the recording context closes. Close the context and wait for the file to finish before editing. Use the actual recorded page/context, not a different tab. Verify the screen state after each significant interaction. Framework-specific input events matter: filling a search box may not trigger a key-up handler; use actual typing where required and confirm the results changed.
 
-A subtle visible cursor helps explain clicks. Keep it small, move it deliberately, and ensure any cursor overlay cannot intercept pointer events. Avoid recording development tools, permission dialogs, or unrelated desktop content.
+A small visible cursor helps explain clicks. Let viewers follow it to the control and see the result of the click. Make any cursor overlay ignore pointer events. Leave out development tools, permission dialogs, and unrelated desktop content.
+
+## Sign-in and privacy
+
+Keep capture paused or stopped while the user completes sign-in in the same browser. Resume from the authenticated app view. If the recorder cannot pause, record separate takes around sign-in.
+
+Use small masks over visible email addresses, phone numbers, street addresses, and other sensitive data. Keep surrounding controls and any names or profile photos the brief permits visible. Make the center of each mask fully opaque over the text, with any feathering outside the sensitive area. Move the mask with the text when the page scrolls or changes layout. Check the rendered MP4 as each affected view opens, while it moves, and as it closes.
 
 ## Speech and timing
 
@@ -31,7 +39,7 @@ Use a voice explicitly requested by name or ID. For a female or male Estonian vo
 
 ElevenLabs lists both IDs as voices that expire on December 31, 2026. If an option is unavailable, offer to audition its suggested successor in Estonian. For Sarah, audition Talia (`OZ0L6eISlOejga3XjDFt`). For George, audition Eldrin (`6WwXjDDEMyNmFG95zycZ`). Show the proposed voice with the storyboard. [ElevenLabs voice transition guide](https://elevenlabs.io/docs/help-center/product/voices/my-voices/what-are-default-voices)
 
-For Estonian, audition a native voice when one is available to the account. Use a short sample with real product terms, names, and numbers. Listen for natural Estonian stress and rhythm, a gentle lower register, and a relaxed conversational delivery. Write complete thoughts with natural punctuation. Spell out tricky numbers or abbreviations as spoken when needed.
+For Estonian, audition a native voice when one is available to the account. Listen for natural stress and rhythm, a gentle lower register, and a relaxed conversational delivery.
 
 Provide `ELEVENLABS_API_KEY` through the environment of the process running the helper. Pass the selected ID with `--voice-id` and use it across the video. Replace `VOICE_ID` in the examples with the selected ID.
 
@@ -52,9 +60,11 @@ If the user exports the API key in `~/.zshrc` and the command environment lacks 
 
 The helper sends the UTF-8 spoken text to the [ElevenLabs Create speech API](https://elevenlabs.io/docs/api-reference/text-to-speech/convert) using `eleven_v4`, the selected voice ID, and the primary language code (`et` for `et-EE`). It wraps the returned mono 24 kHz PCM in a WAV with a finalized length header. Put only the spoken lines in the text file. Shape the delivery through voice choice, phrasing, and punctuation.
 
-### Shared timing and captions
+### Pronunciation, timing, and captions
 
-Generate narration in coherent chunks, each tied to a timeline segment. Store the text, start times, and filenames in working production notes. Measure real chunk durations before finalizing the timeline. Audition the opening and any tricky wording early. Correct unnatural pauses in text or delivery rather than globally slowing the narration.
+Record pronunciations for the current app as needed. Specify which acronyms are spoken as words or spelled out and mark stress where it matters. Test these terms in full sentences using the chosen voice and language. Check the rendered audio by ear before generating the full narration. A transcript verifies wording alone. If you cannot listen, share a playable sample for feedback while preparing the capture. Apply pronunciation changes to the synthesis text and keep the approved spelling for captions.
+
+Generate narration in coherent chunks, each tied to a timeline segment. Store the text, start times, and filenames in working production notes. Measure real chunk durations before finalizing the timeline. Correct unnatural pauses in the text or regenerate the affected chunk.
 
 Some streamed WAV responses have placeholder length headers, causing audio libraries to report an enormous duration. Remux such files through FFmpeg to normal PCM WAV, with a sensible maximum duration for that chunk, before reading durations or padding. Use `ffprobe` on the normalized file.
 
@@ -84,7 +94,7 @@ Fade the music in and out at the ends. In the filter below, input 0 is the narra
 
 ## Editing and export
 
-Preserve the screen's native dimensions throughout the edit. Trim waits and join shots at logical boundaries. Avoid needless speed changes; readable selection and result shots deserve a hold. If adapting existing footage, map source intervals to the new board before rendering. Do not reuse low-resolution footage for a requested native high-resolution replica.
+Keep footage at its capture resolution through the edit and scale to the requested delivery dimensions at export. Preserve aspect ratio. Trim waits and join shots at logical boundaries. Hold on readable selection and result shots. If adapting existing footage, map source intervals to the new board before rendering.
 
 Use H.264 with `-crf 16`, `-pix_fmt yuv420p`, and `-r 30`; use AAC with `-b:a 192k -ar 48000 -ac 2` and `-movflags +faststart`. Set explicit `-t DURATION`, and ensure both audio and picture cover the full duration. Encoder preset can trade render time for file size without changing the quality target. Finish with the picture fade and audio fade specified in SKILL.md.
 
@@ -96,4 +106,4 @@ ffmpeg -v error -i final.mp4 -f null -
 ffmpeg -i final.mp4 -vn -af astats -f null -
 ```
 
-Extract and view frames at the opening, important choices, generated or saved results, edit transitions, and the ending. Listen across the film, not just to isolated narration. Confirm the final seconds contain the intended visual hold or gentle scroll and the music tail if selected.
+Watch the final export at its delivery size and normal listening volume. Use frame-by-frame inspection for masked views and any motion or compression problems. Check the spoken terms against the pronunciation notes and confirm the ending holds the intended view and fades smoothly.
