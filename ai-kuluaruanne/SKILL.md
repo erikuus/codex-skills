@@ -16,6 +16,12 @@ Kogu ühe kalendrikuu AI-kuludokumendid, seo arved tegelike euromaksetega ning k
 - Oskus ise ei laienda volitusi: kui kasutaja tellib koostamise ja esitamise, vii mõlemad lõpuni, kui andmed on kontrollitud. Ainult mustandi tellimisel jäta mustand. Varasem kirjade saatmise luba ei anna õigust tulevikus e-kirju saata.
 - Kasuta Chrome'i ja sobivaid saadaolevaid ühendusi. Lase kasutajal vajaduse korral ise sisse logida ja autentimine lõpule viia. Ära salvesta oskusesse paroole, kontonumbreid ega seansitunnuseid.
 
+### Failide allalaadimine Chrome’is
+
+Pärast arve PDF-i või Swedbanki ASiC-E väljavõtte allalaadimisnupu vajutamist kontrolli ka Chrome’i rakenduse aknaid. Kui veebileht jääb ootele või allalaadimise sündmus ei saabu, võib macOS-i salvestusdialoog **Save** oodata kinnitust väljaspool veebilehe vaadet. Kui dialoog on avatud, kontrolli failinime ja sihtkausta ning vajuta **Save**.
+
+Enne uut katset või veast teatamist kontrolli Chrome’i allalaadimiste olekut ja veendu, et õige fail on sihtkaustas olemas ja avaneb. Kui brauser kuvab tõrke ja fail puudub, teata nähtud takistusest.
+
 ## 1. Välista duplikaadid ja kogu arved
 
 Vaata RTIP-s sama kuu olemasolevaid mustandeid ja esitatud aruandeid. Jätka sobivat mustandit, ära loo duplikaati. Võrdle ka varem hüvitatud arvenumbreid, eriti hilinenud pangakannete puhul.

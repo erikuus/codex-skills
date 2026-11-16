@@ -5,7 +5,7 @@ description: Finalize an implemented GitHub issue by reconstructing the complete
 
 # Finalize a GitHub issue
 
-Turn the completed work in the current task into verified visual evidence and an issue-scoped GitHub comment. This skill is designed to run in the same task after analysis, implementation, and optionally `review-to-pr`.
+Turn the completed work in the current task into verified visual evidence and an issue-scoped GitHub comment. Run this skill in the same task once implementation and any review are complete.
 
 Explicit invocation authorizes the scoped final issue comment and any exact Project transition already established in the task context. It does not authorize closing the issue, merging a pull request, changing unrelated metadata, or claiming a deployment state that has not been established.
 
