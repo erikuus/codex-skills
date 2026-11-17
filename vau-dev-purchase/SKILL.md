@@ -17,6 +17,8 @@ Use Computer Use with stable page, label and control targets. Read [shared.md](r
 
 ## Adapt to the invocation
 
+Use the five workflow guides as the EveryPay baseline. For a Swedbank Pay run, also read [the Swedbank Pay guide](references/swedbank-pay.md) for checkout, callbacks, and the separate staging evidence.
+
 Treat the invocation as the test brief. Read [request-driven payment testing](references/shared.md#payment-methods-and-scenarios) and adapt the relevant workflow to the requested provider/method, API variant, outcome, data and scope. The recordings are successful card-payment examples: “Mastercard Visa”, particular test-card data and “Yes” are **not fixed requirements**. Current user instructions select the scenario; preserve the workflow's domain prerequisites and traceable identifiers.
 
 For example, “Use this skill to test Swedbank Pay with every supported payment API variant, including success and failure” calls for discovering the supported cases and testing their expected outcomes. It does not call for repeating the recorded card/Yes branch. Do not run all five workflows unless the request calls for that scope. Where scope can reasonably be inferred, state the assumption and proceed; ask only when a missing choice materially affects the test.
@@ -28,6 +30,14 @@ Recorded evidence limits do not prohibit testing a new branch. Inspect the curre
 Use Record & Replay for one complete workflow per recording. The user operates the browser; do not perform orders, enquiries, payments or ERPLY changes during recording. Start only when the user is ready, then yield until they finish. Stop and inspect the captured events. Keep only relevant VAU, payment and ERPLY actions; exclude unrelated tabs and copy/paste detours. Never copy passwords, tokens, cookies, payment credentials or secret-bearing URLs into this skill.
 
 After each recording, update this same skill, extract common steps into shared.md and identify material gaps before the next workflow. Distinguish recorded actions, later read-only observations and user explanations. Convert example values into inputs; do not invent unseen steps or branches. Incomplete guides do not authorize guessed replay.
+
+## Recover interrupted browser control
+
+- When an unattended run crosses between VAU, a payment provider or a bank simulator, keep the test window on the active, unlocked desktop. Before a submission, record the workflow, VAU order/application/bill ID, available payment reference and the action about to be taken. Keep checkout URLs with session tokens out of the checkpoint.
+- If a snapshot times out or a redirect leaves the URL uncertain, treat the last click as possibly applied. Refresh the browser inventory and reacquire the actual tab or window using its current title, host and visible case details. Check the same attempt in VAU, the provider UI and, when available, the payment trace and ERPLY. A stale tab handle or a missing immediate log entry is insufficient evidence to resubmit. Resume once the case state is known.
+- Use native Computer Use for known, authorized VAU confirmation dialogs or an observed file picker when browser control cannot reach them. If the dialog is absent from the main window snapshot, inspect the returned window inventory for the modal. Read the prompt, act once and refresh the state to verify the result.
+- If a hosted Swedbank Pay form remains blank while Chrome debugging is attached, detach using Chrome’s visible debugging banner and reobserve the same checkout with native controls. This recovered the embedded form in November 2026. Use the existing payment/authentication handoff if needed. A provider error that also occurs without debugging needs its own payment evidence.
+- Refresh the binding after a stale handle or lost connection. If the runtime explicitly ends Computer Use for the turn, stop app input and resume from the checkpoint on the next authorized turn. Use a browser or app restart for a persistent lost connection, then reacquire the original case before taking any action.
 
 ## Execution and validation
 
