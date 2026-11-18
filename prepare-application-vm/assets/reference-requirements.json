@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "selfContainedTests": [
+    "test_backup_retention.py",
+    "test_release_retention.py",
+    "test_deployment_maintenance.py",
+    "test_production_promotion.py",
+    "test_updater_status.py",
+    "test_production_config.py"
+  ],
+  "assembledApplicationTests": [
+    "test_configuration.py",
+    "test_production_command.py",
+    "test_rehearsal_migrations.py"
+  ],
+  "dependencies": [
+    {
+      "id": "composer-phar",
+      "requiredBy": "original Kaardid build-release.py",
+      "sourceRepository": "https://github.com/Rahvusarhiiv2/kaardid",
+      "sourceCommit": "f1b462b9a1e65dc46810418bb5d7ec7f1991e5e0",
+      "sourcePath": "protected/tests/composer.phar",
+      "sha256": "c86ce603fe836bf0861a38c93ac566c8f1e69ac44b2445d9b7a6a17ea2e9972a",
+      "acquire": "Read this exact Git object from the pinned repository. Verify SHA256 before execution. A target adapter may instead use its verified installed Composer executable."
+    },
+    {
+      "id": "yii-runtime",
+      "requiredBy": "Yii builders, application configuration and PostgreSQL/Yii integration tests",
+      "source": "User-supplied pinned Yii 1.1.33-dev snapshot",
+      "acquire": "Record selected source path/revision and content hash in the target contract. Verify yii.php, cli commands and extensions before build. No Yii dependency for standalone PHP."
+    },
+    {
+      "id": "app-assembled-dependencies",
+      "requiredBy": "assembledApplicationTests",
+      "source": "Exact pinned application checkout plus its locked vendor/runtime dependencies",
+      "acquire": "Use a disposable complete checkout of sourceCommit and the recorded Yii path. Run only with disposable DB credentials when requested."
+    }
+  ],
+  "toolchain": {
+    "pythonMinimum": "3.12",
+    "workstationPreflight": "python3 scripts/check_python.py",
+    "vmPreflight": "Run the copied check_python.py with the selected interpreter before provisioning helpers",
+    "platform": "POSIX for locking and process groups"
+  }
+}

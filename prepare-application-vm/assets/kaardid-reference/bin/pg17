@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+# Use PostgreSQL 17 clients even when Homebrew's default points at another major.
+set -euo pipefail
+
+usage() {
+    echo 'Usage: bin/pg17 {psql|pg_dump|pg_restore|pg_isready} [arguments...]'
+}
+
+if [[ $# -eq 0 || "$1" == --help ]]; then
+    usage
+    exit 0
+fi
+
+client=$1
+shift
+case "$client" in
+    psql|pg_dump|pg_restore|pg_isready) ;;
+    *) usage >&2; exit 2 ;;
+esac
+
+if [[ -n ${KAARDID_PG_BIN:-} ]]; then
+    pg_bin=$KAARDID_PG_BIN
+elif [[ -x /opt/homebrew/opt/postgresql@17/bin/psql ]]; then
+    pg_bin=/opt/homebrew/opt/postgresql@17/bin
+elif [[ -x /usr/local/opt/postgresql@17/bin/psql ]]; then
+    pg_bin=/usr/local/opt/postgresql@17/bin
+else
+    echo 'Set KAARDID_PG_BIN to your PostgreSQL 17 bin directory.' >&2
+    exit 1
+fi
+
+version=$("$pg_bin/$client" --version)
+if [[ ! "$version" =~ PostgreSQL\)\ 17\. ]]; then
+    echo "Refusing to use a client other than PostgreSQL 17: $version" >&2
+    exit 1
+fi
+
+exec "$pg_bin/$client" "$@"

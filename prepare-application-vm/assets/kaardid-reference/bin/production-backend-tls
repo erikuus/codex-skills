@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Stage the private HTTPS backend using sudo in the operator's Terminal.
+set -euo pipefail
+[[ $# -eq 0 ]]
+root=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
+ssh_options=(-o StrictHostKeyChecking=yes -o ForwardAgent=no)
+stage=$(ssh "${ssh_options[@]}" kaardid 'umask 077; mktemp -d .kaardid-setup/backend-tls.XXXXXXXX')
+[[ $stage =~ ^\.kaardid-setup/backend-tls\.[a-zA-Z0-9]{8}$ ]]
+for name in install-backend-tls.sh nginx/kaardid-backend-tls.conf nginx/kaardid-production.conf nginx/kaardid-production-preview.conf; do
+    source="$root/ops/$name"
+    remote="$stage/${name##*/}"
+    ssh "${ssh_options[@]}" kaardid "umask 077; cat > '$remote'" < "$source"
+    local_hash=$(shasum -a 256 "$source" | awk '{print $1}')
+    remote_hash=$(ssh "${ssh_options[@]}" kaardid "sha256sum '$remote'" | awk '{print $1}')
+    [[ $local_hash == "$remote_hash" ]]
+done
+ssh -t "${ssh_options[@]}" kaardid "sudo -- /bin/bash '$stage/install-backend-tls.sh'"

@@ -1,0 +1,16 @@
+{
+  "environment": "local",
+  "name": "Kaardid",
+  "databaseFile": "database.json",
+  "testDatabaseFile": "test-db.json",
+  "migrationDatabaseFile": "migration-db.json",
+  "integrationsFile": "integrations.json",
+  "analytics": false,
+  "externalCallbackBaseUrl": "http://localhost:8000",
+  "params": {},
+  "developmentParams": {},
+  "testParams": {
+    "enableTestLogin": false
+  },
+  "consoleParams": {}
+}

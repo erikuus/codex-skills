@@ -1,0 +1,25 @@
+# Prepared only. Install and enable at production cutover after a verified run.
+[Unit]
+Description=Synchronize Kaardid maps, images and thumbnails
+Wants=network-online.target
+After=network-online.target postgresql.service
+OnFailure=kaardid-job-failure@%n.service
+ConditionPathExists=/srv/kaardid-production/current/apps/kaardid/protected/config/cron.php
+
+[Service]
+Type=oneshot
+User=kaardid-production
+Group=kaardid-production
+UMask=0007
+WorkingDirectory=/srv/kaardid-production/current/apps/kaardid
+ExecStartPre=/usr/bin/test -s /srv/kaardid-production/shared/runtime/update.log
+ExecStart=/usr/bin/php8.5 cron.php update
+TimeoutStartSec=2h
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=kaardid-update
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths=/srv/kaardid-production/shared/runtime

@@ -1,0 +1,341 @@
+{
+  "sourceRepository": "https://github.com/Rahvusarhiiv2/kaardid",
+  "sourceCommit": "f1b462b9a1e65dc46810418bb5d7ec7f1991e5e0",
+  "capturedAt": "2026-11-18",
+  "purpose": "Application-specific reference code to adapt and test before execution",
+  "files": [
+    {
+      "path": "bin/monitoring-install",
+      "sha256": "8cb532abd431719187ba8a8a6115dee17bff14be2cea4f33b0cb50d1ad6bdd00"
+    },
+    {
+      "path": "bin/monitoring-probe",
+      "sha256": "68a5da91d9788e60c2b00bc78edd656ee4af38953b41f6f76dd32d36c4443a3c"
+    },
+    {
+      "path": "bin/noora-proxy",
+      "sha256": "008c042da83e0c91a1d5948a262d411d601702e67569f20240acc7ac94d4620e"
+    },
+    {
+      "path": "bin/pg17",
+      "sha256": "46e0017597abfee85f2816b8b6a872d0acbe66d5320eda97e9760a1b5fdcc5de"
+    },
+    {
+      "path": "bin/production-backend-tls",
+      "sha256": "b1cc5b3e02d9f1e25e8815171808eb3eea6b5b5ae74a86b3b198470b3b84794b"
+    },
+    {
+      "path": "bin/production-configure",
+      "sha256": "fb6806bdb30cc6096fa72cfd4cc5962c7da563923fc463c9109740723f137a97"
+    },
+    {
+      "path": "bin/production-deploy",
+      "sha256": "964a9c61abc94ae36879cae667521f86b91531b4fb5590b6a532933b05d13509"
+    },
+    {
+      "path": "bin/production-prepare",
+      "sha256": "2151d3d5e8af504a0644d328ad61d4eea9cf2ff4c1444f28fd7d5e39fa8017d7"
+    },
+    {
+      "path": "bin/refresh-dashboard",
+      "sha256": "08aad8182d3568720cf16461fe6cefd0f60d02bc59e25d949d41a95d3e534e3f"
+    },
+    {
+      "path": "bin/rehearsal-activate",
+      "sha256": "4f8bb46153864e3adc575484a7dabdac214680f8bedbd0def1d20ced1514fff2"
+    },
+    {
+      "path": "bin/rehearsal-deploy",
+      "sha256": "587b780b557ff43efe0a5f2e7e746b5398dc41416ce4ed03c248ca966c312aba"
+    },
+    {
+      "path": "bin/server-audit",
+      "sha256": "573acf3bfdd70fb59d9c2b0d12a864e057e6c91dc931fe163ba063bae42fdfb6"
+    },
+    {
+      "path": "bin/server-prepare",
+      "sha256": "811f3343c1a464ebd0c5c51aa905cff115ace3f334768257355c82e33a9d5fba"
+    },
+    {
+      "path": "bin/updater-check",
+      "sha256": "e9d057517d305942115e5772917d3f918505ea8bc3101ac6d6e76c84d3246488"
+    },
+    {
+      "path": "bin/vm",
+      "sha256": "9eb1eca0f23c84b5b498e66fac0c475fd4b0db0721efb93cd144dc7bdada98a7"
+    },
+    {
+      "path": "composer.json",
+      "sha256": "5008306e1a47015b3a986b93effb13619c39895f5597ee5a4dc402a2bf561320"
+    },
+    {
+      "path": "composer.lock",
+      "sha256": "3400ce4430a0876af0515b95d928b18930419a2f86849a8b0d1128582dbd27d9"
+    },
+    {
+      "path": "dev-router.php",
+      "sha256": "c8fbe2a72cef1063ed6acd417315dcdb3b0f35f80aadb47bc986ddab1f3ae42a"
+    },
+    {
+      "path": "ops/activate-rehearsal.sh",
+      "sha256": "86bb8327a1a7fb54994c60abbd5dd08daf8535c1d721bee5a488f7dd952e28a0"
+    },
+    {
+      "path": "ops/build-release.py",
+      "sha256": "d35622aa4443a63b9d27356ee5945dc10671c48c39d7918cd9c9628e98f2380a"
+    },
+    {
+      "path": "ops/check-production-config.php",
+      "sha256": "6192fe5ec81e47cd68989e2fcedd2f3e031f1358cc5e5cf6bba287d6588b0cdf"
+    },
+    {
+      "path": "ops/check-updater.php",
+      "sha256": "ba14d3b170f92f2424a8550ac4e43ff8b9e6b1969bf843222cd1b7ca42b9da7b"
+    },
+    {
+      "path": "ops/check-updater.py",
+      "sha256": "6f70b8c1f7c8f8ed08c840c2ac0f9cd9cc529ec439423136a5efb045f6a0c613"
+    },
+    {
+      "path": "ops/configure-production.py",
+      "sha256": "e30c92fcdba84ff2a57ef765daf0ec2f1025499798c23f8e1825ac47ef30394e"
+    },
+    {
+      "path": "ops/dashboard/refresh-prompt.md",
+      "sha256": "1230ef6717f65889baf9177c1160d90ce673aa9f6b9d5b0cc5b3db58239803c4"
+    },
+    {
+      "path": "ops/deploy-rehearsal.py",
+      "sha256": "8be949ff3d5a9627bd043ee5a3f052b29fdcfac737444f04977cdc0d7b0d1145"
+    },
+    {
+      "path": "ops/export-integration-secrets.php",
+      "sha256": "e3580f8fc0ee8c9c1565eb4949f70e2efab94ea6489ea7173fd57616f82d2f91"
+    },
+    {
+      "path": "ops/install-backend-tls.sh",
+      "sha256": "8d51e8aeb90eb6d5d510c81fbdb415f3175528b014fae0ce6a16873c04c86444"
+    },
+    {
+      "path": "ops/install-monitoring.sh",
+      "sha256": "9ec0a1a9b1087cc924e41b453c5985bfa9ee8e0b7952a3b2379ec78e222a66e9"
+    },
+    {
+      "path": "ops/nginx/kaardid-backend-tls.conf",
+      "sha256": "80cb4e83122f7a24825e12e1c22a8493e81dc767d76aef52f3ef64ab76463bac"
+    },
+    {
+      "path": "ops/nginx/kaardid-production-preview.conf",
+      "sha256": "b480f0dadaa2d48ac39597d346a6f4a0f7932eb9109180ee12dfafd43b1f9b7b"
+    },
+    {
+      "path": "ops/nginx/kaardid-production.conf",
+      "sha256": "ae23b3d79992adcf5e9cf7aef6eb5fa7cbda759b69135498e09e6a9259014bb6"
+    },
+    {
+      "path": "ops/nginx/kaardid-rehearsal.conf",
+      "sha256": "d02a54b498fa7b3cdf7142303dbc2b1b45048470fc4414d5593a9746908ddb90"
+    },
+    {
+      "path": "ops/production-prepare.sh",
+      "sha256": "f8cea4e52b7f8961b2e1ac37b42013ca080c5c9bb5063691726413f11408c532"
+    },
+    {
+      "path": "ops/production-preview.py",
+      "sha256": "c70a3553b72c32a8ea9638c9020183cd39ba9bd346dcd15ba72d25a7bbe02444"
+    },
+    {
+      "path": "ops/production-readiness.example.json",
+      "sha256": "aecb450d210cb8e6d2143d9fd78a0c9aa30832e326c8e775c720c4c830f6493f"
+    },
+    {
+      "path": "ops/promote-production.py",
+      "sha256": "5315d3d985e372cb42c1091f5ace4395b9d13a292c827168294f89230b5b22fd"
+    },
+    {
+      "path": "ops/report-job-failure.php",
+      "sha256": "940f7507e4097de0c4f7fc9f11368fd45685fd1fe97f2c4ce282aef73e1ed003"
+    },
+    {
+      "path": "ops/restore-rehearsal.py",
+      "sha256": "9991f4ba0683c80ce98d61efbd44f481a0389504814a3297351fc0112be99193"
+    },
+    {
+      "path": "ops/sentry-probe-router.php",
+      "sha256": "7bf192a69a7aa71b6340dc3520ee6130bd05502bf2829715c2bedfc3ecc1d006"
+    },
+    {
+      "path": "ops/server-audit.sh",
+      "sha256": "84f02887a969190f97c99f19c33d580ffc717e081b644d2a4129a1915c59fca0"
+    },
+    {
+      "path": "ops/server-prepare.sh",
+      "sha256": "acf773ec47cb409128515a0d3d2322b0e606050518ef8b065f2b522f6c40818d"
+    },
+    {
+      "path": "ops/snapshot-local.php",
+      "sha256": "626034f14e9373f2852311f7aa92c35929521ee500a436b6a5105815f5e57348"
+    },
+    {
+      "path": "ops/systemd/kaardid-job-failure@.service",
+      "sha256": "b7e46beb657732919731315dda26d46dfd4ab8c34e35ea88da743bec5aff9cc0"
+    },
+    {
+      "path": "ops/systemd/kaardid-update.service",
+      "sha256": "06283b4f0c0762788508dc98e408d9fa6558d841ce6fa1ddc82a843cb22e1a52"
+    },
+    {
+      "path": "ops/systemd/kaardid-update.timer",
+      "sha256": "bcfb57ee024aa0dc70dcd5446fc3ed27fe06dfd49084c29643110c14875f5b9a"
+    },
+    {
+      "path": "ops/test-sentry-probe.py",
+      "sha256": "ce25bd796bf2d3e5f25738783a5736340f1603033b0e7b0ef86e39aa5844c29d"
+    },
+    {
+      "path": "ops/test_backup_retention.py",
+      "sha256": "6937c2b6d3b293b04cb252130fa63a776eedaf1c4a3d1b5b66317f60784ab6b7"
+    },
+    {
+      "path": "ops/test_configuration.py",
+      "sha256": "bbc47a5de882f20e88b9bcf4902f2d5add75e210712447ec0e33688193ce37bb"
+    },
+    {
+      "path": "ops/test_deployment_maintenance.py",
+      "sha256": "9fa48bf13e7e71bbf8d485d6c8a9b470b7ea529110ad267308cf545447f2c159"
+    },
+    {
+      "path": "ops/test_production_command.py",
+      "sha256": "05e6e4839a592af7b4e48b2c1175c455084dc7bb9c297347306221bf85895027"
+    },
+    {
+      "path": "ops/test_production_config.py",
+      "sha256": "8756780aa5a9c5167b91158be04071f0a90c41090c05f45562c25fc45eece218"
+    },
+    {
+      "path": "ops/test_production_promotion.py",
+      "sha256": "58e84110df268421e7e2d10e5888d4c36b6af38d0fbef9f0a4eb747611015db3"
+    },
+    {
+      "path": "ops/test_rehearsal_migrations.py",
+      "sha256": "bc8094a758396392adcb5bd7e8c571f884cdba275d7b23634ba5d76e07721638"
+    },
+    {
+      "path": "ops/test_release_retention.py",
+      "sha256": "966ff5572b15490a293c464010778fa74ce228d69885fc15eb01237ce777a1d5"
+    },
+    {
+      "path": "ops/test_updater_status.py",
+      "sha256": "c9a0dbb5f360be20970aa4d8eb4f79c8d5bb36025487ba0f12ddda4fdd4dda98"
+    },
+    {
+      "path": "ops/vm-status.py",
+      "sha256": "c163755d45355345e1b1c7e0edbd6020316cb65224af722d690b3af7f18f1294"
+    },
+    {
+      "path": "protected/commands/UpdateCommand.php",
+      "sha256": "6201504ab8dc58fc7b9c1c779744484338c561fc67507e4bfacd06e72313c404"
+    },
+    {
+      "path": "protected/commands/UpdateRunHistory.php",
+      "sha256": "255091548f2c192c502f053f61e0d0ce1c6bfdfd3e4fd3c0558ba9c6a254c8d9"
+    },
+    {
+      "path": "protected/config/Environment.php",
+      "sha256": "4ebecc9f1c6795cb912aa9bf5ebf7b303241004d87f26efefca4b2a98f1e16ca"
+    },
+    {
+      "path": "protected/config/Maintenance.php",
+      "sha256": "ab774de1b2c49e506abcfadb7b063eeb8a4a48a3849f6eefb058b9c46b009649"
+    },
+    {
+      "path": "protected/config/console.php",
+      "sha256": "32993f5ddd196be5d1cf47742f2fa6c5ca3589c1a09ba3a051c75bdd9e709fed"
+    },
+    {
+      "path": "protected/config/cron.php",
+      "sha256": "66cdda204cf920fe7acf997d676f003280798d71a02dd6435b142fd36cbcfbe0"
+    },
+    {
+      "path": "protected/config/development.php",
+      "sha256": "8254adb20dbea8a403770bfe5c1ac66237b8fa828623e5c937295947a5eea0fc"
+    },
+    {
+      "path": "protected/config/examples/database.json",
+      "sha256": "5696e04871a7f18f9d1dd2b00423d051b2d304fa3fcda9860efb070c804c1352"
+    },
+    {
+      "path": "protected/config/examples/environment.local.json",
+      "sha256": "483ef117854d838651dceca8ade84ee00447ba449bbe24603b7ec3b0663c61d9"
+    },
+    {
+      "path": "protected/config/examples/environment.production.json",
+      "sha256": "c2019baf6e733e8a0181ddf866f422bc883a61a62851270f8a282ea86ba4f41b"
+    },
+    {
+      "path": "protected/config/examples/environment.rehearsal.json",
+      "sha256": "01c989c4499800513bbd6ec990ba2911fd2f0601fe443aed835fd2a88c99719b"
+    },
+    {
+      "path": "protected/config/examples/integrations.json",
+      "sha256": "781b10240008a20044192683c4b5dbaccf1b928141b4d6d60407e7ef5b80a54a"
+    },
+    {
+      "path": "protected/config/examples/migration-db.json",
+      "sha256": "acedf73f167d809fac93404401ab2eed4a649e7dc4b7632577584b6ebd2b7dd9"
+    },
+    {
+      "path": "protected/config/examples/test-db.json",
+      "sha256": "83bdeb28e749b8f8c66985f0571ba56e6042aca303eb97a05393f439579111df"
+    },
+    {
+      "path": "protected/config/main.php",
+      "sha256": "3d45a9387f216ca48b158eb793c7ada9367f7d63d4fe29163331239ddf9cdbd6"
+    },
+    {
+      "path": "protected/config/messages.php",
+      "sha256": "434fafa9e936550a5870998185e5312f41dcaf1a87a8957218c46e507208f7fe"
+    },
+    {
+      "path": "protected/config/params.php",
+      "sha256": "2538caa33e09d17d5c6aadd7ed4205e2c3ee53cfa5e9a0f871476619f89eb462"
+    },
+    {
+      "path": "protected/config/production.php",
+      "sha256": "c2fbde777f8a59592988a136ab1fb3c54ee757e9d1092ba139787b00b7ca6c3b"
+    },
+    {
+      "path": "protected/config/sentry.php",
+      "sha256": "f9ce67fbd5d7d8f1238f15b6c8cc8adf7811fba0282a4c7303cfd548f3d48513"
+    },
+    {
+      "path": "protected/config/test.php",
+      "sha256": "bebb74e5286748a69d6b222a08e6568e416d1861ec92716e626a2f5c3055d631"
+    },
+    {
+      "path": "protected/config/unittest.php",
+      "sha256": "f76c0d3bf90f3a0fad985799bebccbf9f6f10d868d9584849f07479d790046c6"
+    },
+    {
+      "path": "protected/controllers/MaintenanceController.php",
+      "sha256": "74ab711be7d62ac850574803cf9d865396bcbaf999db07acec9ceee802017ae3"
+    },
+    {
+      "path": "protected/extensions/actions/XSentryProbeAction.php",
+      "sha256": "9d529f893132231e594ecf1c9600eab3d28535b735e3e21c1fdb7855ffd6f154"
+    },
+    {
+      "path": "protected/views/maintenance/index.php",
+      "sha256": "cecc92293f076e59f24afc103730f9e6ad778af8f9cf7dfb13844491207d7b3a"
+    },
+    {
+      "path": "protected/views/maintenance/mnt.php",
+      "sha256": "e981ce02344ad2a49d245de1656e897daabe30345a31d310a4f96a3f60ae65f2"
+    }
+  ],
+  "dashboard": {
+    "sourcePage": "page_206bb3e707788191b77360c2e206021d",
+    "sourceSha256": "b92efa2626cf6566af7637d9f7a5d7fb19dca470ae3472ca4f616915c29a2b8d",
+    "path": "../dashboard/kaardid-status-overview.html"
+  }
+}

@@ -1,0 +1,27 @@
+[Unit]
+Description={{APP_ENVIRONMENT}} archive image service
+Wants=network-online.target
+After=network-online.target
+RequiresMountsFor=/mnt/uuskasutus
+
+[Service]
+Type=simple
+TimeoutStartSec=15s
+User={{SERVICE_USER}}
+Group={{SERVICE_GROUP}}
+RuntimeDirectory={{APP_ENVIRONMENT}}
+UMask=0027
+ExecStartPre="{{PYTHON_EXECUTABLE}}" "{{PRIVATE_STORAGE_CHECK}}" --timeout 5 --mount /mnt/uuskasutus --source "{{EXPECTED_SHARE_SOURCE}}" --fstype "{{EXPECTED_SHARE_TYPE}}" --known-file "{{KNOWN_FILE_RELATIVE_PATH}}"
+ExecStart={{VERIFIED_IIPSRV_FOREGROUND_COMMAND}}
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ReadOnlyPaths=/mnt/uuskasutus
+ReadWritePaths={{CACHE_PATH}} {{TEMP_PATH}}
+MemoryMax={{ALLOCATED_MEMORY_LIMIT}}
+
+[Install]
+WantedBy=multi-user.target

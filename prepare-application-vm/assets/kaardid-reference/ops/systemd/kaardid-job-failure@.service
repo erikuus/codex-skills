@@ -1,0 +1,24 @@
+# Static failure handler only; installing it does not schedule or run the updater.
+[Unit]
+Description=Report failed Kaardid job %i to Sentry
+Wants=network-online.target
+After=network-online.target
+StartLimitIntervalSec=600
+StartLimitBurst=3
+
+[Service]
+Type=oneshot
+User=kaardid-production
+Group=kaardid-production
+UMask=0027
+ExecStart=/usr/bin/php8.5 /opt/kaardid-monitoring/report-job-failure.php %i
+TimeoutStartSec=30
+Restart=on-failure
+RestartSec=60
+StandardOutput=journal
+StandardError=journal
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths=/srv/kaardid-production/shared/runtime/monitoring

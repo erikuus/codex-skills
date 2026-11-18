@@ -1,0 +1,187 @@
+{
+  "schemaVersion": 1,
+  "hosts": [
+    {
+      "id": "archive-apps",
+      "sshAlias": "archive-apps",
+      "capacity": {
+        "vcpu": 4,
+        "ramGiB": 8
+      },
+      "setupLock": "/run/lock/application-vm-setup.lock",
+      "operatorRole": "operator"
+    },
+    {
+      "id": "archive-services",
+      "sshAlias": "archive-services",
+      "capacity": {
+        "vcpu": 4,
+        "ramGiB": 8
+      },
+      "setupLock": "/run/lock/application-vm-setup.lock",
+      "operatorRole": "operator"
+    }
+  ],
+  "apps": [
+    {
+      "id": "addresses",
+      "host": "archive-apps",
+      "repository": "/Users/operator/dev/php/addresses",
+      "framework": "yii1",
+      "publicOrigin": "https://addresses.example.org",
+      "environments": {
+        "rehearsal": {
+          "root": "/srv/addresses",
+          "serviceUser": "addresses",
+          "fpmSocket": "/run/php/addresses-rehearsal.sock",
+          "probePort": 18080,
+          "database": {
+            "cluster": "main",
+            "name": "addresses_rehearsal",
+            "ownerRole": "addresses_rehearsal_owner",
+            "migrationRole": "addresses_rehearsal_migrate",
+            "appRole": "addresses_rehearsal_app"
+          },
+          "setupRoot": "/home/operator/.addresses-setup/rehearsal",
+          "unitNames": [],
+          "webTunnelPort": 18100,
+          "dbTunnelPort": 15432
+        },
+        "production": {
+          "root": "/srv/addresses-production",
+          "serviceUser": "addresses-prod",
+          "fpmSocket": "/run/php/addresses-production.sock",
+          "probePort": 18081,
+          "database": {
+            "cluster": "main",
+            "name": "addresses_production",
+            "ownerRole": "addresses_production_owner",
+            "migrationRole": "addresses_production_migrate",
+            "appRole": "addresses_production_app"
+          },
+          "setupRoot": "/home/operator/.addresses-setup/production",
+          "unitNames": [],
+          "webTunnelPort": 18101,
+          "dbTunnelPort": 15433
+        }
+      }
+    },
+    {
+      "id": "seals",
+      "host": "archive-apps",
+      "repository": "/Users/operator/dev/php/seals",
+      "framework": "yii1",
+      "publicOrigin": "https://seals.example.org",
+      "environments": {
+        "rehearsal": {
+          "root": "/srv/seals",
+          "serviceUser": "seals",
+          "fpmSocket": "/run/php/seals-rehearsal.sock",
+          "probePort": 18082,
+          "database": {
+            "cluster": "main",
+            "name": "seals_rehearsal",
+            "ownerRole": "seals_rehearsal_owner",
+            "migrationRole": "seals_rehearsal_migrate",
+            "appRole": "seals_rehearsal_app"
+          },
+          "setupRoot": "/home/operator/.seals-setup/rehearsal",
+          "unitNames": [],
+          "webTunnelPort": 18102,
+          "dbTunnelPort": 15434
+        },
+        "production": {
+          "root": "/srv/seals-production",
+          "serviceUser": "seals-prod",
+          "fpmSocket": "/run/php/seals-production.sock",
+          "probePort": 18083,
+          "database": {
+            "cluster": "main",
+            "name": "seals_production",
+            "ownerRole": "seals_production_owner",
+            "migrationRole": "seals_production_migrate",
+            "appRole": "seals_production_app"
+          },
+          "setupRoot": "/home/operator/.seals-setup/production",
+          "unitNames": [],
+          "webTunnelPort": 18103,
+          "dbTunnelPort": 15435
+        }
+      }
+    },
+    {
+      "id": "names",
+      "host": "archive-apps",
+      "repository": "/Users/operator/dev/php/names",
+      "framework": "standalone-php",
+      "publicOrigin": "https://names.example.org",
+      "environments": {
+        "rehearsal": {
+          "root": "/srv/names",
+          "serviceUser": "names",
+          "fpmSocket": "/run/php/names-rehearsal.sock",
+          "probePort": 18084,
+          "database": {
+            "cluster": "main",
+            "name": "names_rehearsal",
+            "ownerRole": "names_rehearsal_owner",
+            "migrationRole": "names_rehearsal_migrate",
+            "appRole": "names_rehearsal_app"
+          },
+          "setupRoot": "/home/operator/.names-setup/rehearsal",
+          "unitNames": [],
+          "webTunnelPort": 18104,
+          "dbTunnelPort": 15436
+        },
+        "production": {
+          "root": "/srv/names-production",
+          "serviceUser": "names-prod",
+          "fpmSocket": "/run/php/names-production.sock",
+          "probePort": 18085,
+          "database": {
+            "cluster": "main",
+            "name": "names_production",
+            "ownerRole": "names_production_owner",
+            "migrationRole": "names_production_migrate",
+            "appRole": "names_production_app"
+          },
+          "setupRoot": "/home/operator/.names-setup/production",
+          "unitNames": [],
+          "webTunnelPort": 18105,
+          "dbTunnelPort": 15437
+        }
+      }
+    },
+    {
+      "id": "services",
+      "host": "archive-services",
+      "repository": "/Users/operator/dev/php/services",
+      "framework": "yii1",
+      "publicOrigin": "https://services.example.org",
+      "environments": {
+        "rehearsal": {
+          "root": "/srv/services",
+          "serviceUser": "services",
+          "fpmSocket": "/run/php/services-rehearsal.sock",
+          "probePort": 18080,
+          "database": null,
+          "setupRoot": "/home/operator/.services-setup/rehearsal",
+          "unitNames": [],
+          "webTunnelPort": 18106,
+          "dbTunnelPort": null
+        },
+        "production": {
+          "root": "/srv/services-production",
+          "serviceUser": "services-prod",
+          "fpmSocket": "/run/php/services-production.sock",
+          "probePort": 18081,
+          "database": null,
+          "setupRoot": "/home/operator/.services-setup/production",
+          "unitNames": [],
+          "webTunnelPort": 18107,
+          "dbTunnelPort": null
+        }
+      }
+    }
+  ]
+}

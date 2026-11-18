@@ -1,0 +1,121 @@
+#!/usr/bin/env bash
+# SSH and a loopback-only database tunnel; no credentials are stored here.
+set -euo pipefail
+
+usage() {
+    cat <<'USAGE'
+Usage: bin/vm ssh [remote command...]
+       bin/vm status
+       bin/vm db-tunnel [local port, default 15432]
+       bin/vm db-shell
+       bin/vm web-tunnel [local port, default 18080]
+       bin/vm logs [rehearsal|production] [web|warning|console|update] [--follow]
+
+Optional environment:
+  KAARDID_SSH_HOST  Verified VM address (default kaardid.arhiiv.ee)
+  KAARDID_SSH_KEY   Path to the existing private key (otherwise use SSH defaults)
+
+The tunnel targets 127.0.0.1:5432 on the VM; verify the database listener first.
+Leave it running and use Ctrl-C to close it. No deployment or migration occurs.
+USAGE
+}
+
+if [[ $# -eq 0 || "$1" == --help ]]; then
+    usage
+    exit 0
+fi
+
+action=$1
+shift
+host=${KAARDID_SSH_HOST:-kaardid.arhiiv.ee}
+if [[ ! "$host" =~ ^[a-zA-Z0-9][a-zA-Z0-9.-]*$ ]]; then
+    echo 'KAARDID_SSH_HOST must be a hostname or IPv4 address.' >&2
+    exit 2
+fi
+
+ssh_options=(
+    -o ForwardAgent=no
+    -o StrictHostKeyChecking=ask
+    -o HostKeyAlias=kaardid.arhiiv.ee
+    -o ServerAliveInterval=30
+    -o ServerAliveCountMax=3
+    -o ConnectTimeout=10
+)
+if [[ -n ${KAARDID_SSH_KEY:-} ]]; then
+    if [[ ! -r "$KAARDID_SSH_KEY" ]]; then
+        echo 'KAARDID_SSH_KEY is not a readable file.' >&2
+        exit 1
+    fi
+    ssh_options+=(-o IdentitiesOnly=yes -i "$KAARDID_SSH_KEY")
+fi
+
+case "$action" in
+    status)
+        if [[ $# -ne 0 ]]; then usage >&2; exit 2; fi
+        repo_root=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
+        timers=()
+        for unit in "$repo_root"/ops/systemd/*.timer; do
+            [[ -f "$unit" ]] || continue
+            name=${unit##*/}
+            if [[ ! "$name" =~ ^kaardid[a-zA-Z0-9_-]*\.timer$ ]]; then
+                echo 'Unexpected timer name; refusing remote argument.' >&2; exit 2
+            fi
+            timers+=("$name")
+        done
+        echo 'Checking the VM through SSH (Noora required). If connection fails, live state is UNKNOWN.'
+        exec ssh "${ssh_options[@]}" -o BatchMode=yes -o StrictHostKeyChecking=yes \
+            "erik@$host" python3 - "${timers[@]}" < "$repo_root/ops/vm-status.py"
+        ;;
+    ssh)
+        exec ssh "${ssh_options[@]}" "erik@$host" "$@"
+        ;;
+    db-shell)
+        if [[ $# -ne 0 ]]; then usage >&2; exit 2; fi
+        exec ssh -t "${ssh_options[@]}" "erik@$host" psql -X --dbname=kaart
+        ;;
+    db-tunnel)
+        if [[ $# -gt 1 ]]; then usage >&2; exit 2; fi
+        port=${1-15432}
+        if [[ ! "$port" =~ ^[0-9]{1,5}$ ]] || (( 10#$port < 1 || 10#$port > 65535 )); then
+            echo 'Local port must be between 1 and 65535.' >&2
+            exit 2
+        fi
+        exec ssh "${ssh_options[@]}" -o ExitOnForwardFailure=yes -N \
+            -L "127.0.0.1:$port:127.0.0.1:5432" "erik@$host"
+        ;;
+    web-tunnel)
+        if [[ $# -gt 1 ]]; then usage >&2; exit 2; fi
+        port=${1-18080}
+        if [[ ! "$port" =~ ^[0-9]{1,5}$ ]] || (( 10#$port < 1 || 10#$port > 65535 )); then
+            echo 'Local port must be between 1 and 65535.' >&2
+            exit 2
+        fi
+        exec ssh "${ssh_options[@]}" -o ExitOnForwardFailure=yes -N \
+            -L "127.0.0.1:$port:127.0.0.1:18080" "erik@$host"
+        ;;
+    logs)
+        environment=${1:-rehearsal}
+        stream=${2:-web}
+        follow=${3:-}
+        if [[ $# -gt 3 || ( -n "$follow" && "$follow" != --follow ) ]]; then usage >&2; exit 2; fi
+        case "$environment" in
+            rehearsal) root=/srv/kaardid ;;
+            production) root=/srv/kaardid-production ;;
+            *) usage >&2; exit 2 ;;
+        esac
+        case "$stream" in
+            web) logfile="$root/shared/runtime/error.log" ;;
+            warning) logfile="$root/shared/runtime/warning.log" ;;
+            console) logfile="$root/shared/runtime-console/console.log" ;;
+            update) logfile="$root/shared/runtime/update_trace.log" ;;
+            *) usage >&2; exit 2 ;;
+        esac
+        if [[ "$follow" == --follow ]]; then
+            exec ssh "${ssh_options[@]}" "erik@$host" "tail -n 100 -F '$logfile'"
+        else
+            exec ssh "${ssh_options[@]}" "erik@$host" \
+                "if [ -f '$logfile' ]; then tail -n 100 '$logfile'; else printf '%s\\n' 'No log file yet: $logfile'; fi"
+        fi
+        ;;
+    *) usage >&2; exit 2 ;;
+esac

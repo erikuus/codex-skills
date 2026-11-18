@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Test candidate updater/deployment code with a disposable copy of a rehearsal dump.
+set -euo pipefail
+if [[ $# -ne 0 ]]; then echo 'Usage: bin/updater-check' >&2; exit 2; fi
+repo_root=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
+ssh_options=(-o StrictHostKeyChecking=yes -o ForwardAgent=no -o BatchMode=yes)
+remote=$(ssh "${ssh_options[@]}" kaardid 'umask 077; mktemp -d /home/erik/.kaardid-setup/updater-check.XXXXXXXX')
+if [[ ! "$remote" =~ ^/home/erik/\.kaardid-setup/updater-check\.[a-zA-Z0-9]{8}$ ]]; then
+    echo 'Unexpected private test directory.' >&2; exit 1
+fi
+COPYFILE_DISABLE=1 tar --no-xattrs -cf - -C "$repo_root" ops/check-updater.py ops/check-updater.php ops/deploy-rehearsal.py \
+    ops/vm-status.py ops/test_updater_status.py protected/commands/UpdateCommand.php protected/commands/UpdateRunHistory.php \
+    | ssh "${ssh_options[@]}" kaardid "tar -xf - -C '$remote'"
+echo "Testing isolated updater copy; private report directory: $remote"
+ssh "${ssh_options[@]}" kaardid "LC_ALL=C.UTF-8 python3 '$remote/ops/check-updater.py'"

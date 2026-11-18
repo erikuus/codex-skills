@@ -1,0 +1,7 @@
+interface:
+  display_name: "Prepare application VM"
+  short_description: "Set up rehearsal and production for PHP apps"
+  default_prompt: "Use $prepare-application-vm to set up this VM and its applications using the verified Kaardid deployment model."
+policy:
+  allow_implicit_invocation: false
+

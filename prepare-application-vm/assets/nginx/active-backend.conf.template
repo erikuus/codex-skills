@@ -1,0 +1,26 @@
+# Resolve named placeholders before isolated nginx syntax validation.
+# Install one server pair per application, preserving sibling vhosts.
+server {
+    listen {{BACKEND_ADDRESS}}:80;
+    server_name {{BACKEND_HOST}} {{PUBLIC_HOST}};
+    return 308 https://{{PUBLIC_HOST}}$request_uri;
+}
+server {
+    listen {{BACKEND_ADDRESS}}:443 ssl;
+    server_name {{BACKEND_HOST}} {{PUBLIC_HOST}};
+    ssl_certificate {{CERTIFICATE_CHAIN_PATH}};
+    ssl_certificate_key {{PRIVATE_KEY_PATH}};
+    ssl_protocols TLSv1.2 TLSv1.3;
+    set_real_ip_from {{VERIFIED_EDGE_SOURCE}};
+    real_ip_header X-Real-IP;
+    # The edge must overwrite this header. Confirm the policy with its owner.
+    if ($realip_remote_addr != "{{VERIFIED_EDGE_SOURCE}}") { return 403; }
+    root {{ACTIVE_PUBLIC_ROOT}};
+    include {{APP_LOCATION_RULES_FILE}};
+}
+server {
+    listen 127.0.0.1:{{PRODUCTION_PROBE_PORT}};
+    server_name {{PUBLIC_HOST}};
+    root {{ACTIVE_PUBLIC_ROOT}};
+    include {{APP_LOCATION_RULES_FILE}};
+}

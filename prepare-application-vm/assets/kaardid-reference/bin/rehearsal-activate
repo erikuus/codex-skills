@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+set -euo pipefail
+if [[ $# -gt 1 || ( $# -eq 1 && $1 != --nginx-only ) ]]; then
+    echo 'Usage: bin/rehearsal-activate [--nginx-only]' >&2
+    exit 2
+fi
+repo_root=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
+target=${1:-$(git -C "$repo_root" rev-parse HEAD)}
+ssh_options=(-o StrictHostKeyChecking=yes -o ForwardAgent=no)
+stage=$(ssh "${ssh_options[@]}" kaardid 'umask 077; mktemp -d .kaardid-setup/rehearsal-activate.XXXXXXXX')
+[[ $stage =~ ^\.kaardid-setup/rehearsal-activate\.[a-zA-Z0-9]{8}$ ]]
+for source in "$repo_root/ops/activate-rehearsal.sh" "$repo_root/ops/nginx/kaardid-rehearsal.conf"; do
+    remote="$stage/${source##*/}"
+    ssh "${ssh_options[@]}" kaardid "umask 077; cat > '$remote'" < "$source"
+    digest=$(shasum -a 256 "$source" | awk '{print $1}')
+    remote_digest=$(ssh "${ssh_options[@]}" kaardid "sha256sum '$remote'" | awk '{print $1}')
+    if [[ "$remote_digest" != "$digest" ]]; then
+        echo 'Uploaded rehearsal file checksum mismatch.' >&2
+        exit 1
+    fi
+done
+if ssh -t "${ssh_options[@]}" kaardid \
+    "umask 077; set -o pipefail; sudo -v && sudo -n -- /bin/bash '$stage/activate-rehearsal.sh' '$target' 2>&1 | tee .kaardid-setup/rehearsal-activate.txt"; then
+    echo 'Activation completed; report: /home/erik/.kaardid-setup/rehearsal-activate.txt'
+else
+    echo 'Activation failed. See the error above; script diagnostics are saved on the VM when the script starts.' >&2
+    exit 1
+fi

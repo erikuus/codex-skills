@@ -1,0 +1,20 @@
+# Refresh {{APPLICATION_NAME}} VM and development dashboard
+
+Refresh only the existing dashboard Page {{DASHBOARD_PAGE_ID}} for {{APPLICATION_NAME}}. Use the Pages maintain-space and write-page skills. Preserve its prose, layout and human edits. This operation updates its existing visualization data.
+
+Work in this project's checkout and read AGENTS.md and PROJECT_STATUS.md. Use the supplied VM receipt once. Treat receipt.succeeded=false as unavailable and preserve earlier last-success timestamps. Keep all source checks read-only. Read only allowlisted status/structured run summaries and leave private config, raw logs, jobs, deployment and VPN state alone.
+
+Check local Git main/current branch, dirty state, recent commits, all accessible worktrees and unmerged branches with GIT_OPTIONAL_LOCKS=0. Use the GitHub connector for {{GITHUB_REPOSITORY}} main and open/recent PRs when available. Distinguish source changes, merged commits, deployed artifacts and verified behavior.
+
+Read the Page in editing view and locate its {{OVERVIEW_TITLE}} visualization. Copy the complete metadata.visualization_state envelope, change only state.modelContent and save it using guarded set_block_metadata. Preserve file_id, privateContent, unknown fields and unrelated block metadata. Reread the same Page/stream to verify saved data and layout. Reconcile an uncertain write before retrying.
+
+Store observation/source attempt and last-success times in ISO UTC and show Europe/Tallinn. Advance a source's last-success time only after a successful observation. Mark failed/unavailable observations unknown and retain the two-hour stale rule. Update observation time even when data is unchanged. Set monitor.active=false and monitor.cadence=Manual.
+
+Interpret this project's VM receipt using the following contract.
+
+{{STATUS_INTERPRETATION}}
+
+Applicable jobs need installed schedule and timestamped successful completion for verification. Absent capabilities have the project's explicit inapplicable state. Infrastructure backup coverage and public routing use their own evidence.
+
+Return saved=true only after readback confirms the intended Page update. Return a concise terminal summary with observation time, unavailable sources and any write failure. Send no separate chat notification.
+
