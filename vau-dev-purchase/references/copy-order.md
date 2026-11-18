@@ -5,6 +5,10 @@ Status: **Demonstrated — digital reproduction, whole archival unit, simulated 
 
 Apply the current request's [payment method and scenario](shared.md#payment-methods-and-scenarios). The payment choices and results below are the recorded successful-card baseline, not fixed replay instructions. Substitute the requested supported method/API case/test data. Paid/receipt/completion checks apply only to expected success; for failure, cancellation or pending cases use the shared outcome checks instead of proceeding through success-only steps.
 
+## Vautest payment-test FTP scope
+
+Owner clarification, 18 November 2026: for payment tests in **vautest**, check **Loo FTP kaust käsitsi (märgi see, kui testimisel pole vaja kausta reaalselt luua)** when assigning FTP. Real folder creation, copying, uploads and file downloads are outside this payment-test scope. After settlement, verify that the customer download action opens the download page; do not make real FTP setup a prerequisite for payment testing. Report the actual page result without claiming file delivery. Keep this staging payment-test rule separate from production delivery requirements and the original recording.
+
 ## Inputs and starting state
 
 Start signed in at `index.php/et`. The demonstrated account could use researcher, customer-service and copy-centre views. These staff actions are part of this demonstrated purchase lifecycle; they do not grant permission for unrelated administration or authorize future staff changes.
