@@ -1,0 +1,90 @@
+{
+  "application": "names",
+  "framework": {
+    "applicable": false,
+    "reason": "Standalone PHP"
+  },
+  "artifact": {
+    "include": [
+      "*.php",
+      "admin",
+      "app",
+      "frontend",
+      "config",
+      "bin",
+      "database/migrations"
+    ],
+    "exclude": [
+      "config/*.local.php",
+      "tmp",
+      "content"
+    ],
+    "emptySharedPlaceholders": [
+      "content",
+      "tmp/cache",
+      "tmp/sessions",
+      "tmp/log"
+    ]
+  },
+  "shared": {
+    "content": {
+      "target": "content",
+      "owner": "names-production",
+      "group": "names-production",
+      "mode": "2750"
+    },
+    "tmp/cache": {
+      "target": "cache",
+      "owner": "names-production",
+      "group": "names-production",
+      "mode": "2770"
+    },
+    "tmp/sessions": {
+      "target": "sessions",
+      "owner": "names-production",
+      "group": "names-production",
+      "mode": "2770"
+    },
+    "tmp/log": {
+      "target": "logs",
+      "owner": "names-production",
+      "group": "names-production",
+      "mode": "2770"
+    }
+  },
+  "database": {
+    "applicable": true,
+    "ownership": "managed"
+  },
+  "migrations": {
+    "applicable": true,
+    "preview": [
+      "bin/migrate",
+      "--pending"
+    ],
+    "apply": [
+      "bin/migrate",
+      "--apply"
+    ],
+    "verify": [
+      "bin/migrate",
+      "--verify"
+    ]
+  },
+  "jobs": {
+    "applicable": false,
+    "reason": "No scheduled job discovered"
+  },
+  "monitoring": {
+    "applicable": true,
+    "checks": [
+      "web-errors",
+      "mail-delivery"
+    ]
+  },
+  "adapterCommands": "Implement and test the migration ledger and maintenance hook before deployment. These names are a contract example.",
+  "runtime": {
+    "pythonExecutable": null,
+    "pythonMinimum": "3.12"
+  }
+}

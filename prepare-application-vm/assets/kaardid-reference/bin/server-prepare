@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# Run in your own Terminal: sudo and the new personal DB password stay private.
+set -euo pipefail
+
+if [[ $# -ne 0 ]]; then
+    echo 'Usage: bin/server-prepare' >&2
+    exit 2
+fi
+repo_root=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
+prepare_file="$repo_root/ops/server-prepare.sh"
+prepare_sha=$(/usr/bin/shasum -a 256 "$prepare_file" | /usr/bin/awk '{ print $1 }')
+remote_file=".kaardid-setup/server-prepare-$prepare_sha.sh"
+ssh_options=(-o StrictHostKeyChecking=yes -o ForwardAgent=no)
+
+echo 'Uploading the server foundation script. Review ops/server-prepare.sh before running.'
+ssh "${ssh_options[@]}" kaardid \
+    "umask 077; mkdir -p .kaardid-setup && cat > '$remote_file'" < "$prepare_file"
+remote_sha=$(ssh "${ssh_options[@]}" kaardid "sha256sum '$remote_file'" | /usr/bin/awk '{ print $1 }')
+if [[ "$remote_sha" != "$prepare_sha" ]]; then
+    echo 'Uploaded preparation checksum mismatch; nothing will be run with sudo.' >&2
+    exit 1
+fi
+
+# Only script stdout is saved. sudo/psql password prompts use the SSH terminal.
+ssh -t "${ssh_options[@]}" kaardid \
+    "umask 077; set -o pipefail; sudo -- /bin/bash '$remote_file' | tee .kaardid-setup/server-prepare.txt"
+echo 'Preparation report saved at /home/erik/.kaardid-setup/server-prepare.txt.'

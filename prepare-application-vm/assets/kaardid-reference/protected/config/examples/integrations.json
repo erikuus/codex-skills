@@ -1,0 +1,6 @@
+{
+  "vauValidationKey": "REPLACE_WITH_VALIDATION_KEY",
+  "imageSignatureSecret": "REPLACE_WITH_IMAGE_SIGNING_SECRET",
+  "giiPassword": "REPLACE_WITH_LOCAL_GII_PASSWORD",
+  "sentryDsn": null
+}

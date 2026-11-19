@@ -1,0 +1,77 @@
+{
+  "application": "services",
+  "framework": {
+    "applicable": true,
+    "name": "yii1",
+    "version": "1.1.33-dev",
+    "contentSha256": null
+  },
+  "database": {
+    "applicable": false,
+    "reason": "No local managed application database"
+  },
+  "externalDatabases": {
+    "applicable": true,
+    "discover": [
+      "ais3db",
+      "kmooduldb",
+      "saagadb",
+      "ODBC sources in active config"
+    ]
+  },
+  "migrations": {
+    "applicable": false,
+    "reason": "External database schemas belong to their owners"
+  },
+  "jobs": {
+    "applicable": false,
+    "reason": "No application updater discovered"
+  },
+  "monitoring": {
+    "applicable": true,
+    "checks": [
+      "web-errors",
+      "archive-mount-identity",
+      "known-image",
+      "iipsrv-socket",
+      "remote-store-read-probes"
+    ]
+  },
+  "storage": {
+    "mount": "/mnt/uuskasutus",
+    "source": null,
+    "protocol": null,
+    "knownFile": null,
+    "sourceAccess": "read-only"
+  },
+  "shared": {
+    "protected/config/private": {
+      "target": "config",
+      "owner": "deployer",
+      "group": "services-production",
+      "mode": "2750"
+    },
+    "protected/runtime": {
+      "target": "runtime",
+      "owner": "services-production",
+      "group": "services-production",
+      "mode": "2770"
+    },
+    "iip-cache": {
+      "target": "iip-cache",
+      "owner": "services-production",
+      "group": "services-production",
+      "mode": "2770"
+    }
+  },
+  "iipsrv": {
+    "applicable": true,
+    "approvedBinarySource": null,
+    "version": null,
+    "process": "per-environment"
+  },
+  "runtime": {
+    "pythonExecutable": null,
+    "pythonMinimum": "3.12"
+  }
+}

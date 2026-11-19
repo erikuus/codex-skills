@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Run in your own Terminal so the sudo password stays private.
+set -euo pipefail
+if [[ $# -ne 0 ]]; then echo 'Usage: bin/production-prepare' >&2; exit 2; fi
+repo_root=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
+script="$repo_root/ops/production-prepare.sh"
+digest=$(/usr/bin/shasum -a 256 "$script" | /usr/bin/awk '{print $1}')
+remote_file=".kaardid-setup/production-prepare-$digest.sh"
+ssh_options=(-o StrictHostKeyChecking=yes -o ForwardAgent=no)
+ssh "${ssh_options[@]}" kaardid "umask 077; mkdir -p .kaardid-setup; cat > '$remote_file'" < "$script"
+remote_digest=$(ssh "${ssh_options[@]}" kaardid "sha256sum '$remote_file'" | /usr/bin/awk '{print $1}')
+if [[ "$remote_digest" != "$digest" ]]; then echo 'Uploaded script checksum mismatch.' >&2; exit 1; fi
+ssh -t "${ssh_options[@]}" kaardid \
+    "umask 077; set -o pipefail; sudo -v && sudo -n -- /bin/bash '$remote_file' 2>&1 | tee .kaardid-setup/production-prepare.txt"

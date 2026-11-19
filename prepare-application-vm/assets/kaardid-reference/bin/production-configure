@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# Writes private JSON only. No code activation, DB changes or scheduled jobs.
+set -euo pipefail
+mode=prepare
+if [[ $# -eq 2 && "$1" == --check-services && "$2" =~ ^[a-f0-9]{40}$ ]]; then
+    mode=check
+elif [[ $# -gt 1 || ( $# -eq 1 && "$1" != --reuse-existing-vau-key ) ]]; then
+    echo 'Usage: bin/production-configure [--reuse-existing-vau-key] | --check-services <prepared SHA>' >&2; exit 2
+fi
+repo_root=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
+ssh_options=(-o StrictHostKeyChecking=yes -o ForwardAgent=no)
+tooling=$(ssh "${ssh_options[@]}" kaardid 'umask 077; mktemp -d .kaardid-setup/production-config.XXXXXXXX')
+if [[ ! "$tooling" =~ ^\.kaardid-setup/production-config\.[a-zA-Z0-9]{8}$ ]]; then
+    echo 'Unexpected remote tooling path.' >&2; exit 1
+fi
+for source in ops/configure-production.py ops/check-production-config.php protected/config/examples/environment.production.json; do
+    name=${source##*/}
+    digest=$(/usr/bin/shasum -a 256 "$repo_root/$source" | /usr/bin/awk '{print $1}')
+    ssh "${ssh_options[@]}" kaardid "cat > '$tooling/$name'" < "$repo_root/$source"
+    remote_digest=$(ssh "${ssh_options[@]}" kaardid "sha256sum '$tooling/$name'" | /usr/bin/awk '{print $1}')
+    if [[ "$remote_digest" != "$digest" ]]; then echo 'Uploaded configuration tooling checksum mismatch.' >&2; exit 1; fi
+done
+if [[ "$mode" == check ]]; then
+    app="/srv/kaardid-production/releases/$2/apps/kaardid"
+    # Run in the operator's Terminal: sudo reads its password privately. The
+    # service PHP process receives source through stdin, never credentials.
+    ssh -t "${ssh_options[@]}" kaardid "sudo -v &&
+        sudo -n -u kaardid-production -- /usr/bin/php8.5 -r 'eval(\"?>\".stream_get_contents(STDIN));' -- '$app' web < '$tooling/check-production-config.php' &&
+        sudo -n -u www-data -- /bin/bash --noprofile --norc -c 'test -r $app/index.php && ! test -w $app/index.php && ! test -r /srv/kaardid-production/shared/config/integrations.json && ! test -r /etc/kaardid-production/app-db.json' &&
+        sudo -n -u kaardid -- /bin/bash --noprofile --norc -c '! test -r /srv/kaardid-production/shared/config/integrations.json && ! test -r /etc/kaardid-production/app-db.json' &&
+        sudo -n -u kaardid-production -- /bin/bash --noprofile --norc -c '! test -w $app/index.php && test -w /srv/kaardid-production/shared/runtime && test -w /srv/kaardid-production/shared/assets && test -w /srv/kaardid-production/shared/upload && ! test -r /srv/kaardid/shared/config/integrations.json && ! test -r /home/erik/.config/kaardid/production-migration-db.json' &&
+        echo KAARDID_PRODUCTION_SERVICE_CONFIG_VERIFIED"
+    exit
+fi
+ssh "${ssh_options[@]}" kaardid "export LC_ALL=C.UTF-8; python3 -B '$tooling/configure-production.py' ${1:-} '$tooling/environment.production.json'"
+printf 'Private validation helper: /home/erik/%s/check-production-config.php\n' "$tooling"

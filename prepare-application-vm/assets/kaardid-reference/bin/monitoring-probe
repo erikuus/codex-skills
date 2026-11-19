@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# Controlled real Sentry/alert test through the existing protected probe action.
+set -euo pipefail
+if [[ $# -ne 0 ]]; then echo 'Usage: bin/monitoring-probe' >&2; exit 2; fi
+repo_root=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
+options=(-o StrictHostKeyChecking=yes -o ForwardAgent=no)
+release=$(ssh "${options[@]}" kaardid 'readlink /srv/kaardid/rehearsal')
+if [[ ! "$release" =~ ^/srv/kaardid/releases/[a-f0-9]{40}$ ]]; then echo 'Unexpected rehearsal pointer.' >&2; exit 1; fi
+stage=$(ssh "${options[@]}" kaardid 'umask 077; mktemp -d .kaardid-setup/sentry-proof.XXXXXXXX')
+if [[ ! "$stage" =~ ^\.kaardid-setup/sentry-proof\.[a-zA-Z0-9]{8}$ ]]; then echo 'Unexpected staging path.' >&2; exit 1; fi
+for source in ops/test-sentry-probe.py ops/sentry-probe-router.php protected/extensions/actions/XSentryProbeAction.php protected/config/Environment.php protected/config/sentry.php; do
+    name=${source##*/}
+    digest=$(/usr/bin/shasum -a 256 "$repo_root/$source" | /usr/bin/awk '{print $1}')
+    ssh "${options[@]}" kaardid "cat > '$stage/$name'" < "$repo_root/$source"
+    remote_digest=$(ssh "${options[@]}" kaardid "sha256sum '$stage/$name'" | /usr/bin/awk '{print $1}')
+    [[ "$remote_digest" == "$digest" ]] || { echo 'Probe source checksum mismatch.' >&2; exit 1; }
+done
+ssh "${options[@]}" kaardid "export LC_ALL=C.UTF-8; python3 -B '$stage/test-sentry-probe.py' '$release/apps/kaardid'"

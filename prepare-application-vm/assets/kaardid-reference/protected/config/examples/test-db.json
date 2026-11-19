@@ -1,0 +1,7 @@
+{
+  "host": "localhost",
+  "port": 5432,
+  "database": "kaart_test",
+  "user": "YOUR_LOCAL_DB_USER",
+  "password": "REPLACE_WITH_TEST_DB_PASSWORD"
+}

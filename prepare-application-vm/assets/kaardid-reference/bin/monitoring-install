@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Run in your own Terminal; sudo password stays private. No updater installation.
+set -euo pipefail
+if [[ $# -ne 0 ]]; then echo 'Usage: bin/monitoring-install' >&2; exit 2; fi
+repo_root=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
+options=(-o StrictHostKeyChecking=yes -o ForwardAgent=no)
+release=$(ssh "${options[@]}" kaardid 'readlink /srv/kaardid/rehearsal')
+if [[ ! "$release" =~ ^/srv/kaardid/releases/[a-f0-9]{40}$ ]]; then echo 'Unexpected rehearsal pointer.' >&2; exit 1; fi
+sha=${release##*/}
+stage=$(ssh "${options[@]}" kaardid 'umask 077; mktemp -d .kaardid-setup/monitoring.XXXXXXXX')
+if [[ ! "$stage" =~ ^\.kaardid-setup/monitoring\.[a-zA-Z0-9]{8}$ ]]; then echo 'Unexpected staging path.' >&2; exit 1; fi
+for source in ops/install-monitoring.sh ops/report-job-failure.php ops/systemd/kaardid-job-failure@.service; do
+    name=${source##*/}
+    digest=$(/usr/bin/shasum -a 256 "$repo_root/$source" | /usr/bin/awk '{print $1}')
+    ssh "${options[@]}" kaardid "umask 077; cat > '$stage/$name'" < "$repo_root/$source"
+    remote_digest=$(ssh "${options[@]}" kaardid "sha256sum '$stage/$name'" | /usr/bin/awk '{print $1}')
+    [[ "$remote_digest" == "$digest" ]] || { echo 'Monitoring upload checksum mismatch.' >&2; exit 1; }
+done
+ssh -t "${options[@]}" kaardid "sudo -v && sudo -n /bin/bash '/home/erik/$stage/install-monitoring.sh' '/home/erik/$stage' '$sha'"

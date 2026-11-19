@@ -1,0 +1,26 @@
+<?php
+require_once(__DIR__.'/Environment.php');
+KaardidEnvironment::requireLocal();
+$config=CMap::mergeArray(require(__DIR__.'/main.php'),array(
+    'components'=>array(
+        'db'=>array_replace(KaardidEnvironment::database('development'),array(
+            'enableProfiling'=>false,'enableParamLogging'=>true,
+        )),
+        'cache'=>array('class'=>'CDbCache'),
+        'log'=>array('routes'=>array(
+            array('class'=>'CProfileLogRoute','report'=>'summary'),
+            array('class'=>'CFileLogRoute','logFile'=>'dev_trace.log','levels'=>'trace','categories'=>'dev'),
+        )),
+    ),
+    'modules'=>array(
+        'gii'=>array(
+            'class'=>'system.gii.GiiModule',
+            'password'=>KaardidEnvironment::integrations()['giiPassword'],
+            'generatorPaths'=>array('ext.modules.gii'),
+            'ipFilters'=>array('192.168.111.*','::1'),
+            'newFileMode'=>0664,'newDirMode'=>0775,
+        ),
+    ),
+));
+$config['params']=array_replace($config['params'],KaardidEnvironment::settings()['developmentParams']);
+return $config;

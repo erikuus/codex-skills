@@ -1,0 +1,12 @@
+# Prepared only. Do not enable while the old production job is responsible.
+[Unit]
+Description=Run the Kaardid update daily at 04:00 Tallinn time
+
+[Timer]
+OnCalendar=*-*-* 04:00:00 Europe/Tallinn
+Persistent=true
+AccuracySec=1min
+Unit=kaardid-update.service
+
+[Install]
+WantedBy=timers.target

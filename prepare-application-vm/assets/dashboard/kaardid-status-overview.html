@@ -1,0 +1,186 @@
+<div id="kaardid-dashboard" aria-label="Kaardid release and operations dashboard"></div>
+<style>
+#kaardid-dashboard { color:var(--foreground); box-sizing:border-box; width:100%; max-width:100%; min-width:0; overflow-wrap:anywhere; }
+#kaardid-dashboard .eyebrow { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+#kaardid-dashboard .freshness { display:flex; flex-wrap:wrap; gap:8px 20px; padding:0 96px 24px 0; box-sizing:border-box; }
+#kaardid-dashboard .dot { width:8px; height:8px; border-radius:50%; background:var(--muted-foreground); flex:none; display:inline-block; }
+#kaardid-dashboard .dot.good { background:var(--green); }
+#kaardid-dashboard .dot.wait { background:var(--orange); }
+#kaardid-dashboard .dot.bad { background:var(--red); }
+#kaardid-dashboard .release-info { display:grid; gap:6px; margin-top:16px; }
+#kaardid-dashboard .release-note { margin:12px 0 0; }
+#kaardid-dashboard .section { margin-top:40px; min-width:0; }
+#kaardid-dashboard .section-heading { display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px 16px; margin-bottom:14px; }
+#kaardid-dashboard .section-heading h3 { margin:0; }
+#kaardid-dashboard .stages { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); list-style:none; padding:0; margin:0 0 16px; gap:12px; }
+#kaardid-dashboard .stage { min-width:0; display:grid; gap:6px; }
+#kaardid-dashboard .stage-mark { height:4px; background:var(--muted); margin-bottom:4px; }
+#kaardid-dashboard .stage-mark.done { background:var(--green); }
+#kaardid-dashboard .stage-mark.unknown { background:var(--muted-foreground); opacity:.35; }
+#kaardid-dashboard .stage-label { display:flex; align-items:center; gap:6px; }
+#kaardid-dashboard .stats { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px 16px; margin:12px 0 0; }
+#kaardid-dashboard .stats > div { display:flex; flex-direction:column-reverse; align-items:flex-start; }
+#kaardid-dashboard .stats dd { margin:0 0 4px; }
+#kaardid-dashboard .stats dt { color:var(--muted-foreground); }
+#kaardid-dashboard .backup-row { display:flex; justify-content:space-between; gap:8px 20px; flex-wrap:wrap; }
+#kaardid-dashboard summary { padding:12px 0; }
+#kaardid-dashboard .facts { display:grid; grid-template-columns:minmax(120px,1fr) minmax(0,2fr); gap:10px 20px; margin:12px 0; }
+#kaardid-dashboard .facts dt { color:var(--muted-foreground); }
+#kaardid-dashboard .facts dd { margin:0; overflow-wrap:anywhere; }
+#kaardid-dashboard .muted { color:var(--muted-foreground); }
+#kaardid-dashboard a { overflow-wrap:anywhere; }
+#kaardid-dashboard strong { font-weight:500; }
+#kaardid-dashboard .sr-status { margin:0; }
+#kaardid-dashboard .updater-facts { margin-bottom:0; }
+#kaardid-dashboard .updater-counts { display:flex; flex-wrap:wrap; gap:6px 20px; margin:12px 0 0; }
+#kaardid-dashboard .updater-counts div { display:flex; gap:5px; }
+#kaardid-dashboard .updater-counts dd { margin:0; }
+#kaardid-dashboard .updater-history { list-style:none; padding:0; margin:0; }
+#kaardid-dashboard .updater-history li { padding:8px 0; border-top:1px solid var(--border); }
+#kaardid-dashboard .updater-note { margin-top:12px; }
+@media(max-width:560px) {
+ #kaardid-dashboard .stages { gap:8px; }
+ #kaardid-dashboard .freshness { padding-right:0; }
+}
+@media(max-width:390px) {
+ #kaardid-dashboard .stages { grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+ #kaardid-dashboard .facts { grid-template-columns:1fr; gap:4px; }
+ #kaardid-dashboard .facts dd { margin-bottom:10px; }
+}
+</style>
+<script id="kaardid-dashboard-seed" type="application/json">
+{"schemaVersion":1}
+</script>
+<script>
+(() => {
+ const root=document.getElementById('kaardid-dashboard');
+ const seed=JSON.parse(document.getElementById('kaardid-dashboard-seed').textContent);
+ const valid=v=>v && typeof v==='object' && v.schemaVersion===1;
+ const incoming=window.openai?.widgetState?.modelContent;
+ let data=valid(incoming)?incoming:window.openai?.widgetState && Object.prototype.hasOwnProperty.call(window.openai.widgetState,'modelContent')?{schemaVersion:1}:seed;
+ const esc=v=>String(v ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const date=v=>typeof v==='string' && v.trim() && Number.isFinite(Date.parse(v))?Date.parse(v):NaN;
+ const fresh=v=>Number.isFinite(date(v)) && Date.now()-date(v)<=7200000 && date(v)<=Date.now()+300000;
+ const stamp=v=>Number.isFinite(date(v))?new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Tallinn',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}).format(new Date(v)):'Unknown';
+ const age=v=>{const m=Math.max(0,Math.floor((Date.now()-date(v))/60000));return !Number.isFinite(m)?'never checked':m<1?'just now':m<60?`${m}m ago`:m<1440?`${Math.floor(m/60)}h ago`:`${Math.floor(m/1440)}d ago`;};
+ const commit=v=>typeof v==='string' && /^[a-f0-9]{40}$/i.test(v)?`<a href="https://github.com/Rahvusarhiiv2/kaardid/commit/${esc(v)}" target="_blank" rel="noopener">${esc(v.slice(0,8))}</a>`:'Unknown';
+ const count=v=>typeof v==='number' && Number.isInteger(v) && v>=0?String(v):'Unknown';
+ const dot=t=>`<span class="dot ${t}" aria-hidden="true"></span>`;
+ const status=(text,tone='')=>`<span class="eyebrow">${dot(tone)}<span>${esc(text)}</span></span>`;
+ const observed=(name,reachable,time)=>reachable!==true?`${name} ${reachable===false?'unreachable':'unknown'}`:!fresh(time)?`${name} stale`:`${name} checked`;
+ const time=v=>Number.isSafeInteger(v) && v>0 && v<=253402300799?stamp(new Date(v*1000).toISOString())+' Tallinn':'Unknown';
+ const outcomes={
+  completed:['Completed','good'], warning:['Completed with warnings','wait'],
+  failed:['Failed','bad'], skipped:['Skipped · updater or deployment busy','wait']
+ };
+ const runOutcome=value=>Object.hasOwn(outcomes,value)?outcomes[value]:null;
+ const stages={lock:'Operation lock',checkpoint:'Checkpoint',additions:'DGS additions',deletions:'DGS deletions',thumbnails:'Thumbnail retrieval or storage'};
+ const metrics=[['mapsAdded','Maps added'],['imagesAdded','Images linked'],['imagesRemoved','Images removed'],['thumbnailsSaved','Thumbnails saved'],['thumbnailFailures','Thumbnail failures'],['dgsPages','DGS pages returned']];
+ const runSource=run=>run.source==='timer'?'Scheduled':'Manual';
+ const runCounts=run=>run.counts
+  ? `<dl class="updater-counts text-small">${metrics.map(([key,label])=>`<div><dt>${label}</dt><dd class="tabular-nums">${count(run.counts[key])}</dd></div>`).join('')}</dl>`
+  : '';
+ function updaterCard(timer, vm, open) {
+  const u=vm?data.updater:null;
+  const runs=Array.isArray(u?.runs)?u.runs.slice(0,7):[];
+  const latest=runs[0];
+  const serviceResult=!latest || u?.serviceAt>latest.finishedAt
+   || (u?.serviceAt===latest.finishedAt && u?.serviceOutcome!==latest.outcome)
+   ? runOutcome(u?.serviceOutcome) : null;
+  const lastOutcome=serviceResult || runOutcome(latest?.outcome);
+  const health=!vm?['Unknown · VM check needed','wait']
+   : timer?.installed===false?['Not installed','wait']
+   : timer?.installed!==true?['Timer state unknown','wait']
+   : u?.missed?.stage==='trigger'?['Missed scheduled run','bad']
+   : u?.missed?.stage==='completion'?['Scheduled run outcome missing','bad']
+   : timer?.running===true?['Running','wait']
+   : lastOutcome?.[1]==='bad'?lastOutcome
+   : timer?.enabled===false?['Timer disabled','wait']
+   : u?.active===false?['Timer inactive','bad']
+   : lastOutcome
+     || (u?.historyStatus==='unavailable'?['Run summaries unavailable','wait']:['Awaiting first recorded run','wait']);
+  const schedule=timer?.schedule||'Schedule unknown';
+  const timerState=!vm?'Unknown':timer?.installed===false?'Not installed'
+   : timer?.enabled===false?'Disabled':u?.active===false?'Inactive':u?.active===true?'Active':'Unknown';
+  const scheduled=u?.lastScheduledRun;
+  const scheduledText=scheduled && (!u.lastTriggerAt || scheduled.startedAt>=u.lastTriggerAt-2)
+   ? `${time(scheduled.finishedAt)} · ${runOutcome(scheduled.outcome)?.[0]||'Unknown'}`
+   : u?.lastTriggerAt?`${time(u.lastTriggerAt)} · trigger observed`:'No run recorded';
+  const lastAttempt=serviceResult && u?.serviceAt?time(u.serviceAt)
+   : latest?`${time(latest.finishedAt)} · ${runSource(latest)}`:'No run recorded';
+  const noAdditions=u?.noAdditionsStreak;
+  return `<section class="section" aria-label="Production updater"><div class="card">
+   <div class="section-heading"><h3>Production updater</h3>${status(health[0],health[1])}</div>
+   <div class="backup-row text-small"><span>${esc(schedule)}${vm && timer?.installed===false?' · proposed':''}</span><span>Timer ${esc(timerState.toLowerCase())}</span></div>
+   ${vm && timer?.installed!==false?`<dl class="facts updater-facts text-small">
+    <dt>Last attempt</dt><dd>${esc(lastAttempt)}${lastOutcome?` · ${esc(lastOutcome[0])}`:''}${latest?.stage && !serviceResult?` · ${esc(stages[latest.stage]||'Unknown stage')}`:''}</dd>
+    <dt>Last scheduled run</dt><dd>${esc(scheduledText)}</dd>
+    <dt>Next scheduled run</dt><dd>${u?.nextRunAt?time(u.nextRunAt):esc(timer?.nextRun||(timer?.enabled===false?'Not scheduled':'Unknown'))}</dd>
+    <dt>Last recorded checkpoint</dt><dd>${time(u?.lastCheckpointAt)}</dd>
+    ${u?.missed?.at?`<dt>Overdue slot</dt><dd>${time(u.missed.at)}</dd>`:''}
+   </dl>`:''}
+   ${latest && !serviceResult?`${latest.outcome==='failed' && latest.counts?'<p class="updater-note text-small">Changes before failure</p>':''}${runCounts(latest)}`:''}
+   ${typeof noAdditions==='number' && noAdditions>0?`<p class="updater-note">${count(noAdditions)} consecutive completed ${noAdditions===1?'run':'runs'} with no new maps or image links.${u.lastAdditionAt?` Last addition ${time(u.lastAdditionAt)}.`:''}</p>`
+      : u?.lastAdditionAt?`<p class="updater-note text-small">Last addition ${time(u.lastAdditionAt)}.</p>`:''}
+   ${runs.length?`<details id="kaardid-updater-runs" ${open?'open':''}><summary class="cursor-interaction">Recent runs (${runs.length})</summary>
+    <ol class="updater-history">${runs.map(run=>`<li>
+     <div class="backup-row text-small"><span>${time(run.finishedAt)} · ${runSource(run)}</span>${status(...(runOutcome(run.outcome)||['Unknown','']))}</div>
+     ${run.stage?`<div class="text-small">${esc(stages[run.stage]||'Unknown stage')}</div>`:''}
+     ${run.intervalFrom?`<div class="text-small muted">DGS interval from ${time(run.intervalFrom)} · checkpoint ${run.checkpointAfter?time(run.checkpointAfter):'not advanced'}</div>`:''}
+     ${runCounts(run)}</li>`).join('')}</ol></details>`:''}
+  </div></section>`;
+ }
+ function render() {
+  const runsOpen=root.querySelector('#kaardid-updater-runs')?.open;
+  const vm=data.vmReachable===true && fresh(data.vmCheckedAt), repo=data.repoReachable===true && fresh(data.repoCheckedAt);
+  const r=data.rehearsal||{}, p=data.production||{}, d=data.development||{}, b=data.backups||{};
+  const timers=Array.isArray(data.timers)?data.timers.filter(t=>t && typeof t==='object'):[];
+  const dumpSummary=(total,latest)=>vm && Number.isInteger(total) && total>=0
+   ? `${count(total)} ${total===1?'dump':'dumps'} on the VM${Number.isFinite(date(latest))?` · Latest ${stamp(latest)} Tallinn`:''}`
+   : 'Dump count unavailable';
+  const rehearsal=!vm?['Unknown','','Fresh VM check needed']:r.maintenance===true?['Maintenance','wait','Visitor access paused']:typeof r.http==='number' && r.http!==200?['HTTP '+r.http,'bad','Check needed']:r.http===200 && r.maintenance===false?['Healthy','good','HTTP 200 · maintenance off']:['Unknown','','HTTP or maintenance unverified'];
+  const production=!vm || typeof p.active!=='boolean'?['Unknown','','Activation unverified']:p.active?['Activated','good','VM release active · public routing unverified']:['Not activated','wait','No public production release'];
+  const summary=`Rehearsal: ${rehearsal[0]}. Public production: ${production[0]}. ${observed('VM',data.vmReachable,data.vmCheckedAt)}. ${observed('Repository',data.repoReachable,data.repoCheckedAt)}.`;
+  root.innerHTML=`
+   <p class="sr-only sr-status" aria-live="polite">${esc(summary)}</p>
+   <div class="freshness text-small">
+    <span class="eyebrow">${dot(vm?'good':'wait')}<strong>${esc(observed('VM',data.vmReachable,data.vmCheckedAt))}</strong><span class="muted">${esc(age(data.vmCheckedAt))}</span></span>
+    <span class="eyebrow">${dot(repo?'good':'wait')}<strong>${esc(observed('Repo',data.repoReachable,data.repoCheckedAt))}</strong><span class="muted">${esc(age(data.repoCheckedAt))}</span></span>
+   </div>
+   <div class="viz-grid" aria-label="Development, rehearsal and public production">
+    <section class="card" aria-label="Development">
+     <div class="eyebrow"><i data-lucide="git-branch" aria-hidden="true"></i><span>Development</span></div>
+     <h2>Main ${repo?commit(d.main):'Unknown'}</h2>
+     <dl class="stats">${[['Open PRs',d.openPrs],['Worktrees',d.worktrees],['With edits',d.dirtyWorktrees],['Unmerged branches',d.unmergedBranches]].map(([label,value])=>`<div><dt class="text-small">${label}</dt><dd><strong class="tabular-nums">${repo?count(value):'Unknown'}</strong></dd></div>`).join('')}</dl>
+    </section>
+    ${[
+     ['monitor','Rehearsal',rehearsal,vm?commit(r.release):'Unknown'],
+     ['globe','Public production',production,vm && p.active===false?'No active release':vm?commit(p.release):'Unknown']
+    ].map(([icon,label,s,release])=>`<div class="card"><div class="eyebrow"><i data-lucide="${icon}" aria-hidden="true"></i><span>${label}</span></div><h2>${status(s[0],s[1])}</h2><div class="text-small">${esc(s[2])}</div><div class="release-info"><span class="tabular-nums">${release}</span></div></div>`).join('')}
+   </div>
+   <p class="release-note text-small muted">${repo && vm?esc(d.difference||'Release difference unknown'):'Release comparison awaits fresh VM and repository checks.'}</p>
+   ${updaterCard(timers.find(t=>t.name==='kaardid-update'),vm,runsOpen)}
+   ${timers.filter(t=>t.name!=='kaardid-update').map(t=>{
+    const resultFailed=typeof t.result==='string' && /fail|error|timeout|exit-code|signal|core-dump/i.test(t.result);
+    const inconsistent=t.installed!==true && (t.running===true || t.enabled===true || t.verified===true);
+    const job=!vm || inconsistent?['Unknown','']:t.installed===false?['Not installed','wait']:t.installed!==true?['Unknown','']:t.running===true?['Running','good']:resultFailed?['Last run failed','bad']:t.enabled===false?['Disabled','wait']:t.enabled!==true?['Unknown','']:t.verified===true?['Scheduled · run verified','good']:['Scheduled · run unverified','wait'];
+    return `<section class="section" aria-label="${esc(t.label||t.name||'Updater')}"><div class="card"><div class="section-heading"><h3>${esc(t.label||t.name||'Updater')}</h3>${status(job[0],job[1])}</div><ol class="stages" aria-label="Updater activation stages">${[['Defined',t.defined,repo],['Installed',t.installed,vm],['Enabled',t.enabled,vm],['Run verified',t.verified,vm]].map(([label,v,known])=>{const state=!known || typeof v!=='boolean'?'unknown':v?'done':'pending';return `<li class="stage"><span class="stage-mark ${state}" aria-hidden="true"></span><span class="stage-label"><span aria-hidden="true">${state==='done'?'✓':state==='unknown'?'?':'–'}</span>${label}</span><span class="text-small muted">${state==='done'?'Confirmed':state==='unknown'?'Unknown':'Pending'}</span></li>`;}).join('')}</ol><div class="backup-row text-small"><span>${esc(t.schedule||'Schedule unknown')}${vm && t.installed===false?' · proposed':''}</span><span class="muted">Next: ${!vm?'unknown':t.nextRun?esc(t.nextRun):t.enabled===false||t.installed===false?'not scheduled':'unknown'}</span></div></div></section>`;
+   }).join('')}
+   <section class="section" aria-label="Pre-deployment database backups"><div class="card">
+    <div class="section-heading"><h3>Pre-deployment database backups</h3></div>
+    <p>Each deployment creates and checks a PostgreSQL dump before running migrations. The dump can restore the database schema and data if recovery is needed.</p>
+    <dl class="facts text-small">
+     <dt>Rehearsal</dt><dd>${dumpSummary(b.localDumps,b.latestAt)}<br><code>/home/erik/.kaardid-setup/rehearsal-backups/&lt;deployment&gt;/kaart.dump</code></dd>
+     <dt>Production</dt><dd>${dumpSummary(b.productionDumps,b.productionLatestAt)}<br><code>/home/erik/.kaardid-setup/production-backups/&lt;deployment&gt;/kaart_prod.dump</code></dd>
+    </dl>
+    <p>Each environment keeps its three newest verified dumps from successful or resolved deployments. Unresolved attempts are preserved.</p>
+    <p class="text-small muted">Uploads and off-VM recovery are handled separately.</p>
+   </div></section>
+   `;
+  if(window.lucide?.createIcons)window.lucide.createIcons({attrs:{width:16,height:16}});
+ }
+ window.addEventListener('openai:set_globals',event=>{const state=event.detail?.globals?.widgetState;if(state && Object.prototype.hasOwnProperty.call(state,'modelContent')){data=valid(state.modelContent)?state.modelContent:{schemaVersion:1};render();}});
+ render();
+ setInterval(render,60000);
+})();
+</script>

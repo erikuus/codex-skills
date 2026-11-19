@@ -1,0 +1,7 @@
+{
+  "host": "localhost",
+  "port": 5432,
+  "database": "kaart_dev",
+  "user": "YOUR_LOCAL_MIGRATION_USER",
+  "password": "REPLACE_WITH_LOCAL_MIGRATION_PASSWORD"
+}

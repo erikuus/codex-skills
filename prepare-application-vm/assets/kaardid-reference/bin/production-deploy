@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# --deploy prepares then activates; --rollback restores retained code only.
+set -euo pipefail
+if [[ $# -ne 2 || ! "$1" =~ ^--(prepare|activate|activate-restricted|deploy|rollback)$ || ! "$2" =~ ^[a-f0-9]{40}$ ]]; then
+    echo 'Usage: bin/production-deploy --prepare|--activate|--activate-restricted|--deploy|--rollback <full release SHA>' >&2
+    exit 2
+fi
+repo_root=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
+if ! git -C "$repo_root" merge-base --is-ancestor "$2" main; then
+    echo 'The tested rehearsal SHA must belong to local main history. Update main first.' >&2; exit 1
+fi
+ssh_options=(-o StrictHostKeyChecking=yes -o ForwardAgent=no)
+# Upload the paired, identified tooling into a private directory. Never build
+# from HEAD: the VM copies the artifact that actually passed rehearsal checks.
+tooling=$(ssh "${ssh_options[@]}" kaardid 'umask 077; mktemp -d .kaardid-setup/production-tooling.XXXXXXXX')
+if [[ ! "$tooling" =~ ^\.kaardid-setup/production-tooling\.[a-zA-Z0-9]{8}$ ]]; then
+    echo 'Unexpected remote tooling path.' >&2; exit 1
+fi
+for name in promote-production.py deploy-rehearsal.py; do
+    script="$repo_root/ops/$name"
+    digest=$(/usr/bin/shasum -a 256 "$script" | /usr/bin/awk '{print $1}')
+    ssh "${ssh_options[@]}" kaardid "cat > '$tooling/$name'" < "$script"
+    remote_digest=$(ssh "${ssh_options[@]}" kaardid "sha256sum '$tooling/$name'" | /usr/bin/awk '{print $1}')
+    if [[ "$remote_digest" != "$digest" ]]; then echo 'Uploaded tooling checksum mismatch.' >&2; exit 1; fi
+done
+if [[ "$1" == --deploy ]]; then
+    ssh "${ssh_options[@]}" kaardid "export LC_ALL=C.UTF-8; python3 -B '$tooling/promote-production.py' --prepare '$2'"
+    ssh "${ssh_options[@]}" kaardid "export LC_ALL=C.UTF-8; python3 -B '$tooling/promote-production.py' --activate '$2'"
+    echo 'Production deployment completed. Verify https://kaardid.ra.ee/.'
+else
+    ssh "${ssh_options[@]}" kaardid "export LC_ALL=C.UTF-8; python3 -B '$tooling/promote-production.py' '$1' '$2'"
+fi

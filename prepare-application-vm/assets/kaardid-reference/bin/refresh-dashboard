@@ -1,0 +1,133 @@
+#!/usr/bin/env python3
+"""Run the Kaardid monitor once from the Codex integrated terminal."""
+
+from datetime import datetime, timezone
+import json
+import os
+from pathlib import Path
+import shutil
+import subprocess
+import tempfile
+from threading import Event, Thread
+from time import monotonic
+
+
+WORKSPACE = Path(__file__).resolve().parent.parent
+BUNDLED_CODEX = Path(
+    "/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS/codex"
+)
+RESULT_SCHEMA = {
+    "type": "object",
+    "properties": {"saved": {"type": "boolean"}, "summary": {"type": "string"}},
+    "required": ["saved", "summary"],
+    "additionalProperties": False,
+}
+
+
+def show_wait_progress(finished):
+    started = monotonic()
+    while not finished.wait(30):
+        elapsed = int(monotonic() - started)
+        print(f"Waiting for the dashboard update ({elapsed}s elapsed)…", flush=True)
+
+
+def main():
+    prompt_path = WORKSPACE / "ops/dashboard/refresh-prompt.md"
+    try:
+        monitor_prompt = prompt_path.read_text(encoding="utf-8")
+    except (OSError, UnicodeError) as error:
+        raise SystemExit(f"Could not read the Kaardid dashboard instructions: {error}")
+
+    if not monitor_prompt.strip():
+        raise SystemExit("The Kaardid dashboard instructions are empty.")
+
+    cli = shutil.which("codex")
+    if not cli and BUNDLED_CODEX.is_file():
+        cli = str(BUNDLED_CODEX)
+    if not cli:
+        raise SystemExit("Codex CLI was not found.")
+
+    print("Refreshing the Kaardid dashboard. Checking VM status…", flush=True)
+    vm_attempted_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    vm_reachable = False
+    try:
+        vm = subprocess.run(
+            [str(WORKSPACE / "bin/vm"), "status"], cwd=WORKSPACE,
+            capture_output=True, text=True, timeout=60,
+        )
+        vm_reachable = vm.returncode == 0
+        vm_evidence = f"Exit status: {vm.returncode}\n{vm.stdout}\n{vm.stderr}"
+    except (OSError, subprocess.TimeoutExpired) as error:
+        vm_evidence = f"VM status unavailable: {error}"
+
+    prompt = (
+        "Run the Kaardid dashboard instructions below once for a manual "
+        "refresh. Use the available Pages and GitHub connectors. Keep all VM "
+        "and Git checks read-only. Do not request shell permission changes. "
+        "Do not change the automation, schedule, or "
+        "any chat. Update the existing Page and visualization in place. Preserve "
+        "the Page's current layout. Keep detailed sources and observations in the "
+        "terminal. Do not recreate the Sources and refresh section. Read "
+        "back the visualization data and set saved to true only if you verify "
+        "the requested refresh was persisted. Always return a short summary "
+        "for the terminal with the observation time in Europe/Tallinn and any "
+        "unavailable sources or write errors. Do not use chat notifications. "
+        "The button already ran bin/vm status exactly once. Use the VM evidence "
+        "below in place of running it again. A failed response means unknown "
+        "VM status. Record vmAttemptedAt even when access fails. "
+        "After applying the saved instructions, also set modelContent.updater to the "
+        "complete parsed JSON from the 'Production updater JSON:' line below. "
+        "Copy the structured values exactly, including zeroes, nulls and the recent runs. "
+        "Only use that line when VM status succeeded. Otherwise set updater to null. "
+        "For backups.productionDumps and backups.productionLatestAt, use the "
+        "Production pre-deploy DB dumps and Production latest lines. Parse the "
+        "UTC timestamp at the start of the latest dump directory into ISO format. "
+        "Use null for unavailable data and preserve these fields alongside the rehearsal fields. "
+        "Use the updater timer's Last recorded run completion and result to judge verification. "
+        "A timer trigger, a start with no completion or a default systemd result is not verification.\n\n"
+        + monitor_prompt
+        + f"\n\nVM status attempt at {vm_attempted_at} (read-only observation):\n"
+        + vm_evidence
+    )
+
+    with tempfile.TemporaryDirectory(prefix="kaardid-dashboard-") as temporary:
+        schema = Path(temporary) / "schema.json"
+        result = Path(temporary) / "result.json"
+        schema.write_text(json.dumps(RESULT_SCHEMA), encoding="utf-8")
+        # Route the guarded Pages write through Codex's automatic reviewer.
+        args = [cli, "-a", "on-request", "-c", 'approvals_reviewer="auto_review"']
+        # These local MCP servers are unrelated and may wait for startup or sign-in.
+        for server in ("figma", "playwright", "node_repl", "computer-use", "openaiDeveloperDocs"):
+            args.extend(("-c", f"mcp_servers.{server}.enabled=false"))
+        args.extend((
+            "exec", "--ephemeral", "--sandbox", "read-only", "--json",
+            "--output-schema", str(schema), "--output-last-message", str(result), "-",
+        ))
+        vm_result = "VM check complete." if vm_reachable else "VM status is unknown."
+        print(f"{vm_result} Checking Git and refreshing the Page…", flush=True)
+        finished = Event()
+        progress = Thread(target=show_wait_progress, args=(finished,))
+        progress.start()
+        try:
+            completed = subprocess.run(
+                args, cwd=WORKSPACE, input=prompt, text=True, stdout=subprocess.DEVNULL,
+                env={**os.environ, "GIT_OPTIONAL_LOCKS": "0"},
+            )
+        finally:
+            finished.set()
+            progress.join()
+        if completed.returncode:
+            raise SystemExit(f"Dashboard refresh stopped (Codex exit {completed.returncode}).")
+        try:
+            outcome = json.loads(result.read_text(encoding="utf-8"))
+            summary = outcome["summary"]
+            saved = outcome["saved"]
+        except (OSError, ValueError, KeyError, TypeError):
+            raise SystemExit("Codex did not return a dashboard refresh result.")
+
+    print(summary)
+    return 0 if saved is True else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

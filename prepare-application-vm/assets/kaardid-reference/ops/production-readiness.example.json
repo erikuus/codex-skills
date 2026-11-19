@@ -1,0 +1,8 @@
+{
+  "release": "REPLACE_WITH_FULL_TESTED_REHEARSAL_SHA",
+  "offVmBackupRestoreVerified": false,
+  "proxyDnsVauVerified": false,
+  "dgsUpdaterCopyVerified": false,
+  "freshSnapshotCheckpointVerified": false,
+  "legacyUpdaterStopped": false
+}

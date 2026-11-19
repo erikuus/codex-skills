@@ -1,0 +1,131 @@
+#!/usr/bin/env python3
+"""Collect project VM evidence and run its dashboard refresh prompt once."""
+
+from datetime import datetime, timezone
+import json
+import os
+from pathlib import Path
+import shutil
+import subprocess
+import sys
+import tempfile
+from threading import Event, Thread
+from time import monotonic
+
+
+WORKSPACE = Path(__file__).resolve().parent.parent
+BUNDLED_CODEX = Path(
+    "/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS/codex"
+)
+RESULT_SCHEMA = {
+    "type": "object",
+    "properties": {"saved": {"type": "boolean"}, "summary": {"type": "string"}},
+    "required": ["saved", "summary"],
+    "additionalProperties": False,
+}
+
+
+def show_wait_progress(finished):
+    started = monotonic()
+    while not finished.wait(30):
+        elapsed = int(monotonic() - started)
+        print(f"Waiting for the dashboard update ({elapsed}s elapsed)…", flush=True)
+
+
+def main():
+    prompt_path = WORKSPACE / "ops/dashboard/refresh-prompt.md"
+    try:
+        monitor_prompt = prompt_path.read_text(encoding="utf-8")
+    except (OSError, UnicodeError) as error:
+        raise SystemExit(f"Could not read the project dashboard instructions: {error}")
+
+    if not monitor_prompt.strip():
+        raise SystemExit("The project dashboard instructions are empty.")
+
+    deadline = monotonic() + 300
+    bounded = WORKSPACE / "ops/run_bounded.py"
+    if not bounded.is_file():
+        raise SystemExit("Missing ops/run_bounded.py. Install it with the refresh action.")
+
+    cli = shutil.which("codex")
+    if not cli and BUNDLED_CODEX.is_file():
+        cli = str(BUNDLED_CODEX)
+    if not cli:
+        raise SystemExit("Codex CLI was not found.")
+
+    print("Refreshing the project dashboard. Checking VM status…", flush=True)
+    vm_attempted_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    vm_reachable = False
+    try:
+        vm = subprocess.run(
+            [sys.executable, str(bounded), "--timeout", "60", "--",
+             str(WORKSPACE / "bin/vm"), "status"], cwd=WORKSPACE,
+            capture_output=True, text=True, timeout=65,
+        )
+        vm_reachable = vm.returncode == 0
+        vm_evidence = f"Exit status: {vm.returncode}\n{vm.stdout}\n{vm.stderr}"
+    except (OSError, subprocess.TimeoutExpired) as error:
+        vm_evidence = f"VM status unavailable: {error}"
+
+    receipt = {
+        "source": "bin/vm status",
+        "attemptedAt": vm_attempted_at,
+        "succeeded": vm_reachable,
+        "evidence": vm_evidence,
+    }
+    prompt = (
+        "Execute the project-owned dashboard instructions below once. "
+        "Use the supplied read-only VM receipt as the sole VM observation for this run. "
+        "Keep source checks read-only and preserve the existing Page layout and human edits. "
+        "The project instructions define the application, destination and status interpretation. "
+        "Verify the saved Page by reading it back before setting saved to true. "
+        "Return the requested terminal receipt, including unavailable sources or save errors.\n\n"
+        "Project instructions:\n" + monitor_prompt
+        + "\n\nVM observation receipt:\n" + json.dumps(receipt, ensure_ascii=False)
+    )
+
+    with tempfile.TemporaryDirectory(prefix="dashboard-refresh-") as temporary:
+        schema = Path(temporary) / "schema.json"
+        result = Path(temporary) / "result.json"
+        schema.write_text(json.dumps(RESULT_SCHEMA), encoding="utf-8")
+        # Route the guarded Pages write through Codex's automatic reviewer.
+        args = [cli, "-a", "on-request", "-c", 'approvals_reviewer="auto_review"']
+        # These local MCP servers are unrelated and may wait for startup or sign-in.
+        for server in ("figma", "playwright", "node_repl", "computer-use", "openaiDeveloperDocs"):
+            args.extend(("-c", f"mcp_servers.{server}.enabled=false"))
+        args.extend((
+            "exec", "--ephemeral", "--sandbox", "read-only", "--json",
+            "--output-schema", str(schema), "--output-last-message", str(result), "-",
+        ))
+        vm_result = "VM check complete." if vm_reachable else "VM status is unknown."
+        print(f"{vm_result} Checking Git and refreshing the Page…", flush=True)
+        finished = Event()
+        progress = Thread(target=show_wait_progress, args=(finished,))
+        progress.start()
+        try:
+            completed = subprocess.run(
+                [sys.executable, str(bounded), "--timeout",
+                 str(max(1, int(deadline - monotonic()))), "--", *args],
+                cwd=WORKSPACE, input=prompt, text=True, stdout=subprocess.DEVNULL,
+                env={**os.environ, "GIT_OPTIONAL_LOCKS": "0"},
+            )
+        finally:
+            finished.set()
+            progress.join()
+        if completed.returncode == 124:
+            raise SystemExit("Refresh deadline reached. Page save is unverified; reread before retrying.")
+        if completed.returncode:
+            raise SystemExit(f"Dashboard refresh stopped (Codex exit {completed.returncode}).")
+        try:
+            outcome = json.loads(result.read_text(encoding="utf-8"))
+            summary = outcome["summary"]
+            saved = outcome["saved"]
+        except (OSError, ValueError, KeyError, TypeError):
+            raise SystemExit("Codex did not return a dashboard refresh result.")
+
+    print(summary)
+    return 0 if saved is True else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

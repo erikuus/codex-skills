@@ -1,0 +1,12 @@
+{
+  "environment": "rehearsal",
+  "name": "Kaardid rehearsal",
+  "databaseFile": "/etc/kaardid/app-db.json",
+  "migrationDatabaseFile": "/home/erik/.config/kaardid/migration-db.json",
+  "integrationsFile": "integrations.json",
+  "analytics": false,
+  "externalCallbackBaseUrl": "http://127.0.0.1:18080",
+  "runtimePath": "/srv/kaardid/shared/runtime",
+  "consoleRuntimePath": "/srv/kaardid/shared/runtime-console",
+  "assetsPath": "/srv/kaardid/shared/assets"
+}

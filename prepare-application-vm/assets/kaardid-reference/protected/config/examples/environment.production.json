@@ -1,0 +1,12 @@
+{
+  "environment": "production",
+  "name": "Kaardid",
+  "databaseFile": "/etc/kaardid-production/app-db.json",
+  "migrationDatabaseFile": "/home/erik/.config/kaardid/production-migration-db.json",
+  "integrationsFile": "integrations.json",
+  "analytics": true,
+  "externalCallbackBaseUrl": "https://kaardid.ra.ee",
+  "runtimePath": "/srv/kaardid-production/shared/runtime",
+  "consoleRuntimePath": "/srv/kaardid-production/shared/runtime-console",
+  "assetsPath": "/srv/kaardid-production/shared/assets"
+}

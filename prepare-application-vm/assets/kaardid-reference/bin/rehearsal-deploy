@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Deploy the pushed current commit to the existing private preview, without sudo.
+set -euo pipefail
+if [[ $# -ne 0 ]]; then echo 'Usage: bin/rehearsal-deploy' >&2; exit 2; fi
+repo_root=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
+commit=$(git -C "$repo_root" rev-parse HEAD)
+output=$(mktemp -d /private/tmp/kaardid-release.XXXXXX)
+echo "Building pushed commit $commit. Private artifact directory: $output"
+python3 "$repo_root/ops/build-release.py" "$output"
+script="$repo_root/ops/deploy-rehearsal.py"
+digest=$(/usr/bin/shasum -a 256 "$script" | /usr/bin/awk '{print $1}')
+remote_dir=".kaardid-setup/release-$commit"
+remote_script="$remote_dir/deploy-$digest.py"
+ssh_options=(-o StrictHostKeyChecking=yes -o ForwardAgent=no)
+ssh "${ssh_options[@]}" kaardid "umask 077; mkdir -p '$remote_dir'; cat > '$remote_script'" < "$script"
+remote_digest=$(ssh "${ssh_options[@]}" kaardid "sha256sum '$remote_script'" | /usr/bin/awk '{print $1}')
+if [[ "$remote_digest" != "$digest" ]]; then echo 'Uploaded deployment script checksum mismatch.' >&2; exit 1; fi
+rsync -t -e 'ssh -o StrictHostKeyChecking=yes -o ForwardAgent=no' \
+    "$output/$commit.tar.gz" "$output/release-manifest.json" "kaardid:$remote_dir/"
+ssh "${ssh_options[@]}" kaardid "export LC_ALL=C.UTF-8; python3 '$remote_script' '$remote_dir'"
+rm -rf -- "$output"
+echo 'Private rehearsal deployment completed. Open http://127.0.0.1:18080 through bin/vm web-tunnel.'
