@@ -25,7 +25,7 @@ For a normal return, follow the provider's return control once if shown. VAU can
 | --- | --- |
 | [Shop order](shop-order.md) | Visa payment and browser return verified on order 100695. Successful bank payments verified for Coop Pank, Swedbank, SEB, LHV, Luminor, Citadele and Revolut. Coop showed browser-led completion. Citadele showed webhook completion and a later browser duplicate skip. |
 | [Copy order](copy-order.md) | Visa passed on order 1068815 (€20.00, receipt 684). Swedbank banklink passed on 18 November 2026: order 1068818, bill KTA2026-00010 / invoice 45836, payment 76047, ERPLY order 100714 / receipt 690 (€20.00 BANKLINK). The webhook completed payment before merchant return. Late return/reload added no receipt. The released download link opened the simulated folder destination (404); real FTP/file delivery is outside the owner-defined vautest payment-test scope. A second delivered webhook was not observed. See both run records below. |
-| [Interarchival order](interarchival-order.md) | Visa passed on order 1068817 (€3.00, receipt 685). Swedbank banklink passed on 18 November 2026: order 1068819 / EAA.1.1.6, bill KTA2026-00011 / invoice 45837, payment 76048, ERPLY order 100715 / receipt 691 (€3.00 BANKLINK). The webhook completed payment before merchant return. The staff awaiting-dispatch row showed the same paid bill. Late return/reload added no receipt. A second delivered webhook was not observed. Use the non-employee researcher for the paid path. Cancellation also passed on 1068821 / KTA2026-00013 / payment 76059 / ERPLY 100721 (€3): webhook Aborted/paymentattempt-aborted before return, correct cancellation messages, unpaid bill, Alustatud payment, zero receipts and unchanged history. See the run records below. |
+| [Interarchival order](interarchival-order.md) | Visa passed on order 1068817 (€3.00, receipt 685). Swedbank banklink passed on 18 November 2026: order 1068819 / EAA.1.1.6, bill KTA2026-00011 / invoice 45837, payment 76048, ERPLY order 100715 / receipt 691 (€3.00 BANKLINK). The webhook completed payment before merchant return. The staff awaiting-dispatch row showed the same paid bill. Late return/reload added no receipt. A second delivered webhook was not observed. Use the non-employee researcher for the paid path. Cancellation passed on 1068821 / KTA2026-00013 / payment 76059 / ERPLY 100721 (€3): webhook Aborted/paymentattempt-aborted, correct messages and unpaid state. A later pending-to-success retry on new payment 76060 passed on 19 November: IN_PROGRESS stayed unpaid; SETTLED produced webhook-owned settlement and one €3 BANKLINK receipt 696, with no return/reload duplicates. Old 76059 remains Alustatud. The bill is now paid. Pending stayed at hosted Töötlemine…, so VAU waiting-page coverage remains separate. See the run records below. |
 | [Personal-interest enquiry](personal-interest-enquiry.md) | Visa passed on 116090 (€30.00, receipt 686). Banklink webhook-only success passed on 116094 / APA2026-00005 / payment 76046 / ERPLY 100713 / receipt 689; the signed-out customer downloaded the exact PDF. Cancellation and FAILED checks passed on 116096 / APA2026-00006 / ERPLY 100717 using separate payments 76050 and 76051: zero receipts and no answer release. Hosted checkout distinguished cancellation/rejection; leaving checkout showed VAU “Makse katkestati.” After the logging upload, retest payments 76052/76053 verified distinct Aborted/paymentattempt-aborted and Failed/paymentattempt-declined reasons in webhook logs before merchant return; both remained unpaid with zero receipts and no answer release. A later successful retry on 116096 (payment 76054) completed through webhook before return, with one €30 BANKLINK receipt 693, a matching signed-out PDF download, and no duplicate late-return effects; earlier attempts stayed unvalidated. See the run records below. |
 | [Rights-certification enquiry](rights-certification-enquiry.md) | Visa passed on enquiry 116093 after correcting test ERPLY product 1027 and active price-list 27 entry (€25.00, receipt 688). Controlled Visa webhook-only capture/business processing also passed on 116098 / APM2026-00008 / payment 76058 / ERPLY 100720 / receipt 695 (€25 CREDITCARD), with browser confirmation XHR blocked before submission and no duplicate late-return effects. Swedbank banklink passed on 18 November 2026: enquiry 116095, notice APM2026-00006, payment 76049, ERPLY order 100716 / receipt 692. Notice, order and receipt all matched €25.00. The webhook completed payment before merchant return, reaching Makstud. One payment history event showed the verified banklink label; no answer-release event. Late return/reload added no receipt or payment event. A second delivered webhook was not observed. See the run records below. |
 
@@ -78,3 +78,66 @@ After the independent checks, remove only the test rule, restore the prior block
 The interarchival cancellation run is docs/features/swedbank_pay/interarchival-cancellation-2026-11-18.md. Reused order 1068821 after two owner-confirmed preparation dialogs, then issued one €3 bill KTA2026-00013 / invoice 45839; ERPLY order 100721 matched the total. Payment 76059 / request 202611968999 logged BankLink Aborted/paymentattempt-aborted through webhook before merchant return, with Initialized/pending and no settlement. CANCELLED_BY_USER → bank return showed hosted Makse tühistati. Palun proovi uuesti või vali mõni teine makseviis.; hosted exit showed VAU Makse katkestati. Capture that one-request warning before reload. Return/reload left Tasutud Ei, payment Alustatud, zero matching ERPLY receipts and identical seven-entry preparation history. Awaiting dispatch / H<>KL and the bill awaiting online payment were already present before cancellation and stayed unchanged. Preserve this unpaid order unless the owner requests a later retry.
 
 For this workflow, Edasta hoidlasse and Märgi väljastatuks KL-sse are required staging preparation transitions; the separate Saada kauglaenutusse / deliverIAL dispatch was not used. A confirmation-related URL-confidence stop requires resumption from the same saved order and checking whether the owner-confirmed step applied, not recreating the order. Bill issue also timed out reading its response, but the saved bill/ERPLY read proved it applied once. The order action-menu icon is CSS-rendered: matching the apparent glyph as text failed; the observed i.fi-list element opened the menu. Use current UI/DOM evidence for that trigger rather than treating the selector as a universal constant. No runtime fix/upload was required by the completed cancellation test.
+
+### Pending-to-success banklink boundary
+
+See docs/features/swedbank_pay/interarchival-pending-retry-2026-11-19.md. On the existing interarchival €3 bill, a new payment stayed unpaid with zero receipts during IN_PROGRESS. Bank Tagasi kaupmehe juurde returned to hosted Töötlemine…, not VAU. Recovered the same live simulator attempt and changed it once to SETTLED; never reused the cancelled provider order. The bank console reported Failed to fetch while sending to Paywerk sandbox adapter even though the page displayed Notification sent. A webhook nevertheless arrived about 114 seconds after SETTLED and owned validation/accounting. A browser fetch error alone cannot establish whether server processing occurred; verify callback and saved state before retrying.
+
+This run ended with one €3 BANKLINK receipt, the new payment validated, old cancelled payment unvalidated and one paid-history event. Merchant return/reload added no duplicates and started no browser confirmation worker. It did not exercise VAU's waiting-page message or a pending Checkout API callback; those must not be inferred from the simulator's IN_PROGRESS label. The successful webhook started before merchant return, but independent paid-state checks followed that return. Keep provider processing, callback attribution and strict held-at-bank completion as separate claims. Do not repay the completed bill.
+The controlled ERPLY-recovery run is documented in docs/features/swedbank_pay/admin-erply-recovery-2026-11-19.md. The exact-case one-shot fixture was uploaded, but Swedbank's simulator displayed Tehniline viga before login/outcome controls. It persisted without Chrome debugging. GET-only provider checks showed Initialized and zero financial transactions; VAU stayed Alustatud with zero receipts. This is a blocked payment, not a passed recovery/duplicate test. Preserve the same attempt and verify state/fixture expiry before resuming; an admin repair is not a way to settle an unpaid payment.
+
+Native recovery in that run exposed a narrow Chrome window: stale AX geometry and a target outside its bounds caused input failures. A fresh native screenshot supplied usable coordinates for the visible Cancel-debugging banner, then the native Maximize control made the payment panel reachable. Reobserve after each action. These steps recovered input, but did not fix the bank's technical error; keep UI automation recovery separate from provider availability.
+
+### Verified manual pending-page timeout and reopen
+
+See docs/features/swedbank_pay/pending-page-76061-2026-11-19.md. On existing unpaid
+webshop payment 76061/order 100722, manual opening of the normal confirmation
+route verified Ootame makse kinnitust. Palun ärge tasuge uuesti., the delayed
+explanation with contact/reference, and Kontrolli makse olekut after the real
+two-minute threshold. The manual check kept pending without adding a confirmation
+worker. Reload and close/reopen restored the initial pending page and each started
+one provider verification; all three workers finished pending. Final authenticated
+checks showed Alustatud, Veebimakse ootel, no populated paid fields and zero ERPLY
+receipts. No new payment, bank outcome or fault fixture was used.
+
+For this scoped UI test, recheck the existing payment/provider first and use its
+saved controller/id/type; never click Maksa to reopen the result. Do not accelerate
+timers. Distinguish the UI's two-minute delay from a provider transport timeout:
+these GETs succeeded and found Initialized. Webshop has paid fields/completion
+traces rather than the enquiry paid-history list. Record that boundary. Manual
+return-page coverage does not establish a provider-generated pending return,
+later settlement or the still-open accounting-recovery rehearsal.
+
+### Verified Visa accounting failure and admin repair
+
+See docs/features/swedbank_pay/admin-erply-recovery-visa-2026-11-19.md. The
+owner-authorized one-shot fixture suppressed the first ERPLY write after card
+capture and webhook-owned validation on the existing webshop payment. The
+customer page correctly stayed received/processing; a delivered duplicate callback
+verified capture and skipped business processing with zero receipts. This confirms
+that validated-payment callbacks do not repair unfinished accounting.
+
+After owner sign-in as admin, the existing payment/admin Salvesta makse Erply-sse
+action used the consumed marker and saved one CREDITCARD receipt. Repeating that
+same repair logged receipt_already_saved and added no receipt. Customer reload
+then confirmed payment; Continue showed already paid. Browser sent capture while
+webhook committed validation, so this is not webhook-only capture. The run proves
+a deliberately unsent write, not an accepted ERPLY write with a lost response.
+Preserve the consumed marker and successful payment; never repay or reset them.
+Restore normal XErply config, have the owner upload restoration, and switch back
+to the usual test account after the targeted admin action. Keep server cleanup
+confirmation separate from a local restored file. Uncertain writes require
+reconciliation rather than blindly repeating the repair.
+### Old cancelled attempt after a different payment succeeds
+
+See docs/features/swedbank_pay/stale-banklink-116097-2026-11-19.md. On a paid
+rights-certification notice, manually revisiting the old cancellation route showed
+cancelled plus already paid; reload removed the cancellation flash and no Maksa
+button appeared. The old validation return and one delivered old-order callback
+preserved the successful Visa, one receipt and exact history, but exposed a shared
+parser defect: provider Aborted had an id-only empty financialTransactions
+resource; verification failed before saving terminal state. Callback returned
+HTTP 500 and the customer stayed waiting/delayed. This is not a passed return or
+callback case. Stop for the scoped fix/upload/retest; never settle another attempt
+or mark the old one paid to clear the page. Compare business identity/history as
+well as attempt status, and distinguish trace HTTP failures from error-log absence.
