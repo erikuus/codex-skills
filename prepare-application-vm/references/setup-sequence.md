@@ -6,7 +6,7 @@ This is the authoritative setup order. Read it before adapting commands. Later r
 
 | Input | Discover or obtain | Owner and handling |
 | --- | --- | --- |
-| VM, OS, keys, fingerprint, sudo | Administrator handover, verified SSH and metadata audit | Admin supplies identity, user enters passwords privately |
+| VM, OS, client identity, host enrollment, sudo | Administrator endpoint, existing client SSH configuration and known_hosts; first-use enrollment where permitted | Reuse registered key, resolve changed/conflicting server identity, user enters passwords privately |
 | Apps and topology | Repositories, entry points, existing vhosts/pools and sibling status | Codex records allocations and preserves unmanaged objects |
 | Runtime/build inputs | Python 3.12+ on workstation/VM, PHP/PostgreSQL requirements, locked dependencies, pinned Yii source when used | Run check_python.py with both selected interpreters before helpers; reuse verified tools or acquire from the approved source |
 | Data and durable files | Approved dump/source version, media, editable files, corrections and matching job checkpoint | User chooses data source and confirms final writer freeze |

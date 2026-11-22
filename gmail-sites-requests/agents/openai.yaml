@@ -1,0 +1,7 @@
+interface:
+  icon_small: "./assets/icon.svg"
+  icon_large: "./assets/icon.png"
+  default_prompt: "Use $gmail-sites-requests to start monitoring LittleThings at `https://little-things.erikuus.chatgpt.site/`. Use the subject template `@Codex Little Things – [topic]` and accept requests only from John's confirmed email address, `john@littlethings.com`."
+
+policy:
+  allow_implicit_invocation: false

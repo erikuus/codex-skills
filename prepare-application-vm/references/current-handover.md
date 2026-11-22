@@ -8,6 +8,8 @@ Source thread is [Uued VM-id](https://mail.google.com/mail/u/0/#all/1a1c01913819
 
 Mihkel supplied `harald.arhiiv.ee`, accessible with the SSH public keys already registered on the Kaardid VM. He reports nginx, PHP 8.5 and PostgreSQL 18 installed. Erik accepted PostgreSQL 18. Managed `pgadmin4.arhiiv.ee` access is prepared.
 
+The Mac's Kaardid client identity is `~/.ssh/kaardid_ed25519`, selected by its SSH configuration. Select it explicitly for Harald when the new host has no corresponding client configuration. The initial lack of a known_hosts entry concerns Harald's server identity. Follow provisioning.md's first-contact enrollment procedure and continue with the existing client key.
+
 The agreed capacity is 4 vCPU and 8 GB RAM, with one expandable OS disk chosen by Mihkel. Size all application pools plus PostgreSQL within that shared budget and inspect actual disk capacity.
 
 | Project | Checkout | Internal hostname | Agreed public hostname |
@@ -26,13 +28,13 @@ Mihkel says public hostnames await EEnet DNS records. Treat the stated internal 
 
 The earlier 18 November planning email proposed 4 vCPU, 8 GB RAM and an expandable OS disk for `/Users/erikuus/dev/php/services` and iipsrv. The later supplied single-app initiation letter reports `teenused.arhiiv.ee`, user `erik`, SSH-key login, PHP-FPM 8.5, PostgreSQL 17, nginx, 8 vCPU, 16 GB RAM and 500 GB disk. For an invocation using that letter, use those newer reported values and verify them during the authorized audit.
 
-The letter's visible hostname says `teenused.arhiiv.ee` while its hyperlink targets `kaardid.arhiiv.ee`. Resolve the canonical SSH target with the user/administrator before connecting and verify its independent host fingerprint/identity. Continue local project preparation while that input is pending. Preserve the agreed public identity `teenused.ra.ee` until a later explicit change, and verify final routing.
+The letter's visible hostname says `teenused.arhiiv.ee` while its hyperlink targets `kaardid.arhiiv.ee`. Resolve the canonical SSH target with the user/administrator before connecting, then apply provisioning.md's host enrollment policy. Continue local project preparation while the destination is pending. Preserve the agreed public identity `teenused.ra.ee` until a later explicit change, and verify final routing.
 
 Services needs remote AIS/kmooduli PostgreSQL access, DGS and a persistent `/mnt/uuskasutus` file-server mount readable by PHP and iipsrv. The image collection stays on that file server. Discover optional ODBC/Imagick requirements from the repo and actual integrations.
 
 Erik earlier said Services needs no local application database. A PostgreSQL 17 installation reported in the newer seed is administrator-provided infrastructure to preserve. Determine actual database needs from the application. Rehearsal/production still need separate code/private config/runtime/cache and safe remote-data usage.
 
-The newer seed supplies initial access facts but does not establish a verified host fingerprint, archive export/mount details, external grants or public routing. Resolve each input before dependent work. Harald and local Codex project setup remain independent.
+The newer seed supplies initial access facts. Resolve its destination conflict before connection and use the normal first-contact enrollment policy. Archive export/mount details, external grants and public routing remain separate inputs for their dependent stages. Harald and local Codex project setup remain independent.
 
 ## Kaardid reference evidence
 

@@ -4,7 +4,17 @@ Read the selected public implementation files through the source map. The clean-
 
 ## Access and audit
 
-Verify the SSH fingerprint independently, then reuse registered workstation keys and strict host-key checking. Keep separate private keys on separate workstations. Use the established Noora route when available. Kaardid's `noora-proxy` binds netcat to the current PPP interface and avoids route changes. Apply it only when the target needs that routing workaround.
+Reuse the workstation client key registered by the administrator. When told “the same SSH keys as Kaardid,” inspect `ssh -G kaardid` and select its actual IdentityFile, user and applicable VPN transport for the new target. A plain new-host connection may select different default keys. Preserve the existing key and use `IdentitiesOnly=yes` with that identity.
+
+Client-key authentication and server host-key enrollment are separate checks. The client private key stays on the workstation. Each server has its own identity recorded in known_hosts. An unknown server key can stop SSH before client authentication, so that error does not establish whether the server accepts the client key.
+
+For an unambiguous administrator-provided endpoint in an authorized setup, first contact may use `StrictHostKeyChecking=accept-new`. This performs normal first-use enrollment and rejects changed keys. Use an administrator-provided fingerprint or existing trusted entry when available. An independent fingerprint is required when an applicable organizational policy requires it or a stored key has changed. An empty known_hosts entry alone is a routine bootstrap step.
+
+Use the new server's canonical hostname as HostKeyAlias when an alias/private-address workaround is needed. Preserve existing known_hosts entries. A changed key or conflicting destination stops connection until resolved with the owner. Record whether trust came from first use or a separately verified fingerprint.
+
+For Harald, the existing Mac client identity is `~/.ssh/kaardid_ed25519`. A first-contact form is `ssh -i ~/.ssh/kaardid_ed25519 -o IdentitiesOnly=yes -o ForwardAgent=no -o StrictHostKeyChecking=accept-new -o HostKeyAlias=harald.arhiiv.ee erik@harald.arhiiv.ee`. Adapt the applicable verified Noora transport before connecting if needed. Confirm the remote user/hostname with a read-only command, then use the normal strict checks for subsequent automation.
+
+Keep separate private keys on separate workstations. Use the established Noora route when available. Kaardid's `noora-proxy` binds netcat to the current PPP interface and avoids route changes. Carry over the transport with the new target; preserve the new server's identity and destination.
 
 A sandbox can hide macOS VPN status. Distinguish tool restrictions from actual network availability and use the supported scoped approval mechanism for a verified read-only command where allowed. Ask the user to connect the VPN when the actual required connection is unavailable.
 

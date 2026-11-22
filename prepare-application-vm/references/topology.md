@@ -14,7 +14,7 @@ Unknown fields are rejected to catch misspelled allocations. Put explanatory tex
 
 Record these remaining resolved facts in the app contract and runbook.
 
-- VM private/public identities, approved SSH fingerprint, sudo owner and VPN dependency.
+- VM private/public identities, selected client key, recorded host-key enrollment source, sudo owner and VPN dependency.
 - nginx site files, actual document roots, production backend origin/SNI, certificate paths and renewal ownership.
 - Entry points and URL layout, FPM version, dependencies, web/migration/job commands, private file paths and health routes.
 - Distinct rehearsal/production ports, service identities, sockets, roots, locks, backup roots, unit names and database privileges.
