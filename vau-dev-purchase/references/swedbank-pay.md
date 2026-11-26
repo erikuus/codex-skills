@@ -137,7 +137,23 @@ button appeared. The old validation return and one delivered old-order callback
 preserved the successful Visa, one receipt and exact history, but exposed a shared
 parser defect: provider Aborted had an id-only empty financialTransactions
 resource; verification failed before saving terminal state. Callback returned
-HTTP 500 and the customer stayed waiting/delayed. This is not a passed return or
-callback case. Stop for the scoped fix/upload/retest; never settle another attempt
+HTTP 500 and the customer stayed waiting/delayed. That initial run did not pass. Never settle another attempt
 or mark the old one paid to clear the page. Compare business identity/history as
 well as attempt status, and distinguish trace HTTP failures from error-log absence.
+The later scoped parser fix and owner upload passed the same-case staging retest;
+see docs/features/swedbank_pay/stale-banklink-retest-116097-2026-11-19.md. Old
+return now showed Makse ebaõnnestus või katkestati. with Continue; Continue showed
+already paid without Maksa. One controlled callback verified Aborted and returned
+HTTP 200. The old parent stayed Alustatud, the newer Visa/one receipt/history
+were unchanged, and repeat return read the saved terminal state without another
+provider worker. Expected terminal-failure logging appears at error level in two
+routes; correlate its webhook UID and distinguish it from verification exceptions.
+This closes the observed Aborted/id-only shape, not every terminal or competing
+successful-payment case.
+### Verified webshop postal-delivery Visa
+
+See docs/features/swedbank_pay/webshop-postal-visa-2026-11-20.md. Fresh shop2278 / order100725 / billVPA2026-00021 / payment76063 matched product EUR6.00 plus postage EUR1.90, total EUR7.90, across saved VAU order, provider submit amount, ERPLY order and one CREDITCARD receipt699. Selected Postipakiga aadressil and Eesti Vabariik; the checkout product table still showed EUR6.00 while a separate Postikulu panel showed EUR1.90. Compare the generated full payable total before card submission. No physical dispatch was tested.
+
+The enquiry DevTools technique also worked for webshop: scope the browser-only Block rule to paymentShopOrder/validate*. The return document loaded, but confirm=1 was visibly blocked:devtools; webhook workers alone captured, validated and registered the receipt. Independently verify VAU Valideeritud / Swedbank Pay (kaardimakse), ERPLY laekumine Jah and one matching receipt before removing the rule. Late return/reload/Continue read saved state with no browser worker or duplicate write. Shop manager showed the same bill/order, laekunud and Saabunud; that status does not prove dispatch. Remove the sole added rule, restore prior global blocking and close DevTools.
+
+A VPN/session interruption cleared this run's unsent cart. Recheck cart quantity after login; only restore the product if the cart is empty. The order-submit response timed out, but inventory and the saved order established success, so it was not submitted again. Chrome's Save address prompt was declined. Native card input worked with DevTools open in this case; detaching debugging is a recovery option when needed, not a prerequisite.
