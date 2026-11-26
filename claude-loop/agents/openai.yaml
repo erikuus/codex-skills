@@ -1,0 +1,5 @@
+interface:
+  display_name: "Claude Loop"
+  short_description: "Review and fix code with Claude Code"
+  icon_small: "./assets/claude.svg"
+  icon_large: "./assets/claude.png"
