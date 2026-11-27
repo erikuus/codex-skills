@@ -1,0 +1,6 @@
+interface:
+  display_name: "Recall work"
+  short_description: "Recover project decisions and verify current state"
+  icon_small: "./assets/potato-icon.png"
+  icon_large: "./assets/potato-icon.png"
+  default_prompt: "Use $recall-work to reconstruct where I stopped on this project."

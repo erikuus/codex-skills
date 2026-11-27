@@ -1,0 +1,6 @@
+interface:
+  display_name: "Explain codebase"
+  short_description: "Trace runtime behavior and historical design decisions"
+  icon_small: "./assets/potato-icon.png"
+  icon_large: "./assets/potato-icon.png"
+  default_prompt: "Use $explain-codebase to explain how this subsystem works and what led to its design."

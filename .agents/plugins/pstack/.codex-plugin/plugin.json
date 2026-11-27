@@ -1,0 +1,15 @@
+{
+  "name": "pstack",
+  "version": "1.0.0",
+  "description": "Project-specific verification, code walkthroughs, work recall, architecture decisions and technical writing.",
+  "license": "MIT",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "pstack",
+    "shortDescription": "Verify, understand and design changes in your codebase",
+    "category": "Developer Tools",
+    "brandColor": "#A96021",
+    "composerIcon": "./assets/potato-icon.png",
+    "logo": "./assets/potato-icon.png"
+  }
+}

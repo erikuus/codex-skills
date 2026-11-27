@@ -1,0 +1,6 @@
+interface:
+  display_name: "Architect change"
+  short_description: "Compare caller sketches and plan verifiable changes"
+  icon_small: "./assets/potato-icon.png"
+  icon_large: "./assets/potato-icon.png"
+  default_prompt: "Use $architect-change to compare designs for this change using a realistic caller."

@@ -1,0 +1,12 @@
+{
+  "name": "erikuus-skills",
+  "interface": { "displayName": "Erik's skills" },
+  "plugins": [
+    {
+      "name": "pstack",
+      "source": { "source": "local", "path": "./.agents/plugins/pstack" },
+      "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
+      "category": "Developer Tools"
+    }
+  ]
+}
